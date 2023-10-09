@@ -10,6 +10,15 @@ class Failure implements Exception {
   }
 }
 
+
+class DataSourceEmpty extends Failure {
+  @override
+  final String? message;
+
+  DataSourceEmpty({this.message = 'Sem dados'}): super(message: message);
+
+}
+
 class DataSourceException extends Failure {
   @override
   final String? message;
