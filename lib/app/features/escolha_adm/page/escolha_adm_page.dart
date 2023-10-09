@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:greenplus/app/core/utils/string_extensions.dart';
 
 import '../../../core/widgets/custom_button_2.dart';
-import 'home_controller.dart';
+import 'escolha_adm_controller.dart';
 
-class HomePage extends StatefulWidget {
-  final HomeController controller;
+class EscolhaAdmPage extends StatefulWidget {
+  final EscolhaAdmController controller;
 
-  const HomePage({super.key, required this.controller});
+  const EscolhaAdmPage({super.key, required this.controller});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<EscolhaAdmPage> createState() => _EscolhaAdmPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _EscolhaAdmPageState extends State<EscolhaAdmPage> {
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      widget.controller.obterMenusModulos();
+      widget.controller.obterEscolhaAdm();
     });
   }
 
@@ -28,13 +29,15 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Opções de funcionalidades",
+        title: Text("Visualização ou Modificação de conteúdos",
         style: TextStyle(
-          color: Colors.white
-        ),),
-      backgroundColor: Color.fromARGB(255, 27, 136, 83),
+          color: Colors.white,
+        ),
+        ),
+        backgroundColor: Color.fromARGB(255, 27, 136, 83),
+        
       ),
-      body: Container(
+        body: Container(
       width: double.infinity,
       height: double.infinity,
       decoration: const BoxDecoration(
@@ -54,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.red,
                   child: const Text("Error"),
                 ),
-                OutlinedButton(onPressed: ()=>  widget.controller.obterMenusModulos(), child: const Text("Tentar novamente"))
+                OutlinedButton(onPressed: ()=>  widget.controller.obterEscolhaAdm(), child: const Text("Tentar novamente"))
               ],
             );
           }
@@ -64,16 +67,15 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Wrap(children: [
-                    ...widget.controller.menusModulo.take(3).map((menu) {
+                    ...widget.controller.escolhaAdm.map((menu) {
                       return Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: EdgeInsets.symmetric(horizontal: 15),
                           child: CustomButton2(
                             backgroundColor:
                                 const Color.fromARGB(255, 27, 136, 83),
                             icon: menu.icon!.toIcon(),
                             onPressed: () {
-                              // controller.navigateToScreen(
-                              //     context, menu.screenIndex);
+                              Modular.to.pushNamed('/home');
                             },
                             label: menu.title ?? '',
                           ));
@@ -82,24 +84,9 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(
                     height: 40,
                   ),
-                  Wrap(children: [
-                    ...widget.controller.menusModulo.sublist(widget.controller.menusModulo.length - 3, widget.controller.menusModulo.length ).map((menu) {
-                      return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: CustomButton2(
-                            backgroundColor:
-                            const Color.fromARGB(255, 27, 136, 83),
-                            icon: menu.icon!.toIcon(),
-                            onPressed: () {
-                              // controller.navigateToScreen(
-                              //     context, menu.screenIndex);
-                            },
-                            label: menu.title ?? '',
-                          ));
-                    }).toList(),
-                  ])
                 ]);
           }
+
           return Container();
         })),
       ),

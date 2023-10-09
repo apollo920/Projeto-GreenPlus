@@ -1,7 +1,4 @@
 
-import 'dart:math';
-
-import '../../../../core/erros/erros.dart';
 import '../../../../core/infra/client_http/i_client_http.dart';
 import '../../../../core/infra/local_storage/i_local_secure_storage.dart';
 import '../../models/menu_modulo.dart';
@@ -15,9 +12,6 @@ class HomeDataSourceImpl implements IHomeDataSource {
 
   @override
   Future<List<MenuModulo>?> getMenusMedulos() async {
-    if(Random.secure().nextBool()) {
-     return throw Failure();
-    }
     return listaMenuModulo.map((menuModulo) => MenuModulo.fromMap(menuModulo)).toList();
 
     // var result = await clientHttp.get(url: "/users/checktoken");
@@ -47,7 +41,7 @@ class HomeDataSourceImpl implements IHomeDataSource {
       "icon": "0xef11"
     },
     {
-      "title": "QRcodes",
+      "title": "Calendário de provas",
       "action": "",
       "icon": "0xe4f5"
     },
@@ -57,7 +51,7 @@ class HomeDataSourceImpl implements IHomeDataSource {
       "icon": "0xe23e"
     },
     {
-      "title": "Calendário de provas",
+      "title": "Qrcodes",
       "action": "",
       "icon": "0xf0401"
     },

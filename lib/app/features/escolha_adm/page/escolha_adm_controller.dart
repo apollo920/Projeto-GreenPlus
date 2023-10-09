@@ -3,21 +3,21 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:greenplus/app/core/controllers/auth/auth_store.dart';
 import 'package:mobx/mobx.dart';
 
-import '../infra/repository/i_home_repository.dart';
-import '../models/menu_modulo.dart';
+import '../infra/repository/i_escolha_adm_repository.dart';
+import '../models/escolha_adm.dart';
 
 part 'home_controller.g.dart';
 
-class HomeController = HomeControllerBase with _$HomeController;
+class EscolhaAdmController = EscolhaAdmControllerBase with _$EscolhaAdmController;
 
-abstract class HomeControllerBase with Store {
-  IHomeRepository homeRepository;
+abstract class EscolhaAdmControllerBase with Store {
+  IEscolhaAdmRepository escolhaAdmRepository;
   AuthStore authStore;
 
-  HomeControllerBase(this.homeRepository, this.authStore);
+  EscolhaAdmControllerBase(this.escolhaAdmRepository, this.authStore);
 
   @observable
-  List<MenuModulo> menusModulo = [];
+  List<EscolhaAdm> escolhaAdm = [];
 
   @observable
   bool loading = false;
@@ -35,12 +35,12 @@ abstract class HomeControllerBase with Store {
   get loaded => loading == false && erro == false;
 
   @action
-  setMenusModulo(List<MenuModulo> value) => menusModulo = value;
+  setEscolhaAdm(List<EscolhaAdm> value) => escolhaAdm = value;
 
-  obterMenusModulos() async {
+  obterEscolhaAdm() async {
     setLoading(true);
     
-    var result = await homeRepository.getMenusMedulos();
+    var result = await escolhaAdmRepository.getEscolhasMenuAdm();
 
     result.fold(
         (erro) {
@@ -65,7 +65,7 @@ abstract class HomeControllerBase with Store {
             },
           );
         }, (menus) {
-      setMenusModulo(menus);
+      setEscolhaAdm(menus);
       setErro(false);
       setLoading(false);
     });

@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:greenplus/app/core/controllers/auth/auth_store.dart';
+import 'package:greenplus/app/features/escolha_adm/escolha_adm_module.dart';
 import 'package:greenplus/app/features/home/home_module.dart';
 
 import 'core/infra/client_http/client_http_impl.dart';
@@ -26,6 +27,7 @@ class AppModule extends Module {
   @override
   List<ModularRoute> get routes => [
     ModuleRoute('/auth', module: AuthModule()),
+    ModuleRoute('/escadm', module: EscolhaAdmModule()),
     ModuleRoute('/home', module: HomeModule()),
   ];
 }

@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 
 import 'package:greenplus/app/core/erros/erros.dart';
-import 'package:greenplus/app/features/auth/login/models/user.dart';
+
 import 'package:greenplus/app/features/home/models/menu_modulo.dart';
 
 import '../datasources/i_home_datasource.dart';
