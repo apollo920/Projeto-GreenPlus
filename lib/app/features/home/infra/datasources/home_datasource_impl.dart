@@ -32,27 +32,27 @@ class HomeDataSourceImpl implements IHomeDataSource {
       "icon": "0xf051f"
     },{
       "title": "Horários",
-      "action": "",
+      "action": "/cursos",
       "icon": "0xe821"
     },
     {
       "title": "Avisos",
-      "action": "",
+      "action": "/cursos",
       "icon": "0xef11"
     },
     {
       "title": "Calendário de provas",
-      "action": "",
+      "action": "/cursos",
       "icon": "0xe4f5"
     },
     {
       "title": "Eventos",
-      "action": "",
+      "action": "/cursos",
       "icon": "0xe23e"
     },
     {
       "title": "Qrcodes",
-      "action": "",
+      "action": "/cursos",
       "icon": "0xf0401"
     },
   ];
