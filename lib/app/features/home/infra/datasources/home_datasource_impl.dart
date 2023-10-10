@@ -37,7 +37,7 @@ class HomeDataSourceImpl implements IHomeDataSource {
     },
     {
       "title": "Avisos",
-      "action": "/cursos",
+      "action": "/avisos",
       "icon": "0xef11"
     },
     {
@@ -52,7 +52,7 @@ class HomeDataSourceImpl implements IHomeDataSource {
     },
     {
       "title": "Qrcodes",
-      "action": "/cursos",
+      "action": "/qrcode",
       "icon": "0xf0401"
     },
   ];

@@ -1,30 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:greenplus/app/core/utils/string_extensions.dart';
 import 'package:greenplus/app/core/widgets/grid_menus.dart';
 
 import '../../widgets/custom_button_quadrado.dart';
-import '../models/curso.dart';
-import 'curso_controller.dart';
+import 'periodos_controller.dart';
 
-class CursosPage extends StatefulWidget {
-  final Function(Curso curso) callBack;
-  final CursoController controller;
+class PeriodosPage extends StatefulWidget {
+  final String idCurso;
+  final PeriodosController controller;
 
-  const CursosPage({super.key, required this.controller, required this.callBack});
+  const PeriodosPage({super.key, required this.controller, required this.idCurso});
 
   @override
-  State<CursosPage> createState() => _CursosPageState();
+  State<PeriodosPage> createState() => _PeriodosPageState();
 }
 
-class _CursosPageState extends State<CursosPage> {
+class _PeriodosPageState extends State<PeriodosPage> {
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      widget.controller.obterCursos();
+      widget.controller.obterPeriodos(idCurso: widget.idCurso);
     });
   }
 
@@ -33,7 +31,6 @@ class _CursosPageState extends State<CursosPage> {
   Widget build(BuildContext context) {
     return 
       Scaffold(
-
           body: Container(
               width: double.infinity,
               height: double.infinity,
@@ -58,7 +55,7 @@ class _CursosPageState extends State<CursosPage> {
                           ),
                           OutlinedButton(
                               onPressed: () =>
-                                  widget.controller.obterCursos(),
+                                  widget.controller.obterPeriodos(idCurso: widget.idCurso),
                               child: const Text("Tentar novamente"))
                         ],
                       );
@@ -74,7 +71,9 @@ class _CursosPageState extends State<CursosPage> {
                                         backgroundColor:
                                             const Color.fromARGB(255, 27, 136, 83),
                                         icon: curso.icon!.toIcon(),
-                                        onPressed: () => widget.callBack(curso),
+                                        onPressed: () {
+                                          //controller.navigateToCourseScreen(context, n, 'Eng');
+                                        },
                                         label: curso.nome ?? '',
                                       ),
                                 ))
@@ -87,7 +86,9 @@ class _CursosPageState extends State<CursosPage> {
                                           backgroundColor:
                                               const Color.fromARGB(255, 27, 136, 83),
                                           icon: curso.icon!.toIcon(),
-                                          onPressed: () => widget.callBack(curso),
+                                          onPressed: () {
+                                            //controller.navigateToCourseScreen(context, n, 'Eng');
+                                          },
                                           label: curso.nome ?? '',
                                         ),
                                   ))

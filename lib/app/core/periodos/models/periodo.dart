@@ -1,30 +1,28 @@
 import 'dart:convert';
 
-class Curso {
+class Periodo {
 
   final String? nome;
   final String? action;
   final String? icon;
-  final String? id;
 
-  Curso({required this.nome, required this.action, required this.icon, required this.id});
+  Periodo({required this.nome, required this.action, required this.icon});
 
-  Curso copyWith({
+  Periodo copyWith({
     String? nome,
     String? action,
   }) {
-    return Curso(
+    return Periodo(
       nome: nome ?? this.nome,
       action: action ?? this.action,
       icon: icon ?? this.icon,
-      id: id ?? this.id,
     );
   }
 
 
-  static Curso? fromJson(String? source) {
-    if (source?.isEmpty ?? true) return Curso.fromMap({});
-    return Curso.fromMap(json.decode(source!));
+  static Periodo? fromJson(String? source) {
+    if (source?.isEmpty ?? true) return Periodo.fromMap({});
+    return Periodo.fromMap(json.decode(source!));
   }
 
   String toJson() => json.encode(toMap());
@@ -34,16 +32,14 @@ class Curso {
       'nome': nome,
       'action': action,
       'icon': icon,
-      'id': id,
     };
   }
 
-  factory Curso.fromMap(Map<String, dynamic> map) {
-    return Curso(
+  factory Periodo.fromMap(Map<String, dynamic> map) {
+    return Periodo(
       nome: map['nome'] as String?,
       action: map['action'] as String?,
       icon: map['icon'] as String?,
-      id: map['id'] as String?,
     );
   }
 }

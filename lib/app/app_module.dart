@@ -8,15 +8,23 @@ import 'package:greenplus/app/core/cursos/infra/datasources/i_curso_datasource.d
 import 'package:greenplus/app/core/cursos/infra/repository/curso_repository.dart';
 import 'package:greenplus/app/core/cursos/infra/repository/i_curso_repository.dart';
 import 'package:greenplus/app/core/cursos/page/cursos_page.dart';
+import 'package:greenplus/app/core/periodos/infra/datasources/i_periodos_datasource.dart';
+import 'package:greenplus/app/core/periodos/infra/repository/i_periodos_repository.dart';
+import 'package:greenplus/app/core/periodos/page/periodos_controller.dart';
+import 'package:greenplus/app/core/periodos/page/periodos_page.dart';
+import 'package:greenplus/app/features/avisos/page/avisos_page.dart';
 
 import 'package:greenplus/app/features/home/home_module.dart';
 import 'package:greenplus/app/features/home_adm/home_adm_module.dart';
+import 'package:greenplus/app/features/qrcode/page/qrcode_page.dart';
 
 import 'core/cursos/page/curso_controller.dart';
 import 'core/infra/client_http/client_http_impl.dart';
 import 'core/infra/client_http/i_client_http.dart';
 import 'core/infra/local_storage/i_local_secure_storage.dart';
 import 'core/infra/local_storage/local_secure_storage_impl.dart';
+import 'core/periodos/infra/datasources/periodos_datasource_impl.dart';
+import 'core/periodos/infra/repository/periodos_repository.dart';
 import 'features/auth/auth_module.dart';
 import 'features/auth/login/login_module.dart';
 
@@ -31,7 +39,10 @@ class AppModule extends Module {
     Bind((i) => AuthStore(i())),
     Bind<ICursoDataSource>((i) => CursoDataSourceImpl(i(), i())),
     Bind<ICursoRepository>((i) => CursoRepositoryImpl(i())),
-    Bind((i) => CursoController(i()))
+    Bind((i) => CursoController(i())),
+    Bind<IPeriodosDataSource>((i) => PeriodosDataSourceImpl(i(), i())),
+    Bind<IPeriodosRepository>((i) => PeriodosRepositoryImpl(i())),
+    Bind((i) => PeriodosController(i()))
 
   ];
 
@@ -40,6 +51,9 @@ class AppModule extends Module {
     ModuleRoute('/auth', module: AuthModule()),
     ModuleRoute('/homeadm', module: HomeAdmModule()),
     ModuleRoute('/home', module: HomeModule()),
-    ChildRoute("/cursos", child:  (context, args) => CursosPage(controller: Modular.get(),)),
+    ChildRoute("/cursos", child:  (context, args) => CursosPage(controller: Modular.get(), callBack: args.data,)),
+    ChildRoute("/periodos/:idCurso", child:  (context, args) => PeriodosPage(controller: Modular.get(), idCurso: args.params['idCurso'],)),
+    ChildRoute("/qrcode", child:  (context, args) => const QrCodePage()),
+    ChildRoute("/avisos", child:  (context, args) => const AvisosPage()),
   ];
 }
