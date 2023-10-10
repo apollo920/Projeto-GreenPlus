@@ -16,29 +16,38 @@ class CustomButtonQuadrado extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return
-      Column(
-          children: [
-            ElevatedButton(
-                onPressed: onPressed,
-                style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.all(40),
-                    backgroundColor: backgroundColor,
-                    shape: RoundedRectangleBorder()
-                ),
-                child: Icon(
-                  icon,
-                  size: 60,
-                  color: Colors.white,
-                )
-            ),
-            Text(
-                label,
-                style: TextStyle(
-                  fontSize: 22,
-                  color: Colors.white,
-                )
-            )
-          ]
+      Container(
+        constraints: const BoxConstraints(
+        maxWidth: 250
+      ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                  onPressed: onPressed,
+                  style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.all(40),
+                      backgroundColor: backgroundColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12))                     
+                  ),
+                  child: Icon(
+                    icon,
+                    size: 60,
+                    color: Colors.white,
+                  )
+              ),
+              Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: Colors.white,
+                  )
+              )
+            ]
+        ),
       );
   }
 }

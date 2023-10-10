@@ -8,8 +8,9 @@ import 'package:greenplus/app/core/cursos/infra/datasources/i_curso_datasource.d
 import 'package:greenplus/app/core/cursos/infra/repository/curso_repository.dart';
 import 'package:greenplus/app/core/cursos/infra/repository/i_curso_repository.dart';
 import 'package:greenplus/app/core/cursos/page/cursos_page.dart';
-import 'package:greenplus/app/features/escolha_adm/escolha_adm_module.dart';
+
 import 'package:greenplus/app/features/home/home_module.dart';
+import 'package:greenplus/app/features/home_adm/home_adm_module.dart';
 
 import 'core/cursos/page/curso_controller.dart';
 import 'core/infra/client_http/client_http_impl.dart';
@@ -37,7 +38,7 @@ class AppModule extends Module {
   @override
   List<ModularRoute> get routes => [
     ModuleRoute('/auth', module: AuthModule()),
-    ModuleRoute('/escadm', module: EscolhaAdmModule()),
+    ModuleRoute('/homeadm', module: HomeAdmModule()),
     ModuleRoute('/home', module: HomeModule()),
     ChildRoute("/cursos", child:  (context, args) => CursosPage(controller: Modular.get(),)),
   ];

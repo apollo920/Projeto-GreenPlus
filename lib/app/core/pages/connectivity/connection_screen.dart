@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mobx/mobx.dart';
 
 import '../../controllers/network_provider.dart';
 import '../empty/empty_page.dart';

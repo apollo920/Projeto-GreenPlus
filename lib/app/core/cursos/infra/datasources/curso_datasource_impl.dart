@@ -27,7 +27,7 @@ class CursoDataSourceImpl implements ICursoDataSource {
 
   var listaCursos = [
     {
-      "nome": "Engenharia de software",
+      "nome": "Engenharia\n de software",
       "action": "/periodos/1",
       "icon": "0xf051f"
     },{

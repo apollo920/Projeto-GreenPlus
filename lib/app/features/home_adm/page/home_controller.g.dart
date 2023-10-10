@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'escolha_adm_controller.dart';
+part of 'home_adm_controller.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,33 +8,33 @@ part of 'escolha_adm_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$EscolhaAdmController on EscolhaAdmControllerBase, Store {
+mixin _$HomeAdmController on HomeAdmControllerBase, Store {
   Computed<dynamic>? _$loadedComputed;
 
   @override
   dynamic get loaded =>
       (_$loadedComputed ??= Computed<dynamic>(() => super.loaded,
-              name: 'EscolhaAdmControllerBase.loaded'))
+              name: 'HomeAdmControllerBase.loaded'))
           .value;
 
-  late final _$escolhaAdmAtom =
-      Atom(name: 'EscolhaAdmControllerBase.escolhaAdm', context: context);
+  late final _$homeAdmAtom =
+      Atom(name: 'HomeAdmControllerBase.homeAdm', context: context);
 
   @override
-  List<EscolhaAdm> get escolhaAdm {
-    _$escolhaAdmAtom.reportRead();
-    return super.escolhaAdm;
+  List<HomeAdm> get homeAdm {
+    _$homeAdmAtom.reportRead();
+    return super.homeAdm;
   }
 
   @override
-  set escolhaAdm(List<EscolhaAdm> value) {
-    _$escolhaAdmAtom.reportWrite(value, super.escolhaAdm, () {
-      super.escolhaAdm = value;
+  set homeAdm(List<HomeAdm> value) {
+    _$homeAdmAtom.reportWrite(value, super.homeAdm, () {
+      super.homeAdm = value;
     });
   }
 
   late final _$loadingAtom =
-      Atom(name: 'EscolhaAdmControllerBase.loading', context: context);
+      Atom(name: 'HomeAdmControllerBase.loading', context: context);
 
   @override
   bool get loading {
@@ -50,7 +50,7 @@ mixin _$EscolhaAdmController on EscolhaAdmControllerBase, Store {
   }
 
   late final _$erroAtom =
-      Atom(name: 'EscolhaAdmControllerBase.erro', context: context);
+      Atom(name: 'HomeAdmControllerBase.erro', context: context);
 
   @override
   bool get erro {
@@ -65,46 +65,46 @@ mixin _$EscolhaAdmController on EscolhaAdmControllerBase, Store {
     });
   }
 
-  late final _$EscolhaAdmControllerBaseActionController =
-      ActionController(name: 'EscolhaAdmControllerBase', context: context);
+  late final _$HomeAdmControllerBaseActionController =
+      ActionController(name: 'HomeAdmControllerBase', context: context);
 
   @override
   dynamic setLoading(bool value) {
-    final _$actionInfo = _$EscolhaAdmControllerBaseActionController.startAction(
-        name: 'EscolhaAdmControllerBase.setLoading');
+    final _$actionInfo = _$HomeAdmControllerBaseActionController.startAction(
+        name: 'HomeAdmControllerBase.setLoading');
     try {
       return super.setLoading(value);
     } finally {
-      _$EscolhaAdmControllerBaseActionController.endAction(_$actionInfo);
+      _$HomeAdmControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic setErro(bool value) {
-    final _$actionInfo = _$EscolhaAdmControllerBaseActionController.startAction(
-        name: 'EscolhaAdmControllerBase.setErro');
+    final _$actionInfo = _$HomeAdmControllerBaseActionController.startAction(
+        name: 'HomeAdmControllerBase.setErro');
     try {
       return super.setErro(value);
     } finally {
-      _$EscolhaAdmControllerBaseActionController.endAction(_$actionInfo);
+      _$HomeAdmControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  dynamic setEscolhaAdm(List<EscolhaAdm> value) {
-    final _$actionInfo = _$EscolhaAdmControllerBaseActionController.startAction(
-        name: 'EscolhaAdmControllerBase.setEscolhaAdm');
+  dynamic setHomeAdm(List<HomeAdm> value) {
+    final _$actionInfo = _$HomeAdmControllerBaseActionController.startAction(
+        name: 'HomeAdmControllerBase.setHomeAdm');
     try {
-      return super.setEscolhaAdm(value);
+      return super.setHomeAdm(value);
     } finally {
-      _$EscolhaAdmControllerBaseActionController.endAction(_$actionInfo);
+      _$HomeAdmControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   String toString() {
     return '''
-escolhaAdm: ${escolhaAdm},
+homeAdm: ${homeAdm},
 loading: ${loading},
 erro: ${erro},
 loaded: ${loaded}

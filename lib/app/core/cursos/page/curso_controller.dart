@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:greenplus/app/core/controllers/auth/auth_store.dart';
+
 import 'package:mobx/mobx.dart';
 
 import '../infra/repository/i_curso_repository.dart';

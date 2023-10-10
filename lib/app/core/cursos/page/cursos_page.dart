@@ -28,71 +28,81 @@ class _CursosPageState extends State<CursosPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Escolha um dos cursos específicos'),
-          backgroundColor: Color.fromARGB(255, 27, 136, 83),
-        ),
-        body: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: ExactAssetImage('assets/images/a.png'))),
-            child: Center(
-              child: SingleChildScrollView(
-                child: Observer(builder: (context) {
-                  if (widget.controller.loading) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  if (widget.controller.erro) {
-                    return Column(
-                      children: [
-                        Container(
-                          color: Colors.red,
-                          child: const Text("Error"),
-                        ),
-                        OutlinedButton(
-                            onPressed: () =>
-                                widget.controller.obterCursos(),
-                            child: const Text("Tentar novamente"))
-                      ],
-                    );
-                  }
-                  if (widget.controller.loaded) {
-                    return GridMenus(
-                        contentLine1: widget.controller.cursos
-                            .take(3)
-                            .map((curso) => CustomButtonQuadrado(
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 27, 136, 83),
-                                  icon: curso.icon!.toIcon(),
-                                  onPressed: () {
-                                    //controller.navigateToCourseScreen(context, n, 'Eng');
-                                  },
-                                  label: curso.nome ?? '',
+    return 
+      Scaffold(
+          appBar: AppBar(
+            title: const Text('Escolha um dos cursos específicos'),
+            backgroundColor: Color.fromARGB(255, 27, 136, 83),
+          ),
+          body: Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: ExactAssetImage('assets/images/a.png'))),
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Observer(builder: (context) {
+                    if (widget.controller.loading) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    if (widget.controller.erro) {
+                      return Column(
+                        children: [
+                          Container(
+                            color: Colors.red,
+                            child: const Text("Error"),
+                          ),
+                          OutlinedButton(
+                              onPressed: () =>
+                                  widget.controller.obterCursos(),
+                              child: const Text("Tentar novamente"))
+                        ],
+                      );
+                    }
+                    if (widget.controller.loaded) {
+                      return GridMenus(
+                            contentLine1: widget.controller.cursos
+                                .take(3)
+                                .map((curso) => Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 30),
+                                  
+                                  child: CustomButtonQuadrado(
+                                        backgroundColor:
+                                            const Color.fromARGB(255, 27, 136, 83),
+                                        icon: curso.icon!.toIcon(),
+                                        onPressed: () {
+                                          //controller.navigateToCourseScreen(context, n, 'Eng');
+                                        },
+                                        label: curso.nome ?? '',
+                                      ),
                                 ))
-                            .toList(),
-                        contentLine2: widget.controller.cursos
-                            .sublist(
-                                widget.controller.cursos.length - 3, widget.controller.cursos.length)
-                            .map((curso) => CustomButtonQuadrado(
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 27, 136, 83),
-                                  icon: curso.icon!.toIcon(),
-                                  onPressed: () {
-                                    //controller.navigateToCourseScreen(context, n, 'Eng');
-                                  },
-                                  label: curso.nome ?? '',
-                                ))
-                            .toList());
-                  }
-                  return Container();
-                }),
-              ),
-            )));
+                                .toList(),                      
+                              contentLine2: widget.controller.cursos
+                                  .skip(3)
+                                  .map((curso) => Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 20),
+                                    child: CustomButtonQuadrado(
+                                          backgroundColor:
+                                              const Color.fromARGB(255, 27, 136, 83),
+                                          icon: curso.icon!.toIcon(),
+                                          onPressed: () {
+                                            //controller.navigateToCourseScreen(context, n, 'Eng');
+                                          },
+                                          label: curso.nome ?? '',
+                                        ),
+                                  ))
+                                .toList());
+                      
+                    }
+                    return Container();
+                  }),
+                ),
+              )),
+    );
   }
 }
+ 

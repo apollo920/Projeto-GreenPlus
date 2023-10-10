@@ -4,24 +4,24 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:greenplus/app/core/utils/string_extensions.dart';
 
 import '../../../core/widgets/custom_button_2.dart';
-import 'escolha_adm_controller.dart';
+import 'home_adm_controller.dart';
 
-class EscolhaAdmPage extends StatefulWidget {
-  final EscolhaAdmController controller;
+class HomeAdmPage extends StatefulWidget {
+  final HomeAdmController controller;
 
-  const EscolhaAdmPage({super.key, required this.controller});
+  const HomeAdmPage({super.key, required this.controller});
 
   @override
-  State<EscolhaAdmPage> createState() => _EscolhaAdmPageState();
+  State<HomeAdmPage> createState() => _HomeAdmPageState();
 }
 
-class _EscolhaAdmPageState extends State<EscolhaAdmPage> {
+class _HomeAdmPageState extends State<HomeAdmPage> {
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      widget.controller.obterEscolhaAdm();
+      widget.controller.obterHomeAdm();
     });
   }
 
@@ -57,7 +57,7 @@ class _EscolhaAdmPageState extends State<EscolhaAdmPage> {
                   color: Colors.red,
                   child: const Text("Error"),
                 ),
-                OutlinedButton(onPressed: ()=>  widget.controller.obterEscolhaAdm(), child: const Text("Tentar novamente"))
+                OutlinedButton(onPressed: ()=>  widget.controller.obterHomeAdm(), child: const Text("Tentar novamente"))
               ],
             );
           }
@@ -67,7 +67,7 @@ class _EscolhaAdmPageState extends State<EscolhaAdmPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Wrap(children: [
-                    ...widget.controller.escolhaAdm.map((menu) {
+                    ...widget.controller.homeAdm.map((menu) {
                       return Padding(
                           padding: EdgeInsets.symmetric(horizontal: 15),
                           child: CustomButton2(

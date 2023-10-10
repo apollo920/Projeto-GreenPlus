@@ -50,7 +50,7 @@ abstract class LoginControllerBase with Store {
               },
             ), (token) {
       authStore.setUserAuthentication(authStore.user?.copyWith(token: token));
-      Modular.to.pushNamed('/home');
+      Modular.to.pushNamed('/homeadm');
     });
   }
 }

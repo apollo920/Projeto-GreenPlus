@@ -1,24 +1,19 @@
 
-import 'dart:math';
-
-import '../../../../core/erros/erros.dart';
 import '../../../../core/infra/client_http/i_client_http.dart';
 import '../../../../core/infra/local_storage/i_local_secure_storage.dart';
-import '../../models/escolha_adm.dart';
-import 'i_escolha_adm_datasource.dart';
+import '../../models/home_adm.dart';
+import 'i_home_adm_datasource.dart';
 
-class EscolhaAdmDataSourceImpl implements IEscolhaAdmDataSource {
+class HomeAdmDataSourceImpl implements IHomeAdmDataSource {
   final IClientHttp clientHttp;
   final ILocalSecureStorage localStorage;
 
-  EscolhaAdmDataSourceImpl(this.clientHttp, this.localStorage);
+  HomeAdmDataSourceImpl(this.clientHttp, this.localStorage);
 
   @override
-  Future<List<EscolhaAdm>?> getEscolhasMenuAdm() async {
-    if(Random.secure().nextBool()) {
-     return throw Failure();
-    }
-    return listaEscolhasMenuAdm.map((menuModulo) => EscolhaAdm.fromMap(menuModulo)).toList();
+  Future<List<HomeAdm>?> getHomeMenuAdm() async {
+    
+    return listaHomeMenuAdm.map((homeAdm) => HomeAdm.fromMap(homeAdm)).toList();
 
     // var result = await clientHttp.get(url: "/users/checktoken");
     // if (result.statusCode == 200) {
@@ -31,7 +26,7 @@ class EscolhaAdmDataSourceImpl implements IEscolhaAdmDataSource {
   }
 
 
-  var listaEscolhasMenuAdm = [
+  var listaHomeMenuAdm = [
     {
       "title": "Visualizar Conteúdos",
       "action": "",
