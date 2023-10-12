@@ -17,7 +17,7 @@ abstract class PeriodosControllerBase with Store {
   PeriodosControllerBase(this.cursoRepository);
 
   @observable
-  List<Periodo> cursos = [];
+  List<Periodo> periodos = [];
 
   @observable
   bool loading = false;
@@ -35,7 +35,7 @@ abstract class PeriodosControllerBase with Store {
   get loaded => loading == false && erro == false;
 
   @action
-  setPeriodos(List<Periodo> value) => cursos = value;
+  setPeriodos(List<Periodo> value) => periodos = value;
 
   obterPeriodos({required String idCurso}) async {
     setLoading(true);

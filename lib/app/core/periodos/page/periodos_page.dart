@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:greenplus/app/core/periodos/models/periodo.dart';
 import 'package:greenplus/app/core/utils/string_extensions.dart';
 import 'package:greenplus/app/core/widgets/grid_menus.dart';
 
@@ -9,8 +10,9 @@ import 'periodos_controller.dart';
 class PeriodosPage extends StatefulWidget {
   final String idCurso;
   final PeriodosController controller;
+  final Function(Periodo curso) callBack;
 
-  const PeriodosPage({super.key, required this.controller, required this.idCurso});
+  const PeriodosPage({super.key, required this.controller, required this.idCurso, required this.callBack});
 
   @override
   State<PeriodosPage> createState() => _PeriodosPageState();
@@ -62,34 +64,30 @@ class _PeriodosPageState extends State<PeriodosPage> {
                     }
                     if (widget.controller.loaded) {
                       return GridMenus(
-                            contentLine1: widget.controller.cursos
+                            contentLine1: widget.controller.periodos
                                 .take(3)
-                                .map((curso) => Padding(
+                                .map((periodo) => Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 30),
                                   
                                   child: CustomButtonQuadrado(
                                         backgroundColor:
                                             const Color.fromARGB(255, 27, 136, 83),
-                                        icon: curso.icon!.toIcon(),
-                                        onPressed: () {
-                                          //controller.navigateToCourseScreen(context, n, 'Eng');
-                                        },
-                                        label: curso.nome ?? '',
+                                        icon: periodo.icon!.toIcon(),
+                                        onPressed: () => widget.callBack(periodo),
+                                        label: periodo.nome ?? '',
                                       ),
                                 ))
                                 .toList(),                      
-                              contentLine2: widget.controller.cursos
+                              contentLine2: widget.controller.periodos
                                   .skip(3)
-                                  .map((curso) => Padding(
+                                  .map((periodo) => Padding(
                                     padding: EdgeInsets.symmetric(horizontal: 20),
                                     child: CustomButtonQuadrado(
                                           backgroundColor:
                                               const Color.fromARGB(255, 27, 136, 83),
-                                          icon: curso.icon!.toIcon(),
-                                          onPressed: () {
-                                            //controller.navigateToCourseScreen(context, n, 'Eng');
-                                          },
-                                          label: curso.nome ?? '',
+                                          icon: periodo.icon!.toIcon(),
+                                          onPressed: () => widget.callBack(periodo),
+                                          label: periodo.nome ?? '',
                                         ),
                                   ))
                                 .toList());

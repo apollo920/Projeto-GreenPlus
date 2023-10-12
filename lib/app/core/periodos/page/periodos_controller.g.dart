@@ -17,19 +17,19 @@ mixin _$PeriodosController on PeriodosControllerBase, Store {
               name: 'PeriodosControllerBase.loaded'))
           .value;
 
-  late final _$cursosAtom =
-      Atom(name: 'PeriodosControllerBase.cursos', context: context);
+  late final _$periodosAtom =
+      Atom(name: 'PeriodosControllerBase.periodos', context: context);
 
   @override
-  List<Periodo> get cursos {
-    _$cursosAtom.reportRead();
-    return super.cursos;
+  List<Periodo> get periodos {
+    _$periodosAtom.reportRead();
+    return super.periodos;
   }
 
   @override
-  set cursos(List<Periodo> value) {
-    _$cursosAtom.reportWrite(value, super.cursos, () {
-      super.cursos = value;
+  set periodos(List<Periodo> value) {
+    _$periodosAtom.reportWrite(value, super.periodos, () {
+      super.periodos = value;
     });
   }
 
@@ -104,7 +104,7 @@ mixin _$PeriodosController on PeriodosControllerBase, Store {
   @override
   String toString() {
     return '''
-cursos: ${cursos},
+periodos: ${periodos},
 loading: ${loading},
 erro: ${erro},
 loaded: ${loaded}
