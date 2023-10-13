@@ -1,10 +1,14 @@
 import 'dart:convert';
+import 'dart:math';
 
 class User {
 
   final String? username;
   final String? password;
   final String? token;
+
+
+  bool get isAdmin => Random().nextBool();
 
   User({required this.username, required this.password, this.token});
 

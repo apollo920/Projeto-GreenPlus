@@ -1,5 +1,5 @@
 import '../../models/qrcode.dart';
 
 abstract class IQrCodeDataSource {
-  Future<List<QrCode>?> getQrCodes();
+  Future<List<QrCodeModel>?> getQrCodes();
 }

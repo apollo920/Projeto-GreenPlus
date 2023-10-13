@@ -1,28 +1,30 @@
 import 'dart:convert';
 
-class QrCode {
+class QrCodeModel {
   
   final String? title;
   final String? content;
   final String? icon;
+  final String? type;
 
-  QrCode({required this.title, required this.content, required this.icon});
+  QrCodeModel({required this.title, required this.content, required this.icon, required this.type});
 
-  QrCode copyWith({
+  QrCodeModel copyWith({
     String? title,
     String? content,
   }) {
-    return QrCode(
+    return QrCodeModel(
       title: title ?? this.title,
       content: content ?? this.content,
       icon: icon ?? this.icon,
+      type: type ?? this.type,
     );
   }
 
 
-  static QrCode? fromJson(String? source) {
-    if (source?.isEmpty ?? true) return QrCode.fromMap({});
-    return QrCode.fromMap(json.decode(source!));
+  static QrCodeModel? fromJson(String? source) {
+    if (source?.isEmpty ?? true) return QrCodeModel.fromMap({});
+    return QrCodeModel.fromMap(json.decode(source!));
   }
 
   String toJson() => json.encode(toMap());
@@ -32,14 +34,16 @@ class QrCode {
       'title': title,
       'content': content,
       'icon': icon,
+      'type': type,
     };
   }
 
-  factory QrCode.fromMap(Map<String, dynamic> map) {
-    return QrCode(
+  factory QrCodeModel.fromMap(Map<String, dynamic> map) {
+    return QrCodeModel(
       title: map['title'] as String?,
       content: map['content'] as String?,
       icon: map['icon'] as String?,
+      type: map['type'] as String?,
     );
   }
 }

@@ -11,8 +11,8 @@ class QrCodeDataSourceImpl implements IQrCodeDataSource {
   QrCodeDataSourceImpl(this.clientHttp, this.localStorage);
 
   @override
-  Future<List<QrCode>?> getQrCodes() async {
-    return listaQrCode.map((qrcode) => QrCode.fromMap(qrcode)).toList();
+  Future<List<QrCodeModel>?> getQrCodes() async {
+    return listaQrCode.map((qrcode) => QrCodeModel.fromMap(qrcode)).toList();
   }
     // var result = await clientHttp.get(url: "/users/checktoken");
     // if (result.statusCode == 200) {
@@ -24,19 +24,19 @@ class QrCodeDataSourceImpl implements IQrCodeDataSource {
     // }
   }
 
+var listaQrCode = [
+  {
+    "content": "WIFI:T:WPA;S:SuaRedeWiFi;P:SuaSenha;;",
+    "title": "WIFI DA PADARIA",
+    "icon": "0xf051f",
+    "type": "WiFi",
+  },
+  {
+    "content": "https://exemplo.com",
+    "title": "Exemplo de Link",
+    "icon": "0xf1234",
+    "type": "Link",
+  },
+];
 
-  var listaQrCode = [
-    {
-      "content": "WIFI:T:WPA;S:SuaRedeWiFi;P:SuaSenha;;",
-      "title": "WIFI DA PADARIA",
-      "icon": "0xf051f",
-      "type": "WiFi",
-    },
-    {
-      "content": "https://exemplo.com",
-      "title": "Exemplo de Link",
-      "icon": "0xf1234",
-      "type": "Link",
-    },
-  ];
 

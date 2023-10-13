@@ -3,6 +3,8 @@ import 'package:mobx/mobx.dart';
 
 import '../../../core/cursos/models/curso.dart';
 import '../../../core/periodos/models/periodo.dart';
+import '../models/qrcode.dart';
+import 'package:greenplus/app/features/qrcode/infra/datasources/qrcode_datasource_impl.dart';
 
 part 'qrcode_controller.g.dart';
 
@@ -22,6 +24,21 @@ abstract class QrCodeControllerBase with Store {
 
   @observable
   bool loading = false;
+
+  ObservableList<QrCodeModel> listaQrCode = ObservableList.of([
+    {
+      "content": "WIFI:T:WPA;S:SuaRedeWiFi;P:SuaSenha;;",
+      "title": "WIFI DA PADARIA",
+      "icon": "0xf051f",
+      "type": "WiFi",
+    },
+    {
+      "content": "https://exemplo.com",
+      "title": "Exemplo de Link",
+      "icon": "0xf1234",
+      "type": "Link",
+    },
+  ].map((e) => QrCodeModel.fromMap(e)).toList());
 
   @observable
   bool erro = false;

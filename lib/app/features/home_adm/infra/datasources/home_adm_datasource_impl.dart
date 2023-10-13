@@ -29,7 +29,7 @@ class HomeAdmDataSourceImpl implements IHomeAdmDataSource {
   var listaHomeMenuAdm = [
     {
       "title": "Visualizar Conteúdos",
-      "action": "",
+      "action": "/home",
       "icon": "0xf051f"
     },{
       "title": "Modificar Conteúdos",
