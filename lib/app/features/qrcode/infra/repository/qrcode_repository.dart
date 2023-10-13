@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 
 import 'package:greenplus/app/core/erros/erros.dart';
 
-import 'package:greenplus/app/features/home/models/menu_modulo.dart';
+
 import 'package:greenplus/app/features/qrcode/models/qrcode.dart';
 
 import '../datasources/i_qrcode_datasource.dart';

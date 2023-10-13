@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:greenplus/app/core/utils/string_extensions.dart';
 import 'package:greenplus/app/core/widgets/grid_menus.dart';
 

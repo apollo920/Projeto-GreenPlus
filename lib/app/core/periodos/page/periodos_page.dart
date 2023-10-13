@@ -63,12 +63,13 @@ class _PeriodosPageState extends State<PeriodosPage> {
                       );
                     }
                     if (widget.controller.loaded) {
+                      int halfLength = (widget.controller.periodos.length / 2).ceil();
                       return GridMenus(
                             contentLine1: widget.controller.periodos
-                                .take(3)
+                                .take(halfLength)
                                 .map((periodo) => Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 30),
-                                  
+                        
                                   child: CustomButtonQuadrado(
                                         backgroundColor:
                                             const Color.fromARGB(255, 27, 136, 83),
@@ -79,9 +80,9 @@ class _PeriodosPageState extends State<PeriodosPage> {
                                 ))
                                 .toList(),                      
                               contentLine2: widget.controller.periodos
-                                  .skip(3)
+                                  .skip(halfLength)
                                   .map((periodo) => Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 20),
+                                    padding: EdgeInsets.symmetric(horizontal: 30),
                                     child: CustomButtonQuadrado(
                                           backgroundColor:
                                               const Color.fromARGB(255, 27, 136, 83),

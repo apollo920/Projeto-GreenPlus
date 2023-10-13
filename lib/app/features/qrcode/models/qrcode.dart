@@ -3,18 +3,18 @@ import 'dart:convert';
 class QrCode {
   
   final String? title;
-  final String? action;
+  final String? content;
   final String? icon;
 
-  QrCode({required this.title, required this.action, required this.icon});
+  QrCode({required this.title, required this.content, required this.icon});
 
   QrCode copyWith({
     String? title,
-    String? action,
+    String? content,
   }) {
     return QrCode(
       title: title ?? this.title,
-      action: action ?? this.action,
+      content: content ?? this.content,
       icon: icon ?? this.icon,
     );
   }
@@ -30,7 +30,7 @@ class QrCode {
   Map<String, dynamic> toMap() {
     return {
       'title': title,
-      'action': action,
+      'content': content,
       'icon': icon,
     };
   }
@@ -38,7 +38,7 @@ class QrCode {
   factory QrCode.fromMap(Map<String, dynamic> map) {
     return QrCode(
       title: map['title'] as String?,
-      action: map['action'] as String?,
+      content: map['content'] as String?,
       icon: map['icon'] as String?,
     );
   }

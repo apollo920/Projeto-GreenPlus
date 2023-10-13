@@ -43,7 +43,7 @@ class HomeDataSourceImpl implements IHomeDataSource {
     {
       "title": "Calendário de provas",
       "action": "/cursos",
-      "icon": "0xe4f5"
+      "icon": "0xf0401"
     },
     {
       "title": "Eventos",
@@ -53,7 +53,7 @@ class HomeDataSourceImpl implements IHomeDataSource {
     {
       "title": "Qrcodes",
       "action": "/qrcode",
-      "icon": "0xf0401"
+      "icon": "0xe4f5"
     },
   ];
 }
