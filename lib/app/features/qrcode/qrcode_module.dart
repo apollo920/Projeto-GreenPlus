@@ -12,14 +12,9 @@ class QrCodeModule extends Module {
   List<Bind> get binds => [
         Bind<IQrCodeDataSource>((i) => QrCodeDataSourceImpl(i(), i())),
         Bind<IQrCodeRepository>((i) => QrCodeRepositoryImpl(i())),
-        Bind<QrCodeController>((i) => QrCodeController())
+        Bind<QrCodeController>((i) => QrCodeController(i(), i()))
       ];
 
   @override
-  List<ModularRoute> get routes => [
-        ChildRoute("/",
-            child: (context, args) => QrCodePage(
-                  controller: Modular.get(),
-                ))
-      ];
+  List<ModularRoute> get routes => [ChildRoute("/",child: (context, args) => QrCodePage(controller: Modular.get(),))];
 }

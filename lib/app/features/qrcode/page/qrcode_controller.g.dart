@@ -86,6 +86,22 @@ mixin _$QrCodeController on QrCodeControllerBase, Store {
     });
   }
 
+  late final _$listaQrCodeAtom =
+      Atom(name: 'QrCodeControllerBase.listaQrCode', context: context);
+
+  @override
+  List<QrCodeModel> get listaQrCode {
+    _$listaQrCodeAtom.reportRead();
+    return super.listaQrCode;
+  }
+
+  @override
+  set listaQrCode(List<QrCodeModel> value) {
+    _$listaQrCodeAtom.reportWrite(value, super.listaQrCode, () {
+      super.listaQrCode = value;
+    });
+  }
+
   late final _$erroAtom =
       Atom(name: 'QrCodeControllerBase.erro', context: context);
 
@@ -150,11 +166,23 @@ mixin _$QrCodeController on QrCodeControllerBase, Store {
   }
 
   @override
+  dynamic setQrCodes(List<QrCodeModel> value) {
+    final _$actionInfo = _$QrCodeControllerBaseActionController.startAction(
+        name: 'QrCodeControllerBase.setQrCodes');
+    try {
+      return super.setQrCodes(value);
+    } finally {
+      _$QrCodeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 cursoSelected: ${cursoSelected},
 periodoSelected: ${periodoSelected},
 loading: ${loading},
+listaQrCode: ${listaQrCode},
 erro: ${erro},
 loaded: ${loaded},
 showCursosWidget: ${showCursosWidget},

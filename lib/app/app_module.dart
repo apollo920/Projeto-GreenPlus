@@ -13,7 +13,6 @@ import 'package:greenplus/app/core/periodos/infra/repository/i_periodos_reposito
 import 'package:greenplus/app/core/periodos/page/periodos_controller.dart';
 import 'package:greenplus/app/features/avisos/page/avisos_page.dart';
 import 'package:greenplus/app/features/home/home_module.dart';
-import 'package:greenplus/app/features/home_adm/home_adm_module.dart';
 import 'package:greenplus/app/features/qrcode/page/qrcode_page.dart';
 import 'core/cursos/page/curso_controller.dart';
 import 'core/infra/client_http/client_http_impl.dart';
@@ -47,13 +46,13 @@ class AppModule extends Module {
   @override
   List<ModularRoute> get routes => [
     ModuleRoute('/auth', module: AuthModule()),
-    ModuleRoute('/homeadm', module: HomeAdmModule()),
     ModuleRoute('/home', module: HomeModule()),
     ModuleRoute('/qrcode', module: QrCodeModule()),
     ChildRoute("/cursos", child:  (context, args) => CursosPage(controller: Modular.get(), callBack: args.data,)),
     ChildRoute("/qrcodewifi", child:  (context, args) => QRCodeWifiGenerator()),
     ChildRoute("/qrcodelink", child:  (context, args) => QRCodeLinkGenerator()),
     ChildRoute("/qrcodelist", child:  (context, args) => QRCodeListScreen()),
+    ChildRoute("/qrcodezoom", child:  (context, args) => QRCodeZoomScreen(data: '',)),
     //ChildRoute("/periodos/:idCurso", child:  (context, args) => PeriodosPage(controller: Modular.get(), idCurso: args.params['idCurso'],)),
     ChildRoute("/avisos", child:  (context, args) => const AvisosPage()),
   ];
