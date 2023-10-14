@@ -90,13 +90,13 @@ mixin _$QrCodeController on QrCodeControllerBase, Store {
       Atom(name: 'QrCodeControllerBase.listaQrCode', context: context);
 
   @override
-  List<QrCodeModel> get listaQrCode {
+  ObservableList<QrCodeModel> get listaQrCode {
     _$listaQrCodeAtom.reportRead();
     return super.listaQrCode;
   }
 
   @override
-  set listaQrCode(List<QrCodeModel> value) {
+  set listaQrCode(ObservableList<QrCodeModel> value) {
     _$listaQrCodeAtom.reportWrite(value, super.listaQrCode, () {
       super.listaQrCode = value;
     });

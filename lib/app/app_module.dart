@@ -51,7 +51,7 @@ class AppModule extends Module {
     ChildRoute("/cursos", child:  (context, args) => CursosPage(controller: Modular.get(), callBack: args.data,)),
     ChildRoute("/qrcodewifi", child:  (context, args) => QRCodeWifiGenerator()),
     ChildRoute("/qrcodelink", child:  (context, args) => QRCodeLinkGenerator()),
-    ChildRoute("/qrcodelist", child:  (context, args) => QRCodeListScreen()),
+    ChildRoute("/qrcodelist", child:  (context, args) => QRCodeListScreen(controller: Modular.get(),)),
     ChildRoute("/qrcodezoom", child:  (context, args) => QRCodeZoomScreen(data: '',)),
     //ChildRoute("/periodos/:idCurso", child:  (context, args) => PeriodosPage(controller: Modular.get(), idCurso: args.params['idCurso'],)),
     ChildRoute("/avisos", child:  (context, args) => const AvisosPage()),

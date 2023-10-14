@@ -58,12 +58,9 @@ class _QrCodePageState extends State<QrCodePage> {
                     controller: Modular.get(),
                     idCurso: widget.controller.cursoSelected!.id!,
                     callBack: (periodo) {
-                      widget.controller.setPeriodoSelected(periodo);
+                      //widget.controller.setPeriodoSelected(periodo);
+                      Modular.to.pushNamed('/qrcodelist');
                     });
-              }
-
-              if (widget.controller.showQrCode) {
-                Modular.to.pushNamed('/qrcodelist');
               }
 
               return Container();
@@ -403,7 +400,8 @@ class _QRCodeLinkGeneratorState extends State<QRCodeLinkGenerator> {
 }
 
 class QRCodeListScreen extends StatefulWidget {
-  const QRCodeListScreen({super.key});
+  final QrCodeController controller;
+  const QRCodeListScreen({required this.controller, super.key});
 
   
   @override
@@ -464,7 +462,7 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
                             alignment: WrapAlignment.center,
                             spacing: 20,
                             runSpacing: 20,
-                            children: Modular.get<QrCodeController>()
+                            children: widget.controller
                                 .listaQrCode
                                 .map(
                                   (element) {

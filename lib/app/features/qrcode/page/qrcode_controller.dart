@@ -26,7 +26,7 @@ abstract class QrCodeControllerBase with Store {
   bool loading = false;
 
   @observable
-  List<QrCodeModel> listaQrCode = []; 
+  ObservableList<QrCodeModel> listaQrCode = ObservableList<QrCodeModel>.of([]);
 
   @observable
   bool erro = false;
@@ -47,7 +47,7 @@ abstract class QrCodeControllerBase with Store {
   setPeriodoSelected(Periodo? value) => periodoSelected = value;
 
   @action
-  setQrCodes(List<QrCodeModel> value) => listaQrCode = value;
+  setQrCodes(List<QrCodeModel> value) => listaQrCode = ObservableList<QrCodeModel>.of(value);
 
   @computed
   get showCursosWidget => cursoSelected == null;

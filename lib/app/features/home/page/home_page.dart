@@ -79,9 +79,7 @@ class _HomePageState extends State<HomePage> {
                           label: menu.title ?? '',
                         ));
                   }).toList(),
-                  contentLine2: widget.controller.menusModulo.sublist(widget
-                      .controller.menusModulo.length - 3,
-                      widget.controller.menusModulo.length).map((menu) {
+                  contentLine2: widget.controller.menusModulo.skip((widget.controller.menusModulo.length.toInt() / 2).ceil()).map((menu) {
                     return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: CustomButton2(
