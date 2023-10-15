@@ -11,7 +11,10 @@ class PeriodosDataSourceImpl implements IPeriodosDataSource {
 
   @override
   Future<List<Periodo>?> getPeriodos({required String idCurso}) async {
-    return listaPeriodoss[idCurso]?.map((periodo) => Periodo.fromMap(periodo)).toList();
+    return listaPeriodoss[idCurso]?.map((periodo) {
+      periodo['id'] = listaPeriodoss[idCurso]!.indexOf(periodo).toString();
+      return  Periodo.fromMap(periodo);
+    }).toList();
 
     // var result = await clientHttp.get(url: "/users/checktoken");
     // if (result.statusCode == 200) {

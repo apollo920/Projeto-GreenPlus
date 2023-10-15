@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:greenplus/app/core/controllers/auth/auth_store.dart';
 import 'package:greenplus/app/core/cursos/page/cursos_page.dart';
+import 'package:greenplus/app/core/pages/empty/empty_page.dart';
 import 'package:greenplus/app/core/periodos/page/periodos_page.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import '../models/qrcode.dart';
@@ -12,7 +14,6 @@ import 'qrcode_controller.dart';
 
 class QrCodePage extends StatefulWidget {
   final QrCodeController controller;
-
   const QrCodePage({super.key, required this.controller});
 
   @override
@@ -24,9 +25,6 @@ class _QrCodePageState extends State<QrCodePage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      widget.controller.obterQrCodes();
-    });
   }
 
   @override
@@ -58,8 +56,8 @@ class _QrCodePageState extends State<QrCodePage> {
                     controller: Modular.get(),
                     idCurso: widget.controller.cursoSelected!.id!,
                     callBack: (periodo) {
-                      //widget.controller.setPeriodoSelected(periodo);
-                      Modular.to.pushNamed('/qrcode/qrcodelist');
+                      widget.controller.setPeriodoSelected(periodo);
+                      Modular.to.pushNamed('/qrcode/qrcodelist/${widget.controller.cursoSelected?.id}/${periodo.id}');
                     });
               }
 
@@ -352,8 +350,8 @@ class _QRCodeLinkGeneratorState extends State<QRCodeLinkGenerator> {
                                               child: const Text("Cancelar"),
                                             ),
                                             TextButton(
-                                              onPressed: () {
-                                                _generateLinkQRCode(link);
+                                              onPressed: () async {
+                                                await _generateLinkQRCode(link);
                                                 setState(() {});
                                                 Navigator.of(context).pop();
                                                 Navigator.of(context).pop();
@@ -390,8 +388,9 @@ class _QRCodeLinkGeneratorState extends State<QRCodeLinkGenerator> {
                 ))));
   }
 
-  void _generateLinkQRCode(String data) {
-    Modular.get<QrCodeController>().listaQrCode.add(QrCodeModel.fromMap({
+  Future _generateLinkQRCode(String data) async {
+    //TODO Inlcluir o type via variavel
+    await Modular.get<QrCodeController>().addQrCode(qrCodeModel: QrCodeModel.fromMap({
       "content": link,
       "title": title,
       "type": "Link",
@@ -401,7 +400,10 @@ class _QRCodeLinkGeneratorState extends State<QRCodeLinkGenerator> {
 
 class QRCodeListScreen extends StatefulWidget {
   final QrCodeController controller;
-  const QRCodeListScreen({required this.controller, super.key});
+  final String idCurso;
+  final String idPeriodo;
+
+  const QRCodeListScreen({required this.controller, required this.idCurso, required this.idPeriodo, super.key});
 
   
   @override
@@ -409,6 +411,14 @@ class QRCodeListScreen extends StatefulWidget {
 }
 
 class _QRCodeListScreenState extends State<QRCodeListScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      widget.controller.obterQrCodes(idCurso: widget.idCurso, idPeriodo: widget.idPeriodo);
+    });
+  }
   
 
   @override
@@ -462,80 +472,94 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
                             alignment: WrapAlignment.center,
                             spacing: 20,
                             runSpacing: 20,
-                            children: widget.controller
-                                .listaQrCode
-                                .map(
-                                  (element) {
-                                    final content = element.content;
-                                    final title = element.title;
-                                    final type = element.type;
+                            children: [
+                              if(widget.controller
+                                  .listaQrCode.isNotEmpty)
+                                        ...widget.controller
+                                    .listaQrCode
+                                    .map(
+                                        (qrCodeModel) {
+                                      final content = qrCodeModel.content;
+                                      final title = qrCodeModel.title;
+                                      final type = qrCodeModel.type;
 
-                                    return GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => 
-                                            QRCodeZoomScreen(
-                                              data: content,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.grey
-                                                      .withOpacity(0.5),
-                                                  spreadRadius: 3,
-                                                  blurRadius: 7,
-                                                  offset: const Offset(0, 3),
-                                                ),
-                                              ],
-                                            ),
-                                            width: 200,
-                                            padding: const EdgeInsets.all(16.0),
-                                            child: Column(
+                                      return GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    QRCodeZoomScreen(
+                                                      data: content,
+                                                    ),
+                                              ),
+                                            );
+                                          },
+                                          child: Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                               children: [
-                                                Text(
-                                                  title!,
-                                                  style: const TextStyle(
-                                                    fontSize: 20,
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
                                                 Container(
-                                                  color: Colors.white,
-                                                  child: QrImageView(
-                                                    data: content!,
-                                                    version: QrVersions.auto,
-                                                    size: 150.0,
-                                                  ),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                      BorderRadius.circular(15),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.grey
+                                                              .withOpacity(0.5),
+                                                          spreadRadius: 3,
+                                                          blurRadius: 7,
+                                                          offset: const Offset(0, 3),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    width: 200,
+                                                    padding: const EdgeInsets.all(16.0),
+                                                    child: Column(
+                                                        children: [
+                                                          Text(
+                                                            title!,
+                                                            style: const TextStyle(
+                                                              fontSize: 20,
+                                                              color: Colors.black,
+                                                            ),
+                                                          ),
+                                                          Container(
+                                                            color: Colors.white,
+                                                            child: QrImageView(
+                                                              data: content!,
+                                                              version: QrVersions.auto,
+                                                              size: 150.0,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                              type!,
+                                                              style: const TextStyle(
+                                                                fontSize: 18,
+                                                                color: Colors.black,
+                                                              )
+                                                          )
+                                                        ]
+                                                    )
                                                 ),
-                                                Text(
-                                                  type!,
-                                                  style: const TextStyle(
-                                                    fontSize: 18,
-                                                    color: Colors.black,
-                                                  )
+
+                                                Visibility(
+                                                   visible: qrCodeModel.id?.isNotEmpty ?? false ,
+                                                  child: ElevatedButton(onPressed: () => print("deletei ${qrCodeModel.id}"), child: const Text("DELETAR", style: TextStyle(color: Colors.white),), style: const ButtonStyle(
+                                                    backgroundColor: MaterialStatePropertyAll<Color>(Colors.red),
+                                                  )),
                                                 )
                                               ]
-                                            )
                                           )
-                                        ]
-                                      )
-                                    );
-                                  }
+                                      );
+                                    }
                                 )
-                                .toList()
+                                    .toList()
+                              else
+                                const EmptyPage(imagePath: "assets/images/empty.svg", message: "Sem QRCodes", isSvg: true, heightPercent: 0.4, subMessage: "Tente novamente mais tarde", textColor: Colors.white,)
+
+                            ]
                           )
                         );
                       }

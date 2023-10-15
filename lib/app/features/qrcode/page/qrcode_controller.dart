@@ -6,6 +6,7 @@ import 'package:mobx/mobx.dart';
 import '../../../core/cursos/models/curso.dart';
 import '../../../core/periodos/models/periodo.dart';
 import '../models/qrcode.dart';
+
 part 'qrcode_controller.g.dart';
 
 class QrCodeController = QrCodeControllerBase with _$QrCodeController;
@@ -47,19 +48,19 @@ abstract class QrCodeControllerBase with Store {
   setPeriodoSelected(Periodo? value) => periodoSelected = value;
 
   @action
-  setQrCodes(List<QrCodeModel> value) => listaQrCode = ObservableList<QrCodeModel>.of(value);
+  setQrCodes(List<QrCodeModel> value) =>
+      listaQrCode = ObservableList<QrCodeModel>.of(value);
 
   @computed
   get showCursosWidget => cursoSelected == null;
 
   @computed
-  get showPeriodosWidget => !showCursosWidget && periodoSelected == null;
+  get showPeriodosWidget => !showCursosWidget;
 
   @computed
   get showQrCode => !showPeriodosWidget && !showCursosWidget;
 
   back() {
-
     if (showQrCode) {
       return setPeriodoSelected(null);
     }
@@ -71,37 +72,77 @@ abstract class QrCodeControllerBase with Store {
     }
   }
 
-obterQrCodes() async {
-  setLoading(true);
+  obterQrCodes({required String idCurso, required String idPeriodo}) async {
+    setLoading(true);
 
-  var result = await qrCodeRepository.getQrCodes();
+    var result = await qrCodeRepository.getQrCodes(
+        idCurso: idCurso, idPeriodo: idPeriodo);
 
-  result.fold(
-      (erro) {
-        setErro(true);
-        setLoading(false);
-        showDialog(
-          context:
-          Modular.routerDelegate.navigatorKey.currentState!.context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text('Erro ao buscar os QrCodes'),
-              content: Text(erro.message ?? ''),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('OK'),
-                )
-              ],
-            );
-          },
-        );
-      }, (qrcode) {
-    setQrCodes(qrcode);
-    setErro(false);
-    setLoading(false);
-  });
-}
+    result.fold((erro) {
+      setErro(true);
+      setLoading(false);
+      showDialog(
+        context: Modular.routerDelegate.navigatorKey.currentState!.context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Erro ao buscar os QrCodes'),
+            content: Text(erro.message ?? ''),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('OK'),
+              )
+            ],
+          );
+        },
+      );
+    }, (qrcode) {
+      setQrCodes(qrcode);
+      setErro(false);
+      setLoading(false);
+    });
+  }
+
+  Future addQrCode({required QrCodeModel qrCodeModel}) async {
+    showLoading();
+
+    var result = await qrCodeRepository.addQrCode(
+        idCurso: cursoSelected!.id! , idPeriodo: periodoSelected!.id!, qrCodeModel: qrCodeModel);
+    await Future.delayed(Duration(seconds: 3));
+    result.fold((erro) {
+      Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
+      showDialog(
+        context: Modular.routerDelegate.navigatorKey.currentState!.context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Erro ao adicionar QrCode'),
+            content: Text(erro.message ?? ''),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('OK'),
+              )
+            ],
+          );
+        },
+      );
+    }, (id) {
+      listaQrCode.add(qrCodeModel.copyWith(id: id));
+      //listaQrCode.removeWhere((element) => element.id == id);
+      Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
+    });
+  }
+
+  showLoading(){
+    showDialog(
+      context: Modular.routerDelegate.navigatorKey.currentState!.context,
+      builder: (context) {
+        return const Center(child: CircularProgressIndicator(),);
+      },
+    );
+  }
 }

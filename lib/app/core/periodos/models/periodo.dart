@@ -2,17 +2,21 @@ import 'dart:convert';
 
 class Periodo {
 
+  final String? id;
   final String? nome;
   final String? action;
   final String? icon;
 
-  Periodo({required this.nome, required this.action, required this.icon});
+  Periodo({required this.id, required this.nome, required this.action, required this.icon});
 
   Periodo copyWith({
     String? nome,
     String? action,
+    String? icon,
+    String? id,
   }) {
     return Periodo(
+      id: id ?? this.id,
       nome: nome ?? this.nome,
       action: action ?? this.action,
       icon: icon ?? this.icon,
@@ -32,6 +36,7 @@ class Periodo {
       'nome': nome,
       'action': action,
       'icon': icon,
+      'id': id,
     };
   }
 
@@ -40,6 +45,7 @@ class Periodo {
       nome: map['nome'] as String?,
       action: map['action'] as String?,
       icon: map['icon'] as String?,
+      id: map['id'] as String?,
     );
   }
 }

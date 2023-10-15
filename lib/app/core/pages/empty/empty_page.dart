@@ -82,9 +82,9 @@ class EmptyPage extends StatelessWidget {
       child: Text(
         subMessage ?? '',
         textAlign: TextAlign.center,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 16.0,
-          color: Colors.black,
+          color: textColor,
         ),
       ),
     );

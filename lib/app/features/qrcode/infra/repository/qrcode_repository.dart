@@ -15,15 +15,30 @@ class QrCodeRepositoryImpl extends IQrCodeRepository{
   QrCodeRepositoryImpl(this.dataSource);
 
   @override
-  Future<Either<Failure, List<QrCodeModel>>> getQrCodes() async {
+  Future<Either<Failure, List<QrCodeModel>>> getQrCodes({required String idCurso, required String idPeriodo}) async {
     try {
-      List<QrCodeModel>? listaQrCode = await dataSource.getQrCodes();
+      List<QrCodeModel>? listaQrCode = await dataSource.getQrCodes(idCurso: idCurso, idPeriodo: idPeriodo);
 
       if (listaQrCode == null) {
         return Left(DataSourceEmpty());
       }
 
       return Right(listaQrCode);
+    } catch (e) {
+      return Left(DataSourceException());
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> addQrCode({required String idCurso, required String idPeriodo, required QrCodeModel qrCodeModel}) async {
+    try {
+      String? idQr = await dataSource.addQrCode(idCurso: idCurso, idPeriodo: idPeriodo,qrCodeModel: qrCodeModel );
+
+      if (idQr == null || idQr.isEmpty) {
+        return Left(DataSourceEmpty());
+      }
+
+      return Right(idQr);
     } catch (e) {
       return Left(DataSourceException());
     }
