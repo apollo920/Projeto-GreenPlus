@@ -59,7 +59,7 @@ class _QrCodePageState extends State<QrCodePage> {
                     idCurso: widget.controller.cursoSelected!.id!,
                     callBack: (periodo) {
                       //widget.controller.setPeriodoSelected(periodo);
-                      Modular.to.pushNamed('/qrcodelist');
+                      Modular.to.pushNamed('/qrcode/qrcodelist');
                     });
               }
 
@@ -426,12 +426,12 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
               fabButtons: [
                 FabActionButton(
                   icon: Icons.wifi,
-                  onPressed: () => Modular.to.pushNamed('/qrcodewifi'),
+                  onPressed: () => Modular.to.pushNamed('/qrcode/qrcodewifi'),
                   title: 'QrCode de WI-FI',
                 ),
                 FabActionButton(
                   icon: Icons.library_add,
-                  onPressed: () => Modular.to.pushNamed('/qrcodelink'),
+                  onPressed: () => Modular.to.pushNamed('/qrcode/qrcodelink'),
                   title: 'QrCode de Links',
                 ),
               ],

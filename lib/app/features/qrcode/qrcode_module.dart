@@ -16,5 +16,11 @@ class QrCodeModule extends Module {
       ];
 
   @override
-  List<ModularRoute> get routes => [ChildRoute("/",child: (context, args) => QrCodePage(controller: Modular.get(),))];
+  List<ModularRoute> get routes => [ChildRoute("/",child: (context, args) => QrCodePage(controller: Modular.get(),)),
+  ChildRoute("/qrcodewifi", child:  (context, args) => QRCodeWifiGenerator()),
+  ChildRoute("/qrcodelink", child:  (context, args) => QRCodeLinkGenerator()),
+  ChildRoute("/qrcodelist", child:  (context, args) => QRCodeListScreen(controller: Modular.get(),)),
+  ChildRoute("/qrcodezoom", child:  (context, args) => QRCodeZoomScreen(data: '',)),
+  
+  ];
 }
