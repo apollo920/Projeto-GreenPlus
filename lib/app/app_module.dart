@@ -13,7 +13,6 @@ import 'package:greenplus/app/core/periodos/infra/repository/i_periodos_reposito
 import 'package:greenplus/app/core/periodos/page/periodos_controller.dart';
 import 'package:greenplus/app/features/avisos/page/avisos_page.dart';
 import 'package:greenplus/app/features/home/home_module.dart';
-import 'package:greenplus/app/features/qrcode/page/qrcode_page.dart';
 import 'core/cursos/page/curso_controller.dart';
 import 'core/infra/client_http/client_http_impl.dart';
 import 'core/infra/client_http/i_client_http.dart';

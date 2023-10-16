@@ -34,6 +34,30 @@ class QrCodeDataSourceImpl implements IQrCodeDataSource {
       return null;
     }
   }
+
+ @override
+Future<String?> deleteQrCode(
+    {required String idCurso,
+    required String idPeriodo,
+    required int idQrcode}) async {
+  try {
+    var qrCodes = listaQrCodeByCursoAndPeriodo[idCurso]?[idPeriodo];
+    if (qrCodes != null) {
+      for (int i = 0; i < qrCodes.length; i++) {
+        if (qrCodes[i]['id'] == idQrcode.toString()) {
+          qrCodes.removeAt(i);
+          return idQrcode.toString();
+        }
+      }
+    }
+    return null;
+  } on Exception catch (e) {
+    return null;
+  }
+}
+
+
+
 // var result = await clientHttp.get(url: "/users/checktoken");
 // if (result.statusCode == 200) {
 //   return true;

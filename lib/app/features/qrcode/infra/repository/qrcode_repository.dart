@@ -44,5 +44,20 @@ class QrCodeRepositoryImpl extends IQrCodeRepository{
     }
   }
 
+  @override
+  Future<Either<Failure, String>> deleteQrCode({required String idCurso, required String idPeriodo, required int idQrcode}) async {
+    try {
+      String? idQr = await dataSource.deleteQrCode(idCurso: idCurso, idPeriodo: idPeriodo, idQrcode: idQrcode);
+
+      if (idQr == null || idQr.isEmpty) {
+        return Left(DataSourceEmpty());
+      }
+
+      return Right(idQr);
+    } catch (e) {
+      return Left(DataSourceException());
+    }
+  }
+
 
 }

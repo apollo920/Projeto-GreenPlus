@@ -1,11 +1,11 @@
 import 'package:flutter_modular/flutter_modular.dart';
-
+import 'package:greenplus/app/features/qrcode/pages/qrcode_controller.dart';
 import 'infra/datasources/i_qrcode_datasource.dart';
 import 'infra/datasources/qrcode_datasource_impl.dart';
 import 'infra/repository/i_qrcode_repository.dart';
 import 'infra/repository/qrcode_repository.dart';
-import 'page/qrcode_controller.dart';
-import 'page/qrcode_page.dart';
+import 'pages/qrcode_list.dart';
+import 'pages/qrcode_page.dart';
 
 class QrCodeModule extends Module {
   @override
@@ -18,10 +18,10 @@ class QrCodeModule extends Module {
   @override
   List<ModularRoute> get routes => [
     ChildRoute("/",child: (context, args) => QrCodePage(controller: Modular.get())),
-  ChildRoute("/qrcodewifi", child:  (context, args) => QRCodeWifiGenerator()),
-  ChildRoute("/qrcodelink", child:  (context, args) => QRCodeLinkGenerator()),
+  ChildRoute("/qrcodewifi", child:  (context, args) => const QRCodeWifiGenerator()),
+  ChildRoute("/qrcodelink", child:  (context, args) => const QRCodeLinkGenerator()),
   ChildRoute("/qrcodelist/:idCurso/:idPeriodo", child:  (context, args) => QRCodeListScreen(controller: Modular.get(), idCurso: args.params['idCurso'], idPeriodo: args.params['idPeriodo'],)),
-  ChildRoute("/qrcodezoom", child:  (context, args) => QRCodeZoomScreen(data: '',)),
+  ChildRoute("/qrcodezoom", child:  (context, args) => const QRCodeZoomScreen(data: '',)),
 
   ];
 }
