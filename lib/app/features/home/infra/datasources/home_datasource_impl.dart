@@ -47,7 +47,7 @@ class HomeDataSourceImpl implements IHomeDataSource {
     },
     {
       "title": "Eventos",
-      "action": "/cursos",
+      "action": "/eventos",
       "icon": "0xe23e"
     },
     {

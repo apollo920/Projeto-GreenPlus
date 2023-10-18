@@ -26,7 +26,11 @@ class _QrCodePageState extends State<QrCodePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Escolha um dos cursos específicos'),
+          title: Observer(
+            builder: (context) {
+              return widget.controller.showPeriodosWidget ? const Text('Escolha um dos periodos específicos') :  const Text('Escolha um dos cursos específicos');
+            }
+          ),
           backgroundColor: const Color.fromARGB(255, 27, 136, 83),
           automaticallyImplyLeading: false,
           leading: IconButton(

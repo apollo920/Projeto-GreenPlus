@@ -1,4 +1,3 @@
-
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -76,68 +75,47 @@ abstract class QrCodeControllerBase with Store {
   }
 
   obterQrCodes({required String idCurso, required String idPeriodo}) async {
+    listaQrCode.clear();
     setLoading(true);
 
     var result = await qrCodeRepository.getQrCodes(
         idCurso: idCurso, idPeriodo: idPeriodo);
 
-  result.fold((erro) {
-  setErro(true);
-  setLoading(false);
-  showDialog(
-    context: Modular.routerDelegate.navigatorKey.currentState!.context,
-    builder: (context) {
-      return BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-        child: AlertDialog(
-          title: const Text('Erro ao buscar os QrCodes'),
-          content: Text(erro.message ?? ''),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-              },
-              child: const Text('OK'),
-            )
-          ]
-        )
-      );
-    }
-  );
-}, (qrcode) {
-  setQrCodes(qrcode);
-  setErro(false);
-  setLoading(false);
-});
-
+    result.fold((erro) {
+      setErro(true);
+      setLoading(false);
+    }, (qrcode) {
+      setQrCodes(qrcode);
+      setErro(false);
+      setLoading(false);
+    });
   }
 
   Future addQrCode({required QrCodeModel qrCodeModel}) async {
     showLoading();
 
     var result = await qrCodeRepository.addQrCode(
-        idCurso: cursoSelected!.id! , idPeriodo: periodoSelected!.id!, qrCodeModel: qrCodeModel);
+        idCurso: cursoSelected!.id!,
+        idPeriodo: periodoSelected!.id!,
+        qrCodeModel: qrCodeModel);
     await Future.delayed(const Duration(seconds: 3));
     result.fold((erro) {
       Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
       showDialog(
-        context: Modular.routerDelegate.navigatorKey.currentState!.context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Erro ao adicionar QrCode'),
-            content: Text(erro.message ?? ''),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('OK'),
-              )
-            ]
-          );
-        }
-      );
+          context: Modular.routerDelegate.navigatorKey.currentState!.context,
+          builder: (context) {
+            return AlertDialog(
+                title: const Text('Erro ao adicionar QrCode'),
+                content: Text(erro.message ?? ''),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('OK'),
+                  )
+                ]);
+          });
     }, (id) {
       listaQrCode.add(qrCodeModel.copyWith(id: id));
       Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
@@ -145,43 +123,43 @@ abstract class QrCodeControllerBase with Store {
   }
 
   Future deleteQrCode({required int idQrcode}) async {
-  showLoading();
+    showLoading();
 
-  var result = await qrCodeRepository.deleteQrCode(
-      idCurso: cursoSelected!.id!, idPeriodo: periodoSelected!.id!, idQrcode: idQrcode);
-  await Future.delayed(const Duration(seconds: 3));
-  result.fold((erro) {
-    Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
-    showDialog(
-      context: Modular.routerDelegate.navigatorKey.currentState!.context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Erro ao apagar QrCode'),
-          content: Text(erro.message ?? ''),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('OK'),
-            )
-          ]
-        );
-      }
-    );
-  }, (id) {
-    listaQrCode.removeWhere((element) => element.id == id.toString());
-    Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
-  });
-}
+    var result = await qrCodeRepository.deleteQrCode(
+        idCurso: cursoSelected!.id!,
+        idPeriodo: periodoSelected!.id!,
+        idQrcode: idQrcode);
+    await Future.delayed(const Duration(seconds: 3));
+    result.fold((erro) {
+      Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
+      showDialog(
+          context: Modular.routerDelegate.navigatorKey.currentState!.context,
+          builder: (context) {
+            return AlertDialog(
+                title: const Text('Erro ao apagar QrCode'),
+                content: Text(erro.message ?? ''),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('OK'),
+                  )
+                ]);
+          });
+    }, (id) {
+      listaQrCode.removeWhere((element) => element.id == id.toString());
+      Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
+    });
+  }
 
-  showLoading(){
+  showLoading() {
     showDialog(
-      context: Modular.routerDelegate.navigatorKey.currentState!.context,
-      builder: (context) {
-        return const Center(child: CircularProgressIndicator(),);
-      }
-    );
+        context: Modular.routerDelegate.navigatorKey.currentState!.context,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        });
   }
 }
-

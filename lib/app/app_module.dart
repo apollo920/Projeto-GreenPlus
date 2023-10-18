@@ -22,6 +22,7 @@ import 'core/periodos/infra/datasources/periodos_datasource_impl.dart';
 import 'core/periodos/infra/repository/periodos_repository.dart';
 import 'features/auth/auth_module.dart';
 import 'features/auth/login/login_module.dart';
+import 'features/eventos/eventos_module.dart';
 import 'features/qrcode/qrcode_module.dart';
 
 class AppModule extends Module {
@@ -47,6 +48,7 @@ class AppModule extends Module {
     ModuleRoute('/auth', module: AuthModule()),
     ModuleRoute('/home', module: HomeModule()),
     ModuleRoute('/qrcode', module: QrCodeModule()),
+    ModuleRoute('/eventos', module: EventosModule()),
     ChildRoute("/cursos", child:  (context, args) => CursosPage(controller: Modular.get(), callBack: args.data,)),
     //ChildRoute("/periodos/:idCurso", child:  (context, args) => PeriodosPage(controller: Modular.get(), idCurso: args.params['idCurso'],)),
     ChildRoute("/avisos", child:  (context, args) => const AvisosPage()),

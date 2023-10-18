@@ -16,7 +16,7 @@ class QRCodeListScreen extends StatefulWidget {
 
   const QRCodeListScreen({required this.controller, required this.idCurso, required this.idPeriodo, super.key});
 
-  
+
   @override
   _QRCodeListScreenState createState() => _QRCodeListScreenState();
 }
@@ -30,13 +30,15 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
       widget.controller.obterQrCodes(idCurso: widget.idCurso, idPeriodo: widget.idPeriodo);
     });
   }
-  
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Lista de QrCodes", 
+        automaticallyImplyLeading: false,
+        leading: IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white,), onPressed: () => Modular.to.pop()),
+        title: const Text("Lista de QrCodes",
         style: TextStyle(
           color: Colors.white
         ),),
@@ -113,7 +115,7 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
                                                   decoration: BoxDecoration(
                                                     color: Colors.white,
                                                     borderRadius:
-                                                    BorderRadius.circular(15),                     
+                                                    BorderRadius.circular(15),
                                                     ),
                                                     width: 200,
                                                     padding: const EdgeInsets.all(16.0),
@@ -159,7 +161,7 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
                                                           onPressed: (){
                                                             Navigator.of(context).pop();
                                                             _deleteQRCode(int.parse(qrCodeModel.id!));
-                                                          }, 
+                                                          },
                                                           child: const Text("Ok"))
                                                         ]
                                                       );}),
@@ -178,12 +180,23 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
                                         }
                                       )
                                     .toList()
+                              else if(widget.controller.erro)
+                                Column(
+                                  children: [
+                                    const EmptyPage(
+                                      imagePath: "assets/images/server_down.svg", message: "Erro ao carregar dados!",
+                                      isSvg: true,
+                                      heightPercent: 0.4,
+                                      subMessage: "Tente novamente mais tarde", textColor: Colors.white,),
+                                    ElevatedButton(onPressed: () => Navigator.of(context).pop(), child: const Text("VOLTAR"))
+                                  ],
+                                )
                               else
                                 const EmptyPage(
-                                  imagePath: "assets/images/empty.svg", message: "Sem QRCodes", 
-                                  isSvg: true,
-                                  heightPercent: 0.4, 
-                                  subMessage: "Tente novamente mais tarde", textColor: Colors.white,)
+                                imagePath: "assets/images/empty.svg", message: "Sem QRCodes",
+                                isSvg: true,
+                                heightPercent: 0.4,
+                                subMessage: "Tente novamente mais tarde", textColor: Colors.white,)
                             ]
                           )
                         );
@@ -213,7 +226,7 @@ class QRCodeZoomScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 27, 136, 83),
-        elevation: 0, 
+        elevation: 0,
       ),
       body: Stack(
         children: [
