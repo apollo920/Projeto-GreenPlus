@@ -1,9 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-
 import '../../../core/controllers/auth/auth_store.dart';
 import '../../../core/cursos/models/curso.dart';
-import '../../../core/periodos/models/periodo.dart';
 import '../infra/repository/i_eventos_repository.dart';
 import '../models/eventos.dart';
 
@@ -12,16 +11,13 @@ part 'eventos_controller.g.dart';
 class EventosController = EventosControllerBase with _$EventosController;
 
 abstract class EventosControllerBase with Store {
-  IEventosRepository qrCodeRepository;
+  IEventosRepository eventosRepository;
   AuthStore authStore;
 
-  EventosControllerBase(this.qrCodeRepository, this.authStore);
+  EventosControllerBase(this.eventosRepository, this.authStore);
 
   @observable
   Curso? cursoSelected;
-
-  @observable
-  Periodo? periodoSelected;
 
   @observable
   bool loading = false;
@@ -45,9 +41,6 @@ abstract class EventosControllerBase with Store {
   setCursoSelected(Curso? value) => cursoSelected = value;
 
   @action
-  setPeriodoSelected(Periodo? value) => periodoSelected = value;
-
-  @action
   setEventos(List<EventoModel> value) =>
       listaEvento = ObservableList<EventoModel>.of(value);
 
@@ -55,20 +48,71 @@ abstract class EventosControllerBase with Store {
   get showCursosWidget => cursoSelected == null;
 
   @computed
-  get showPeriodosWidget => !showCursosWidget;
-
-  @computed
-  get showEvento => !showPeriodosWidget && !showCursosWidget;
+  get showEvento => !showCursosWidget;
 
   back() {
     if (showEvento) {
-      return setPeriodoSelected(null);
-    }
-    if (showPeriodosWidget) {
       return setCursoSelected(null);
     }
     if (showCursosWidget) {
       return Modular.to.pop();
     }
   }
+
+  obterEventos({required String idCurso}) async {
+    listaEvento.clear();
+    setLoading(true);
+
+    var result = await eventosRepository.getEventos(
+        idCurso: idCurso);
+
+    result.fold((erro) {
+      setErro(true);
+      setLoading(false);
+    }, (evento) {
+      setEventos(evento);
+      setErro(false);
+      setLoading(false);
+    });
+  }
+
+  Future addEventos({required EventoModel eventosModel}) async {
+    showLoading();
+    var result = await eventosRepository.addEventos(
+        idCurso: cursoSelected!.id!,
+        eventoModel: eventosModel);
+    await Future.delayed(const Duration(seconds: 3));
+    result.fold((erro) {
+      Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
+      showDialog(
+          context: Modular.routerDelegate.navigatorKey.currentState!.context,
+          builder: (context) {
+            return AlertDialog(
+                title: const Text('Erro ao adicionar eventos'),
+                content: Text(erro.message ?? ''),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('OK'),
+                  )
+                ]);
+          });
+    }, (id) {
+      listaEvento.add(eventosModel.copyWith(id: id));
+      Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
+    });
+  }
+  
+  showLoading() {
+    showDialog(
+        context: Modular.routerDelegate.navigatorKey.currentState!.context,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        });
+  }
+
 }

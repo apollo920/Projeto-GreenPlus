@@ -1,4 +1,4 @@
-import 'dart:ui';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -162,4 +162,5 @@ abstract class QrCodeControllerBase with Store {
           );
         });
   }
+  
 }

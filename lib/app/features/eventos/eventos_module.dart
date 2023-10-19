@@ -20,6 +20,7 @@ class EventosModule extends Module {
   @override
   List<ModularRoute> get routes => [
     ChildRoute("/",child: (context, args) => EventosPage(controller: Modular.get())),
+    ChildRoute("/eventospicker", child:  (context, args) => ImagePickerService()),
   // ChildRoute("/qrcodelink", child:  (context, args) => const QRCodeLinkGenerator()),
   // ChildRoute("/qrcodelist/:idCurso/:idPeriodo", child:  (context, args) => QRCodeListScreen(controller: Modular.get(), idCurso: args.params['idCurso'], idPeriodo: args.params['idPeriodo'],)),
   // ChildRoute("/qrcodezoom", child:  (context, args) => const QRCodeZoomScreen(data: '',)),

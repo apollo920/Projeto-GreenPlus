@@ -23,13 +23,6 @@ mixin _$EventosController on EventosControllerBase, Store {
           Computed<dynamic>(() => super.showCursosWidget,
               name: 'EventosControllerBase.showCursosWidget'))
       .value;
-  Computed<dynamic>? _$showPeriodosWidgetComputed;
-
-  @override
-  dynamic get showPeriodosWidget => (_$showPeriodosWidgetComputed ??=
-          Computed<dynamic>(() => super.showPeriodosWidget,
-              name: 'EventosControllerBase.showPeriodosWidget'))
-      .value;
   Computed<dynamic>? _$showEventoComputed;
 
   @override
@@ -51,22 +44,6 @@ mixin _$EventosController on EventosControllerBase, Store {
   set cursoSelected(Curso? value) {
     _$cursoSelectedAtom.reportWrite(value, super.cursoSelected, () {
       super.cursoSelected = value;
-    });
-  }
-
-  late final _$periodoSelectedAtom =
-      Atom(name: 'EventosControllerBase.periodoSelected', context: context);
-
-  @override
-  Periodo? get periodoSelected {
-    _$periodoSelectedAtom.reportRead();
-    return super.periodoSelected;
-  }
-
-  @override
-  set periodoSelected(Periodo? value) {
-    _$periodoSelectedAtom.reportWrite(value, super.periodoSelected, () {
-      super.periodoSelected = value;
     });
   }
 
@@ -155,17 +132,6 @@ mixin _$EventosController on EventosControllerBase, Store {
   }
 
   @override
-  dynamic setPeriodoSelected(Periodo? value) {
-    final _$actionInfo = _$EventosControllerBaseActionController.startAction(
-        name: 'EventosControllerBase.setPeriodoSelected');
-    try {
-      return super.setPeriodoSelected(value);
-    } finally {
-      _$EventosControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic setEventos(List<EventoModel> value) {
     final _$actionInfo = _$EventosControllerBaseActionController.startAction(
         name: 'EventosControllerBase.setEventos');
@@ -180,13 +146,11 @@ mixin _$EventosController on EventosControllerBase, Store {
   String toString() {
     return '''
 cursoSelected: ${cursoSelected},
-periodoSelected: ${periodoSelected},
 loading: ${loading},
 listaEvento: ${listaEvento},
 erro: ${erro},
 loaded: ${loaded},
 showCursosWidget: ${showCursosWidget},
-showPeriodosWidget: ${showPeriodosWidget},
 showEvento: ${showEvento}
     ''';
   }

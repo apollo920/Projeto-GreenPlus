@@ -41,8 +41,8 @@ class _ExpandableFabState extends State<ExpandableFab>
     _animateIcon =
         Tween<double>(begin: 0.0, end: 1.0).animate(_animationController!);
     _buttonColor = ColorTween(
-      begin: Colors.blue,
-      end: Colors.blue,
+      begin: Colors.green,
+      end: Colors.green,
     ).animate(CurvedAnimation(
       parent: _animationController!,
       curve: Interval(

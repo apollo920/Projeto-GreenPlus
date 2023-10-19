@@ -1,10 +1,5 @@
 import 'package:dartz/dartz.dart';
-
 import 'package:greenplus/app/core/erros/erros.dart';
-
-
-import 'package:greenplus/app/features/qrcode/models/qrcode.dart';
-
 import '../../models/eventos.dart';
 import '../datasources/i_eventos_datasource.dart';
 import 'i_eventos_repository.dart';

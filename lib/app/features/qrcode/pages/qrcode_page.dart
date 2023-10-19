@@ -28,13 +28,19 @@ class _QrCodePageState extends State<QrCodePage> {
       appBar: AppBar(
           title: Observer(
             builder: (context) {
-              return widget.controller.showPeriodosWidget ? const Text('Escolha um dos periodos específicos') :  const Text('Escolha um dos cursos específicos');
+              return widget.controller.showPeriodosWidget ? const Text('Escolha um dos periodos específicos', 
+        style: TextStyle(
+          color: Colors.white
+        ),) :  const Text('Escolha um dos cursos específicos', 
+        style: TextStyle(
+          color: Colors.white
+        ),);
             }
           ),
           backgroundColor: const Color.fromARGB(255, 27, 136, 83),
           automaticallyImplyLeading: false,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_sharp),
+            icon: const Icon(Icons.arrow_back, color: Colors.white,),
             onPressed: () {
               widget.controller.back();
             },
@@ -89,7 +95,12 @@ class _QRCodeWifiGeneratorState extends State<QRCodeWifiGenerator> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Gerador de QR Code de Rede Wi-Fi'),
+        automaticallyImplyLeading: false,
+        leading: IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white,), onPressed: () => Modular.to.pop()),
+          title: const Text('Gerador de QR Code de Rede Wi-Fi', 
+          style: TextStyle(
+          color: Colors.white
+        ),),
           backgroundColor: const Color.fromARGB(255, 27, 136, 83),
         ),
         body: Container(
@@ -296,7 +307,12 @@ class _QRCodeLinkGeneratorState extends State<QRCodeLinkGenerator> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Gerador de QR Code de Link'),
+          automaticallyImplyLeading: false,
+        leading: IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white,), onPressed: () => Modular.to.pop()),
+          title: const Text('Gerador de QR Code de Link', 
+          style: TextStyle(
+          color: Colors.white
+        ),),
           backgroundColor: const Color.fromARGB(255, 27, 136, 83),
         ),
         body: Container(

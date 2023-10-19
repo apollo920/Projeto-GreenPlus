@@ -1,11 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-
+import 'package:greenplus/app/features/eventos/models/eventos.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../core/cursos/page/cursos_page.dart';
-import '../../../core/periodos/page/periodos_page.dart';
-
-
 import 'eventos_controller.dart';
 
 class EventosPage extends StatefulWidget {
@@ -27,15 +27,12 @@ class _EventosPageState extends State<EventosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Observer(
-              builder: (context) {
-                return widget.controller.showPeriodosWidget ? const Text('Escolha um dos periodos específicos') :  const Text('Escolha um dos cursos específicos');
-              }
-          ),
+          title: const Text('Escolha um dos cursos específicos', style: TextStyle(color: Colors.white),),
           backgroundColor: const Color.fromARGB(255, 27, 136, 83),
           automaticallyImplyLeading: false,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_sharp),
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
             onPressed: () {
               widget.controller.back();
             },
@@ -49,18 +46,9 @@ class _EventosPageState extends State<EventosPage> {
                     controller: Modular.get(),
                     callBack: (curso) {
                       widget.controller.setCursoSelected(curso);
+                      Modular.to.pushNamed('/eventos/eventoslist/${curso.id}');
                     });
               }
-              if (widget.controller.showPeriodosWidget) {
-                return PeriodosPage(
-                    controller: Modular.get(),
-                    idCurso: widget.controller.cursoSelected!.id!,
-                    callBack: (periodo) {
-                      widget.controller.setPeriodoSelected(periodo);
-                      Modular.to.pushNamed('/qrcode/qrcodelist/${widget.controller.cursoSelected?.id}/${periodo.id}');
-                    });
-              }
-
               return Container();
             }),
           )
@@ -69,3 +57,40 @@ class _EventosPageState extends State<EventosPage> {
     );
   }
 }
+
+
+class ImagePickerService extends StatefulWidget {
+  @override
+  _ImagePickerServiceState createState() => _ImagePickerServiceState();
+}
+
+class _ImagePickerServiceState extends State<ImagePickerService> {
+  final _picker = ImagePicker();
+  String observacoes = '';
+
+  Future<void> getImageAndAddEventos() async {
+    XFile? pickedImage = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      String base64Image = base64Encode(await pickedImage.readAsBytes());
+      String observacoes = '';
+      await _addImage(base64Image, observacoes);
+    } else {
+      
+    }
+  }
+
+  Future<void> _addImage(String data, String observacoes) async {
+    await Modular.get<EventosController>().addEventos(
+      eventosModel: EventoModel.fromMap({
+        "image": data,
+        "observacoes": observacoes,
+      }),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    throw UnimplementedError();
+  }
+}
+

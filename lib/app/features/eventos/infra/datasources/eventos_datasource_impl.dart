@@ -63,21 +63,6 @@ Future<String?> deleteEventos(
 // }
 }
 
-var listaEventos = [
-  {
-    "content": "WIFI:T:WPA;S:SuaRedeWiFi;P:SuaSenha;;",
-    "title": "WIFI DA PADARIA",
-    "icon": "0xf051f",
-    "type": "WiFi",
-  },
-  {
-    "content": "https://exemplo.com",
-    "title": "Exemplo de Link",
-    "icon": "0xf1234",
-    "type": "Link",
-  },
-];
-
 var listaEventosByCursos = {
   "1": [
     {

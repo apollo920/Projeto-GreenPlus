@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -13,10 +15,11 @@ class QRCodeListScreen extends StatefulWidget {
   final QrCodeController controller;
   final String idCurso;
   final String idPeriodo;
+  
 
-  const QRCodeListScreen({required this.controller, required this.idCurso, required this.idPeriodo, super.key});
+  QRCodeListScreen({required this.controller, required this.idCurso, required this.idPeriodo, super.key});
 
-
+  
   @override
   _QRCodeListScreenState createState() => _QRCodeListScreenState();
 }
@@ -39,13 +42,16 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
         automaticallyImplyLeading: false,
         leading: IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white,), onPressed: () => Modular.to.pop()),
         title: const Text("Lista de QrCodes",
-        style: TextStyle(
-          color: Colors.white
+          style: TextStyle(
+            color: Colors.white
         ),),
         backgroundColor: const Color.fromARGB(255, 27, 136, 83),
       ),
       floatingActionButton: (Modular.get<AuthStore>().user?.isAdmin ?? false)
-          ? ExpandableFab(
+        ? Observer(
+          builder: (_) {  
+          if (!widget.controller.erro){
+          return ExpandableFab(
               fabButtons: [
                 FabActionButton(
                   icon: Icons.wifi,
@@ -58,8 +64,12 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
                   title: 'QrCode de Links',
                 ),
               ],
-            )
-          : null,
+            );
+          }
+          return Container();
+          },
+        )
+        : null,
       body: Center(
         child: Container(
           width: double.infinity,
@@ -103,23 +113,23 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
                                                 builder: (context) =>
                                                     QRCodeZoomScreen(
                                                       data: content,
+                                                      title: title
                                                     ),
                                                   ),
                                                 );
                                               },
                                             child: Column(
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.center,
                                               children: [
                                                 Container(
                                                   decoration: BoxDecoration(
                                                     color: Colors.white,
-                                                    borderRadius:
-                                                    BorderRadius.circular(15),
-                                                    ),
-                                                    width: 200,
-                                                    padding: const EdgeInsets.all(16.0),
-                                                    child: Column(
+                                                    borderRadius: BorderRadius.circular(15),
+                                                  ),
+                                                  width: 200,
+                                                  padding: const EdgeInsets.all(16.0),
+                                                  child:
+                                                      Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.center,
                                                         children: [
                                                           Text(
                                                             title!,
@@ -137,42 +147,57 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
                                                             ),
                                                           ),
                                                           Text(
-                                                              type!,
-                                                              style: const TextStyle(
-                                                                fontSize: 18,
-                                                                color: Colors.black,
-                                                              )
-                                                            )
-                                                          ]
-                                                        )
+                                                            type!,
+                                                            style: const TextStyle(
+                                                              fontSize: 18,
+                                                              color: Colors.black,
+                                                            ),
+                                                          ),
+                                                          Visibility(
+                                                        visible: qrCodeModel.id?.isNotEmpty ?? false,
+                                                        child: ElevatedButton(
+                                                          onPressed: () => showDialog(
+                                                            context: context,
+                                                            builder: (BuildContext context) {
+                                                              return AlertDialog(
+                                                                title: Text(
+                                                                  "Você tem certeza que deseja apagar o QrCode '$title' ?",
+                                                                ),
+                                                                actions: [
+                                                                  TextButton(
+                                                                    onPressed: () {
+                                                                      Navigator.of(context).pop();
+                                                                    },
+                                                                    child: const Text("Cancelar"),
+                                                                  ),
+                                                                  TextButton(
+                                                                    onPressed: () {
+                                                                      Navigator.of(context).pop();
+                                                                      _deleteQRCode(int.parse(qrCodeModel.id!));
+                                                                    },
+                                                                    child: const Text("Ok"),
+                                                                  )
+                                                                ],
+                                                              );
+                                                            },
+                                                          ),
+                                                          style: ButtonStyle(
+                                                            backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                                                            shape: MaterialStateProperty.all<OutlinedBorder>(
+                                                              CircleBorder(),
+                                                            ),
+                                                          ),
+                                                          child: const Padding(
+                                                            padding: EdgeInsets.all(8.0),
+                                                            child: Icon(
+                                                              Icons.delete,
+                                                              color: Colors.white,
+                                                            ),
+                                                          ),
+                                                        ),
                                                       ),
-                                                Visibility(
-                                                   visible: qrCodeModel.id?.isNotEmpty ?? false ,
-                                                  child: ElevatedButton(onPressed: () => showDialog(context: context, builder: (BuildContext context) {
-                                                    return AlertDialog(
-                                                      title: Text("Você tem certeza que deseja apagar o QrCode '$title' ?"),
-                                                      actions: [
-                                                        TextButton(
-                                                        onPressed:() {
-                                                          Navigator.of(context).pop();
-                                                        },
-                                                        child: const Text("Cancelar")),
-                                                        TextButton(
-                                                          onPressed: (){
-                                                            Navigator.of(context).pop();
-                                                            _deleteQRCode(int.parse(qrCodeModel.id!));
-                                                          },
-                                                          child: const Text("Ok"))
-                                                        ]
-                                                      );}),
-                                                    style: ButtonStyle(
-                                                    backgroundColor: const MaterialStatePropertyAll<Color>(Colors.red),
-                                                    shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(30)))
-                                                  ), child: const Padding(
-                                                    padding: EdgeInsets.all(8.0),
-                                                    child: Icon(Icons.delete,
-                                                    color: Colors.white,)),),
+                                                    ],
+                                                  ),  
                                                 )
                                               ]
                                             )
@@ -188,7 +213,11 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
                                       isSvg: true,
                                       heightPercent: 0.4,
                                       subMessage: "Tente novamente mais tarde", textColor: Colors.white,),
-                                    ElevatedButton(onPressed: () => Navigator.of(context).pop(), child: const Text("VOLTAR"))
+                                    ElevatedButton(onPressed: () => Navigator.of(context).pop(), child: const Text("VOLTAR")),
+                                    const SizedBox(height: 20,),
+                                    ElevatedButton(onPressed: () =>  setState(() {
+                                      initState(); 
+                                    }),child: const Text("TENTE NOVAMENTE"))
                                   ],
                                 )
                               else
@@ -196,7 +225,8 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
                                 imagePath: "assets/images/empty.svg", message: "Sem QRCodes",
                                 isSvg: true,
                                 heightPercent: 0.4,
-                                subMessage: "Tente novamente mais tarde", textColor: Colors.white,)
+                                subMessage: "Tente novamente mais tarde", textColor: Colors.white,),
+                               
                             ]
                           )
                         );
@@ -218,13 +248,20 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
 
 class QRCodeZoomScreen extends StatelessWidget {
   final String data;
+  final String title;
 
-  const QRCodeZoomScreen({super.key, required this.data});
+  const QRCodeZoomScreen({super.key, required this.data, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white,), onPressed: () => Modular.to.pop()),
+        title: Text(title, 
+        style: TextStyle(
+          color: Colors.white
+        ),),
         backgroundColor: const Color.fromARGB(255, 27, 136, 83),
         elevation: 0,
       ),
