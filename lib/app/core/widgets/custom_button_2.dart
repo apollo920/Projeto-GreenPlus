@@ -30,7 +30,7 @@ class CustomButton2 extends StatelessWidget {
             ),
             child: Icon(
               icon,
-              size: 80,
+              size: 75,
               color: Colors.white,
             )
           ),

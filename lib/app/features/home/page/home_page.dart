@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Container(
                       color: Colors.red,
-                      child: const Text("Error"),
+                      child: const Text("Erro inesperado"),
                     ),
                     OutlinedButton(onPressed: () =>
                         widget.controller.obterMenusModulos(),

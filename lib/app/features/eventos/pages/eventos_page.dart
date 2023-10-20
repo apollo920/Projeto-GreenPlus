@@ -72,8 +72,13 @@ class _ImagePickerServiceState extends State<ImagePickerService> {
     XFile? pickedImage = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
       String base64Image = base64Encode(await pickedImage.readAsBytes());
-      String observacoes = '';
-      await _addImage(base64Image, observacoes);
+      Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ImagePreviewAndObservations(imagePath: base64Image),
+      ),
+    );
+      // await _addImage(base64Image, observacoes);
     } else {
       
     }
@@ -90,7 +95,179 @@ class _ImagePickerServiceState extends State<ImagePickerService> {
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError();
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white,), onPressed: () => Modular.to.pop()),
+        title: const Text("Selecione uma imagem a ser exibida",
+          style: TextStyle(
+            color: Colors.white
+        ),),
+        backgroundColor: const Color.fromARGB(255, 27, 136, 83),
+      ),
+      body: Container(
+        width: double.infinity,
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.fill,
+              image: ExactAssetImage('assets/images/a.png'),
+            ),
+          ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: getImageAndAddEventos,
+                child: const Text('Selecionar Imagem', style: TextStyle(color: Colors.black),),),
+              const SizedBox(
+                height: 20
+              ),
+              FractionallySizedBox(
+                widthFactor: 0.1,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(8))),
+                  child: const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('*Nota: Lembre-se que esse é um seletor de imagens, tente usar apenas arquivos .PNG, .JPEG ou .JPG', style: TextStyle(color: Colors.black),),
+                      ],
+                    ))),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
+class ImagePreviewAndObservations extends StatefulWidget {
+  final String imagePath;
+
+  ImagePreviewAndObservations({required this.imagePath});
+
+  @override
+  _ImagePreviewAndObservationsState createState() =>
+      _ImagePreviewAndObservationsState();
+}
+
+class _ImagePreviewAndObservationsState
+    extends State<ImagePreviewAndObservations> {
+  String observacoes = '';
+  TextEditingController textController = TextEditingController();
+
+  Future<void> showConfirmationDialog() async {
+    return await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Tem certeza que deseja sair?"),
+          actions: <Widget>[
+            TextButton(
+              child: Text("Cancelar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text("Sim"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+  
+  Future<void> _addImage(String data, String observacoes) async {
+    await Modular.get<EventosController>().addEventos(
+      eventosModel: EventoModel.fromMap({
+        "image": data,
+        "observacoes": observacoes,
+      }),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => showConfirmationDialog(),
+        ),
+        title: const Text(
+          "Verificação de imagem selecionada e observações",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: const Color.fromARGB(255, 27, 136, 83),
+      ),
+      body: Container(
+        width: double.infinity,
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.fill,
+              image: ExactAssetImage('assets/images/a.png'),
+            ),
+          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Imagem selecionada", style: TextStyle(color: Colors.white),),
+            SizedBox(height: 7),
+            Image.memory(
+                    base64Decode(widget.imagePath),
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    height: MediaQuery.of(context).size.height *0.5, 
+                    fit: BoxFit.contain,),
+            SizedBox(height: 20,),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.5,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+              child: FractionallySizedBox(
+                widthFactor: 0.5,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 20),
+                      Text("Escreva suas observações(Se necessário):"),
+                      TextFormField(
+                        controller: textController,
+                      ),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () async {
+                          setState(() {
+                            observacoes = textController.text; 
+                          });
+                          await _addImage(widget.imagePath, observacoes);
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Salvar'),
+                      ),
+                      SizedBox(height: 20,)
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

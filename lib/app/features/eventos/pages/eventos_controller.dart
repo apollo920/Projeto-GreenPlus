@@ -105,6 +105,37 @@ abstract class EventosControllerBase with Store {
     });
   }
   
+  
+  Future deleteEventos({required int idEvento}) async {
+    showLoading();
+
+    var result = await eventosRepository.deleteEventos(
+        idCurso: cursoSelected!.id!,
+        idEvento: idEvento);
+    await Future.delayed(const Duration(seconds: 3));
+    result.fold((erro) {
+      Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
+      showDialog(
+          context: Modular.routerDelegate.navigatorKey.currentState!.context,
+          builder: (context) {
+            return AlertDialog(
+                title: const Text('Erro ao apagar Evento'),
+                content: Text(erro.message ?? ''),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('OK'),
+                  )
+                ]);
+          });
+    }, (id) {
+      listaEvento.removeWhere((element) => element.id == id.toString());
+      Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
+    });
+  }
+
   showLoading() {
     showDialog(
         context: Modular.routerDelegate.navigatorKey.currentState!.context,

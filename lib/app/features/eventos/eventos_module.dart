@@ -1,7 +1,6 @@
 
-
 import 'package:flutter_modular/flutter_modular.dart';
-
+import 'package:greenplus/app/features/eventos/pages/eventos_carrossel.dart';
 import 'infra/datasources/eventos_datasource_impl.dart';
 import 'infra/datasources/i_eventos_datasource.dart';
 import 'infra/repository/eventos_repository.dart';
@@ -20,8 +19,9 @@ class EventosModule extends Module {
   @override
   List<ModularRoute> get routes => [
     ChildRoute("/",child: (context, args) => EventosPage(controller: Modular.get())),
-    ChildRoute("/eventospicker", child:  (context, args) => ImagePickerService()),
-  // ChildRoute("/qrcodelink", child:  (context, args) => const QRCodeLinkGenerator()),
+    ChildRoute("/eventoslist/:idCurso", child:  (context, args) => ImageCarousel(controller: Modular.get(), idCurso: args.params['idCurso'],)),
+  ChildRoute("/eventospicker", child:  (context, args) => ImagePickerService()),
+
   // ChildRoute("/qrcodelist/:idCurso/:idPeriodo", child:  (context, args) => QRCodeListScreen(controller: Modular.get(), idCurso: args.params['idCurso'], idPeriodo: args.params['idPeriodo'],)),
   // ChildRoute("/qrcodezoom", child:  (context, args) => const QRCodeZoomScreen(data: '',)),
 
