@@ -40,17 +40,12 @@ class _EventosPageState extends State<EventosPage> {
       body: Column(
         children: [
           Expanded(
-            child: Observer(builder: (context) {
-              if (widget.controller.showCursosWidget) {
-                return CursosPage(
-                    controller: Modular.get(),
-                    callBack: (curso) {
-                      widget.controller.setCursoSelected(curso);
-                      Modular.to.pushNamed('/eventos/eventoslist/${curso.id}');
-                    });
-              }
-              return Container();
-            }),
+            child: CursosPage(
+                controller: Modular.get(),
+                callBack: (curso) {
+                  widget.controller.setCursoSelected(curso);
+                  Modular.to.pushNamed('/eventos/eventoslist/${curso.id}');
+                }),
           )
         ],
       ),
