@@ -32,7 +32,7 @@ class HomeDataSourceImpl implements IHomeDataSource {
       "icon": "0xf051f"
     },{
       "title": "Horários",
-      "action": "/cursos",
+      "action": "/horarios",
       "icon": "0xe821"
     },
     {
