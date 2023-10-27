@@ -70,7 +70,7 @@ abstract class HorariosControllerBase with Store {
       setLoading(false);
     }, (horario) {
       setHorarios(horario);
-      print(horario);
+      
       setErro(false);
       setLoading(false);
     });
