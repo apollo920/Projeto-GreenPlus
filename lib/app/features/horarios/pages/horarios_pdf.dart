@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:greenplus/app/features/horarios/pages/horarios_controller.dart';
+import 'package:printing/printing.dart';
 
 class PDFScreen extends StatefulWidget {
   final HorariosController controller;
@@ -37,28 +40,7 @@ class _PDFScreenState extends State<PDFScreen> {
             child: CircularProgressIndicator(),
           );
         }
-        return PDFView(
-          filePath: widget.controller.listaHorario,
-          enableSwipe: true,
-          swipeHorizontal: true,
-          autoSpacing: false,
-          pageFling: false,
-          onRender: (_pages) {
-            print("Rendered $_pages pages");
-          },
-          onError: (error) {
-            print(error.toString());
-          },
-          onPageError: (page, error) {
-            print('$page: ${error.toString()}');
-          },
-          onViewCreated: (PDFViewController pdfViewController) {
-
-          },
-          onPageChanged: (int? page, int? total) {
-            print('page change: $page/$total');
-          },
-        );
+        return PdfPreview(build: (_) => base64Decode(widget.controller.listaHorario ?? ''), );
       }),
     );
   }
