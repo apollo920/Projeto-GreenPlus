@@ -76,11 +76,11 @@ abstract class HorariosControllerBase with Store {
     });
   }
 
-  Future addHorarios({required HorarioModel horariosModel, required String idCurso, required String base64}) async {
+  Future addHorarios({required String base64}) async {
     showLoading();
     var result = await horariosRepository.addHorarios(
         idCurso: cursoSelected!.id!,
-        horarioModel: horariosModel);
+        base64: base64);
     await Future.delayed(const Duration(seconds: 3));
     result.fold((erro) {
       Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
@@ -100,7 +100,7 @@ abstract class HorariosControllerBase with Store {
                 ]);
           });
     }, (id) {
-      listaHorario = base64;
+      setHorarios(base64);
       Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
     });
   }

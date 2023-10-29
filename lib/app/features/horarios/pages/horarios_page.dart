@@ -68,12 +68,22 @@ class _PDFToBase64ScreenState extends State<PDFToBase64Screen> {
       File file = File(result.files.single.path!);
       List<int> pdfBytes = await file.readAsBytes();
       base64PDF = base64Encode(pdfBytes);
-
-      
-      print('Base64 encoded PDF: $base64PDF');
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PDFPreview(pdfPath: base64PDF),
+      ),
+    );
     } else {
-      // User canceled the picker
+      const Text("erro");
     }
+  }
+
+  Future<void> _addPDF(String data) async {
+    await Modular.get<HorariosController>().addHorarios(
+      base64: data,
+    );
   }
 
   @override
@@ -84,10 +94,124 @@ class _PDFToBase64ScreenState extends State<PDFToBase64Screen> {
       ),
       body: Center(
         child: ElevatedButton(
-          onPressed: () {
+          onPressed: (){
             pickAndConvertFile();
           },
           child: Text('Pick and Convert PDF'),
+        ),
+      ),
+    );
+  }
+}
+
+class PDFPreview extends StatefulWidget {
+  final String pdfPath;
+
+  PDFPreview({required this.pdfPath});
+
+  @override
+  _PDFPreviewState createState() =>
+      _PDFPreviewState();
+}
+
+class _PDFPreviewState
+    extends State<PDFPreview> {
+  TextEditingController textController = TextEditingController();
+
+  Future<void> showConfirmationDialog() async {
+    return await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Tem certeza que deseja sair?"),
+          actions: <Widget>[
+            TextButton(
+              child: Text("Cancelar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text("Sim"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+  
+  Future<void> _addPDF(String data) async {
+    await Modular.get<HorariosController>().addHorarios(
+      base64: data,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => showConfirmationDialog(),
+        ),
+        title: const Text(
+          "Verificação do PDF selecionado",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: const Color.fromARGB(255, 27, 136, 83),
+      ),
+      body: Container(
+        width: double.infinity,
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.fill,
+              image: ExactAssetImage('assets/images/a.png'),
+            ),
+          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text("PDF selecionado", style: TextStyle(color: Colors.white),),
+            SizedBox(height: 7),
+            // Image.memory(
+            //         base64Decode(widget.imagePath),
+            //         width: MediaQuery.of(context).size.width * 0.5,
+            //         height: MediaQuery.of(context).size.height *0.5, 
+            //         fit: BoxFit.contain,),
+            SizedBox(height: 20,),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.5,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+              child: FractionallySizedBox(
+                widthFactor: 0.5,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () async {
+                          await _addPDF(widget.pdfPath);
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Salvar'),
+                      ),
+                      SizedBox(height: 20,)
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

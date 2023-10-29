@@ -26,9 +26,9 @@ class HorariosRepositoryImpl extends IHorariosRepository{
   }
 
   @override
-  Future<Either<Failure, String>> addHorarios({required String idCurso, required HorarioModel horarioModel}) async {
+  Future<Either<Failure, String>> addHorarios({required String idCurso, required String base64}) async {
     try {
-      String? idQr = await dataSource.addHorarios(idCurso: idCurso, horarioModel: horarioModel );
+      String? idQr = await dataSource.addHorarios(idCurso: idCurso, base64: base64);
 
       if (idQr == null || idQr.isEmpty) {
         return Left(DataSourceEmpty());
