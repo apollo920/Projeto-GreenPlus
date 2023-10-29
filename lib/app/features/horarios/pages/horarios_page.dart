@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import '../../../core/cursos/page/cursos_page.dart';
 import 'horarios_controller.dart';
@@ -65,9 +66,8 @@ class _PDFToBase64ScreenState extends State<PDFToBase64Screen> {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
-      File file = File(result.files.single.path!);
-      List<int> pdfBytes = await file.readAsBytes();
-      base64PDF = base64Encode(pdfBytes);
+      Uint8List uploadfile = result.files.single.bytes ?? Uint8List.fromList([]);
+      base64PDF = base64Encode(uploadfile);
       // ignore: use_build_context_synchronously
       Navigator.push(
       context,
