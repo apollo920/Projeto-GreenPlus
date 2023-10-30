@@ -4,7 +4,6 @@ import 'package:mobx/mobx.dart';
 import '../../../core/controllers/auth/auth_store.dart';
 import '../../../core/cursos/models/curso.dart';
 import '../infra/repository/i_horarios_repository.dart';
-import '../models/horarios.dart';
 
 part 'horarios_controller.g.dart';
 
@@ -20,7 +19,7 @@ abstract class HorariosControllerBase with Store {
   Curso? cursoSelected;
   
   @observable
-  String? listaHorario;
+  String? pdfHorario;
 
   @observable
   bool loading = false;
@@ -41,7 +40,7 @@ abstract class HorariosControllerBase with Store {
   setCursoSelected(Curso? value) => cursoSelected = value;
 
   @action
-  setHorarios(String? value) => listaHorario = value;
+  setHorarios(String? value) => pdfHorario = value;
 
   @computed
   get showCursosWidget => cursoSelected == null;
@@ -59,7 +58,7 @@ abstract class HorariosControllerBase with Store {
   }
 
   obterHorarios({required String idCurso}) async {
-    
+    pdfHorario = '';
     setLoading(true);
 
     var result = await horariosRepository.getHorarios(
@@ -70,15 +69,14 @@ abstract class HorariosControllerBase with Store {
       setLoading(false);
     }, (horario) {
       setHorarios(horario);
-      
       setErro(false);
       setLoading(false);
     });
   }
 
-  Future addHorarios({required String base64}) async {
+  Future changeHorarios({required String base64}) async {
     showLoading();
-    var result = await horariosRepository.addHorarios(
+    var result = await horariosRepository.changeHorarios(
         idCurso: cursoSelected!.id!,
         base64: base64);
     await Future.delayed(const Duration(seconds: 3));
@@ -100,7 +98,7 @@ abstract class HorariosControllerBase with Store {
                 ]);
           });
     }, (id) {
-      setHorarios(base64);
+      pdfHorario = base64;
       Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
     });
   }
@@ -117,5 +115,3 @@ abstract class HorariosControllerBase with Store {
 
 }
 
-
-// Modular.routerDelegate.navigatorKey.currentState!.context,

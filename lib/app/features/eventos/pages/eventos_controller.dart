@@ -145,5 +145,13 @@ abstract class EventosControllerBase with Store {
           );
         });
   }
-
+  showTrash() {
+    if ((Modular.get<AuthStore>().user?.isAdmin ?? false)){
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
+
+// evento.id?.isNotEmpty ?? false,

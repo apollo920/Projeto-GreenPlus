@@ -67,7 +67,7 @@ class _CursosPageState extends State<CursosPage> {
                             contentLine1: widget.controller.cursos
                                 .take(3)
                                 .map((curso) => Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 30),
+                                  padding: const EdgeInsets.symmetric(horizontal: 30),
                                   
                                   child: CustomButtonQuadrado(
                                         backgroundColor:
@@ -81,22 +81,22 @@ class _CursosPageState extends State<CursosPage> {
                               contentLine2: widget.controller.cursos
                                   .skip(3)
                                   .map((curso) => Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 20),
+                                    padding: const EdgeInsets.symmetric(horizontal: 20),
                                     child: CustomButtonQuadrado(
                                           backgroundColor:
                                               const Color.fromARGB(255, 27, 136, 83),
                                           icon: curso.icon!.toIcon(),
                                           onPressed: () => widget.callBack(curso),
                                           label: curso.nome ?? '',
-                                        ),
+                                        )
                                   ))
                                 .toList());
                       
                     }
                     return Container();
                   }),
-                ),
-              )),
+                )
+              ))
     );
   }
 }

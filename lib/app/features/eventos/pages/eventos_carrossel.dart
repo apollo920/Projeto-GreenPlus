@@ -8,18 +8,18 @@ import '../../../core/controllers/auth/auth_store.dart';
 import '../../../core/pages/empty/empty_page.dart';
 import '../../../core/widgets/buttons/expandable_fab.dart';
 
-class ImageCarousel extends StatefulWidget {
+class EventosCarousel extends StatefulWidget {
   final EventosController controller;
   final String idCurso;
 
-  const ImageCarousel({super.key, required this.controller, required this.idCurso});
+  const EventosCarousel({super.key, required this.controller, required this.idCurso});
 
   @override
   // ignore: library_private_types_in_public_api
-  _ImageCarouselState createState() => _ImageCarouselState();
+  _EventosCarouselState createState() => _EventosCarouselState();
 }
 
-class _ImageCarouselState extends State<ImageCarousel> {
+class _EventosCarouselState extends State<EventosCarousel> {
   @override
   void initState() {
     super.initState();
@@ -109,7 +109,7 @@ Widget build(BuildContext context) {
                                                 style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                               ),
                                               Visibility(
-                                                visible: evento.id?.isNotEmpty ?? false,
+                                                visible: widget.controller.showTrash(),
                                                 child: ElevatedButton(
                                                   onPressed: () => showDialog(
                                                     context: context,
@@ -147,21 +147,21 @@ Widget build(BuildContext context) {
                                                     child: Icon(
                                                       Icons.delete,
                                                       color: Colors.white,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                                    )
+                                                  )
+                                                )
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    )
                                   );
-                                },
+                                }
                               );
-                            }).toList(),
+                            }).toList()
                           );
-                        },
+                        }
                       );
                     } else if(widget.controller.erro){
                       return Column(children: [
@@ -184,14 +184,14 @@ Widget build(BuildContext context) {
                               heightPercent: 0.4,
                               subMessage: "Tente novamente mais tarde", textColor: Colors.white,);
                               }
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    ),
+                  }
+                )
+              )
+            ]
+          )
+        )
+      )
+    )
   );
 }
 Future<void> _deleteEventos(int id) async {

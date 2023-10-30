@@ -101,10 +101,10 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
                                   ...widget.controller
                                   .listaQrCode
                                   .map(
-                                    (qrCodeModel) {
-                                      final content = qrCodeModel.content;
-                                      final title = qrCodeModel.title;
-                                      final type = qrCodeModel.type;
+                                    (qrCode) {
+                                      final content = qrCode.content;
+                                      final title = qrCode.title;
+                                      final type = qrCode.type;
                                       return GestureDetector(
                                           onTap: () {
                                             Navigator.push(
@@ -154,7 +154,7 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
                                                             ),
                                                           ),
                                                           Visibility(
-                                                        visible: qrCodeModel.id?.isNotEmpty ?? false,
+                                                        visible: widget.controller.showTrash(),
                                                         child: ElevatedButton(
                                                           onPressed: () => showDialog(
                                                             context: context,
@@ -173,7 +173,7 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
                                                                   TextButton(
                                                                     onPressed: () {
                                                                       Navigator.of(context).pop();
-                                                                      _deleteQRCode(int.parse(qrCodeModel.id!));
+                                                                      _deleteQRCode(int.parse(qrCode.id!));
                                                                     },
                                                                     child: const Text("Ok"),
                                                                   )
@@ -184,7 +184,7 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
                                                           style: ButtonStyle(
                                                             backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
                                                             shape: MaterialStateProperty.all<OutlinedBorder>(
-                                                              CircleBorder(),
+                                                              const CircleBorder(),
                                                             ),
                                                           ),
                                                           child: const Padding(
@@ -192,12 +192,12 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
                                                             child: Icon(
                                                               Icons.delete,
                                                               color: Colors.white,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),  
+                                                            )
+                                                          )
+                                                        )
+                                                      )
+                                                    ]
+                                                  )
                                                 )
                                               ]
                                             )
@@ -215,9 +215,10 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
                                       subMessage: "Tente novamente mais tarde", textColor: Colors.white,),
                                     ElevatedButton(onPressed: () => Navigator.of(context).pop(), child: const Text("VOLTAR")),
                                     const SizedBox(height: 20,),
-                                    ElevatedButton(onPressed: () =>  setState(() {
-                                      initState(); 
-                                    }),child: const Text("TENTE NOVAMENTE"))
+                                    ElevatedButton(
+                                      onPressed: () =>  widget.controller.obterQrCodes(idCurso: widget.idCurso, idPeriodo: widget.idPeriodo),
+                                      child: const Text("TENTE NOVAMENTE")
+                                    )
                                   ],
                                 )
                               else
@@ -259,7 +260,7 @@ class QRCodeZoomScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         leading: IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white,), onPressed: () => Modular.to.pop()),
         title: Text(title, 
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.white
         ),),
         backgroundColor: const Color.fromARGB(255, 27, 136, 83),

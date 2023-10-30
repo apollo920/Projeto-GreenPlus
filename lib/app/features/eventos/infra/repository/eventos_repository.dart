@@ -28,13 +28,13 @@ class EventosRepositoryImpl extends IEventosRepository{
   @override
   Future<Either<Failure, String>> addEventos({required String idCurso, required EventoModel eventoModel}) async {
     try {
-      String? idQr = await dataSource.addEventos(idCurso: idCurso, eventoModel: eventoModel );
+      String? idEv = await dataSource.addEventos(idCurso: idCurso, eventoModel: eventoModel );
 
-      if (idQr == null || idQr.isEmpty) {
+      if (idEv == null || idEv.isEmpty) {
         return Left(DataSourceEmpty());
       }
 
-      return Right(idQr);
+      return Right(idEv);
     } catch (e) {
       return Left(DataSourceException());
     }
@@ -43,13 +43,13 @@ class EventosRepositoryImpl extends IEventosRepository{
   @override
   Future<Either<Failure, String>> deleteEventos({required String idCurso, required int idEvento}) async {
     try {
-      String? idQr = await dataSource.deleteEventos(idCurso: idCurso, idEvento: idEvento);
+      String? idEv = await dataSource.deleteEventos(idCurso: idCurso, idEvento: idEvento);
 
-      if (idQr == null || idQr.isEmpty) {
+      if (idEv == null || idEv.isEmpty) {
         return Left(DataSourceEmpty());
       }
 
-      return Right(idQr);
+      return Right(idEv);
     } catch (e) {
       return Left(DataSourceException());
     }

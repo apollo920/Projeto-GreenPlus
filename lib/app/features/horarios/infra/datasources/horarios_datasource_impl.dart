@@ -1,6 +1,5 @@
 import '../../../../core/infra/client_http/i_client_http.dart';
 import '../../../../core/infra/local_storage/i_local_secure_storage.dart';
-import '../../models/horarios.dart';
 import 'i_horarios_datasource.dart';
 
 class HorariosDataSourceImpl implements IHorariosDataSource {
@@ -15,7 +14,7 @@ class HorariosDataSourceImpl implements IHorariosDataSource {
   }
 
   @override
-  Future<String?> addHorarios(
+  Future<String?> changeHorarios(
       {required String idCurso, required String base64}) async {
     try {
       listaHorariosByCursos[idCurso] = base64;
@@ -47,7 +46,7 @@ var listaHorariosByCursos = {
     "2":
        '',
       
-    "3":
-       ''
     
+    // "3":
+    //    ''
   };

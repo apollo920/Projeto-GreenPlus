@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:greenplus/app/features/eventos/models/eventos.dart';
 import 'package:image_picker/image_picker.dart';
@@ -27,7 +25,8 @@ class _EventosPageState extends State<EventosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Escolha um dos cursos específicos', style: TextStyle(color: Colors.white),),
+          title: const Text('Escolha um dos cursos específicos', 
+          style: TextStyle(color: Colors.white),),
           backgroundColor: const Color.fromARGB(255, 27, 136, 83),
           automaticallyImplyLeading: false,
           leading: IconButton(
@@ -45,21 +44,24 @@ class _EventosPageState extends State<EventosPage> {
                 callBack: (curso) {
                   widget.controller.setCursoSelected(curso);
                   Modular.to.pushNamed('/eventos/eventoslist/${curso.id}');
-                }),
+                })
           )
-        ],
-      ),
+        ]
+      )
     );
   }
 }
 
 
-class ImagePickerService extends StatefulWidget {
+class EventosPickerService extends StatefulWidget {
+  const EventosPickerService({super.key});
+
   @override
-  _ImagePickerServiceState createState() => _ImagePickerServiceState();
+  // ignore: library_private_types_in_public_api
+  _EventosPickerServiceState createState() => _EventosPickerServiceState();
 }
 
-class _ImagePickerServiceState extends State<ImagePickerService> {
+class _EventosPickerServiceState extends State<EventosPickerService> {
   final _picker = ImagePicker();
   String observacoes = '';
 
@@ -67,26 +69,18 @@ class _ImagePickerServiceState extends State<ImagePickerService> {
     XFile? pickedImage = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
       String base64Image = base64Encode(await pickedImage.readAsBytes());
+      // ignore: use_build_context_synchronously
       Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => ImagePreviewAndObservations(imagePath: base64Image),
       ),
     );
-      // await _addImage(base64Image, observacoes);
     } else {
       
     }
   }
 
-  Future<void> _addImage(String data, String observacoes) async {
-    await Modular.get<EventosController>().addEventos(
-      eventosModel: EventoModel.fromMap({
-        "image": data,
-        "observacoes": observacoes,
-      }),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,14 +123,15 @@ class _ImagePickerServiceState extends State<ImagePickerService> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('*Nota: Lembre-se que esse é um seletor de imagens, tente usar apenas arquivos .PNG, .JPEG ou .JPG', style: TextStyle(color: Colors.black),),
-                      ],
-                    ))),
+                        Text('*Nota: Lembre-se que esse é um seletor de imagens, tente usar apenas arquivos .PNG, .JPEG ou .JPG', 
+                        style: TextStyle(color: Colors.black),),
+                      ]
+                    )))
               )
-            ],
-          ),
-        ),
-      ),
+            ]
+          )
+        )
+      )
     );
   }
 }
@@ -144,9 +139,10 @@ class _ImagePickerServiceState extends State<ImagePickerService> {
 class ImagePreviewAndObservations extends StatefulWidget {
   final String imagePath;
 
-  ImagePreviewAndObservations({required this.imagePath});
+  const ImagePreviewAndObservations({super.key, required this.imagePath});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ImagePreviewAndObservationsState createState() =>
       _ImagePreviewAndObservationsState();
 }
@@ -161,24 +157,24 @@ class _ImagePreviewAndObservationsState
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Tem certeza que deseja sair?"),
+          title: const Text("Tem certeza que deseja sair?"),
           actions: <Widget>[
             TextButton(
-              child: Text("Cancelar"),
+              child: const Text("Cancelar"),
               onPressed: () {
                 Navigator.of(context).pop();
-              },
+              }
             ),
             TextButton(
-              child: Text("Sim"),
+              child: const Text("Sim"),
               onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
-              },
-            ),
-          ],
+              }
+            )
+          ]
         );
-      },
+      }
     );
   }
   
@@ -187,7 +183,7 @@ class _ImagePreviewAndObservationsState
       eventosModel: EventoModel.fromMap({
         "image": data,
         "observacoes": observacoes,
-      }),
+      })
     );
   }
 
@@ -218,14 +214,14 @@ class _ImagePreviewAndObservationsState
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Imagem selecionada", style: TextStyle(color: Colors.white),),
-            SizedBox(height: 7),
+            const Text("Imagem selecionada", style: TextStyle(color: Colors.white),),
+            const SizedBox(height: 7),
             Image.memory(
                     base64Decode(widget.imagePath),
                     width: MediaQuery.of(context).size.width * 0.5,
                     height: MediaQuery.of(context).size.height *0.5, 
                     fit: BoxFit.contain,),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Container(
               width: MediaQuery.of(context).size.width * 0.5,
               decoration: const BoxDecoration(
@@ -238,7 +234,7 @@ class _ImagePreviewAndObservationsState
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const SizedBox(height: 20),
-                      Text("Escreva suas observações(Se necessário):"),
+                      const Text("Escreva suas observações(Se necessário):"),
                       TextFormField(
                         controller: textController,
                       ),
@@ -249,20 +245,22 @@ class _ImagePreviewAndObservationsState
                             observacoes = textController.text; 
                           });
                           await _addImage(widget.imagePath, observacoes);
+                          // ignore: use_build_context_synchronously
                           Navigator.of(context).pop();
+                          // ignore: use_build_context_synchronously
                           Navigator.of(context).pop();
                         },
                         child: const Text('Salvar'),
                       ),
-                      SizedBox(height: 20,)
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+                      const SizedBox(height: 20,)
+                    ]
+                  )
+                )
+              )
+            )
+          ]
+        )
+      )
     );
   }
 }

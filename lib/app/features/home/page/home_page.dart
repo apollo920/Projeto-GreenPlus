@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:greenplus/app/core/utils/string_extensions.dart';
 
+import '../../../core/pages/empty/empty_page.dart';
 import '../../../core/widgets/custom_button_2.dart';
 import '../../../core/widgets/grid_menus.dart';
 import 'home_controller.dart';
@@ -32,11 +33,11 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white,), onPressed: () => Modular.to.pop()),
-          title: Text("Opções de funcionalidades",
+          title: const Text("Opções de funcionalidades",
             style: TextStyle(
                 color: Colors.white
             ),),
-          backgroundColor: Color.fromARGB(255, 27, 136, 83),
+          backgroundColor: const Color.fromARGB(255, 27, 136, 83),
         ),
         body: Container(
           width: double.infinity,
@@ -55,13 +56,17 @@ class _HomePageState extends State<HomePage> {
               if (widget.controller.erro) {
                 return Column(
                   children: [
-                    Container(
-                      color: Colors.red,
-                      child: const Text("Erro inesperado"),
-                    ),
-                    OutlinedButton(onPressed: () =>
-                        widget.controller.obterMenusModulos(),
-                        child: const Text("Tentar novamente"))
+                    const EmptyPage(
+                      imagePath: "assets/images/server_down.svg", 
+                      message: "Erro ao carregar dados!",
+                      isSvg: true,
+                      heightPercent: 0.4,
+                      subMessage: "Tente novamente mais tarde", textColor: Colors.white,),
+                      ElevatedButton(onPressed: () => Navigator.of(context).pop(), 
+                      child: const Text("VOLTAR")),
+                      const SizedBox(height: 20,),
+                      ElevatedButton(onPressed: () =>  widget.controller.obterMenusModulos(), 
+                      child: const Text("TENTE NOVAMENTE"),),
                   ],
                 );
               }
@@ -70,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                   contentLine1: widget.controller.menusModulo.take(3).map((
                       menu) {
                     return Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: CustomButton2(
                           backgroundColor:
                           const Color.fromARGB(255, 27, 136, 83),
@@ -95,10 +100,9 @@ class _HomePageState extends State<HomePage> {
                         ));
                   }).toList());
               }
-
               return Container();
-            })),
-          ),
+            }))
+          )
         ));
   }
 }

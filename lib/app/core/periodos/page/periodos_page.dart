@@ -68,7 +68,7 @@ class _PeriodosPageState extends State<PeriodosPage> {
                             contentLine1: widget.controller.periodos
                                 .take(halfLength)
                                 .map((periodo) => Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 30),
+                                  padding: const EdgeInsets.symmetric(horizontal: 30),
                         
                                   child: CustomButtonQuadrado(
                                         backgroundColor:
@@ -82,7 +82,7 @@ class _PeriodosPageState extends State<PeriodosPage> {
                               contentLine2: widget.controller.periodos
                                   .skip(halfLength)
                                   .map((periodo) => Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 30),
+                                    padding: const EdgeInsets.symmetric(horizontal: 30),
                                     child: CustomButtonQuadrado(
                                           backgroundColor:
                                               const Color.fromARGB(255, 27, 136, 83),

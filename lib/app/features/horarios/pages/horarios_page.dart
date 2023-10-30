@@ -1,11 +1,12 @@
 
 import 'dart:convert';
-import 'dart:io';
+
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:printing/printing.dart';
 import '../../../core/cursos/page/cursos_page.dart';
 import 'horarios_controller.dart';
 
@@ -48,22 +49,29 @@ class _HorariosPageState extends State<HorariosPage> {
                   Modular.to.pushNamed('/horarios/horariospdf/${curso.id}');
                 }),
           )
-        ],
-      ),
+        ]
+      )
     );
   }
 }
 
-class PDFToBase64Screen extends StatefulWidget {
+class PDFPickerService extends StatefulWidget {
+  const PDFPickerService({super.key});
+
   @override
-  _PDFToBase64ScreenState createState() => _PDFToBase64ScreenState();
+  // ignore: library_private_types_in_public_api
+  _PDFPickerServiceState createState() => _PDFPickerServiceState();
 }
 
-class _PDFToBase64ScreenState extends State<PDFToBase64Screen> {
+class _PDFPickerServiceState extends State<PDFPickerService> {
   String base64PDF = '';
 
   Future<void> pickAndConvertFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+      // allowMultiple: false,
+    );
 
     if (result != null) {
       Uint8List uploadfile = result.files.single.bytes ?? Uint8List.fromList([]);
@@ -72,80 +80,129 @@ class _PDFToBase64ScreenState extends State<PDFToBase64Screen> {
       Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PDFPreview(pdfPath: base64PDF),
-      ),
+        builder: (context) => PDFPreview(pdfBase64: base64PDF),
+      )
     );
     } else {
-      const Text("erro");
+      // ignore: use_build_context_synchronously
+      showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Algo de errado aconteceu"),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("Ok"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }
+            )
+          ]
+        );
+      }
+    );
     }
   }
 
-  Future<void> _addPDF(String data) async {
-    await Modular.get<HorariosController>().addHorarios(
-      base64: data,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('PDF to Base64'),
+        automaticallyImplyLeading: false,
+        leading: IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white,), onPressed: () => Modular.to.pop()),
+        title: const Text("Selecione o horário a ser exibido",
+          style: TextStyle(
+            color: Colors.white
+        )),
+        backgroundColor: const Color.fromARGB(255, 27, 136, 83),
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: (){
-            pickAndConvertFile();
-          },
-          child: Text('Pick and Convert PDF'),
-        ),
-      ),
+      body: Container(
+         width: double.infinity,
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.fill,
+              image: ExactAssetImage('assets/images/a.png'),
+            )
+          ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: (){
+                  pickAndConvertFile();
+                },
+                child: const Text('Escolha o arquivo', style: TextStyle(color: Colors.black),)
+              ),
+              const SizedBox(
+                height: 20
+              ),
+               FractionallySizedBox(
+                widthFactor: 0.1,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(8))),
+                  child: const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('*Nota: Lembre-se que esse é um seletor de PDFs, tente usar apenas arquivos .PDF', style: TextStyle(color: Colors.black),),
+                      ]
+                    )))
+              )
+            ]
+          )
+        )
+      )
     );
   }
 }
 
 class PDFPreview extends StatefulWidget {
-  final String pdfPath;
+  final String pdfBase64;
 
-  PDFPreview({required this.pdfPath});
+  const PDFPreview({super.key, required this.pdfBase64});
 
   @override
+  // ignore: library_private_types_in_public_api
   _PDFPreviewState createState() =>
       _PDFPreviewState();
 }
 
 class _PDFPreviewState
     extends State<PDFPreview> {
-  TextEditingController textController = TextEditingController();
 
   Future<void> showConfirmationDialog() async {
     return await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Tem certeza que deseja sair?"),
+          title: const Text("Tem certeza que deseja sair(talvez você não tenha salvo o arquivo)?"),
           actions: <Widget>[
             TextButton(
-              child: Text("Cancelar"),
+              child: const Text("Cancelar"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text("Sim"),
+              child: const Text("Sim"),
               onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
-              },
-            ),
-          ],
+              }
+            )
+          ]
         );
-      },
+      }
     );
   }
   
-  Future<void> _addPDF(String data) async {
-    await Modular.get<HorariosController>().addHorarios(
+  Future<void> _changePDF(String data) async {
+    await Modular.get<HorariosController>().changeHorarios(
       base64: data,
     );
   }
@@ -165,55 +222,20 @@ class _PDFPreviewState
         ),
         backgroundColor: const Color.fromARGB(255, 27, 136, 83),
       ),
-      body: Container(
-        width: double.infinity,
-          height: double.infinity,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: ExactAssetImage('assets/images/a.png'),
-            ),
-          ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text("PDF selecionado", style: TextStyle(color: Colors.white),),
-            SizedBox(height: 7),
-            // Image.memory(
-            //         base64Decode(widget.imagePath),
-            //         width: MediaQuery.of(context).size.width * 0.5,
-            //         height: MediaQuery.of(context).size.height *0.5, 
-            //         fit: BoxFit.contain,),
-            SizedBox(height: 20,),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.5,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(20))),
-              child: FractionallySizedBox(
-                widthFactor: 0.5,
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () async {
-                          await _addPDF(widget.pdfPath);
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text('Salvar'),
-                      ),
-                      SizedBox(height: 20,)
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      floatingActionButton: 
+      ElevatedButton(
+        onPressed: () async {
+          await _changePDF(widget.pdfBase64);    
+          // ignore: use_build_context_synchronously
+          Navigator.of(context).pop();
+          // ignore: use_build_context_synchronously
+          Navigator.of(context).pop();
+                  },
+              child: const Text('Salvar'),
+                ), 
+      body:PdfPreview(
+            build: (_) => base64Decode(widget.pdfBase64),
+            useActions: false, ),
     );
   }
 }

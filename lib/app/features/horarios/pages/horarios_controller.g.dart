@@ -47,19 +47,19 @@ mixin _$HorariosController on HorariosControllerBase, Store {
     });
   }
 
-  late final _$listaHorarioAtom =
-      Atom(name: 'HorariosControllerBase.listaHorario', context: context);
+  late final _$pdfHorarioAtom =
+      Atom(name: 'HorariosControllerBase.pdfHorario', context: context);
 
   @override
-  String? get listaHorario {
-    _$listaHorarioAtom.reportRead();
-    return super.listaHorario;
+  String? get pdfHorario {
+    _$pdfHorarioAtom.reportRead();
+    return super.pdfHorario;
   }
 
   @override
-  set listaHorario(String? value) {
-    _$listaHorarioAtom.reportWrite(value, super.listaHorario, () {
-      super.listaHorario = value;
+  set pdfHorario(String? value) {
+    _$pdfHorarioAtom.reportWrite(value, super.pdfHorario, () {
+      super.pdfHorario = value;
     });
   }
 
@@ -146,7 +146,7 @@ mixin _$HorariosController on HorariosControllerBase, Store {
   String toString() {
     return '''
 cursoSelected: ${cursoSelected},
-listaHorario: ${listaHorario},
+pdfHorario: ${pdfHorario},
 loading: ${loading},
 erro: ${erro},
 loaded: ${loaded},

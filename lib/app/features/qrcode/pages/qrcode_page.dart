@@ -75,12 +75,14 @@ class _QrCodePageState extends State<QrCodePage> {
   }
 }
 
+// ignore: constant_identifier_names
 enum SecurityType { WPA, nopass, WEP }
 
 class QRCodeWifiGenerator extends StatefulWidget {
   const QRCodeWifiGenerator({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _QRCodeWifiGeneratorState createState() => _QRCodeWifiGeneratorState();
 }
 
@@ -230,9 +232,11 @@ class _QRCodeWifiGeneratorState extends State<QRCodeWifiGenerator> {
                                                                   'WIFI:T:${securityType?.name};S:$networkName;P:$password;;';
                                                               await _generateWifiQRCode(
                                                                   wifiData);
+                                                              // ignore: use_build_context_synchronously
                                                               Navigator.of(
                                                                    context)
                                                                   .pop();
+                                                                  // ignore: use_build_context_synchronously
                                                                   Navigator.of(context).pop();
                                                                   setState(() {
                                                                     
@@ -247,8 +251,8 @@ class _QRCodeWifiGeneratorState extends State<QRCodeWifiGenerator> {
                                             child: const Text('Gerar QR Code'),
                                           ),
                                           const SizedBox(height: 20),
-                                        ],
-                                      ),
+                                        ]
+                                      )
                                     ),
                                     Expanded(
                                       child: Column(
@@ -295,6 +299,7 @@ class QRCodeLinkGenerator extends StatefulWidget {
   const QRCodeLinkGenerator({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _QRCodeLinkGeneratorState createState() => _QRCodeLinkGeneratorState();
 }
 
@@ -377,20 +382,22 @@ class _QRCodeLinkGeneratorState extends State<QRCodeLinkGenerator> {
                                               onPressed: () async {
                                                 await _generateLinkQRCode(link);
                                                 setState(() {});
+                                                // ignore: use_build_context_synchronously
                                                 Navigator.of(context).pop();
+                                                // ignore: use_build_context_synchronously
                                                 Navigator.of(context).pop();
                                               },
                                               child: const Text("OK"),
                                             )
-                                          ],
+                                          ]
                                         );
-                                      },
+                                      }
                                     );
                                   },
                                   child: const Text('Gerar QR Code'),
-                                ),
-                              ],
-                            ),
+                                )
+                              ]
+                            )
                           ),
                               Expanded(
                                 child: Column(
@@ -405,15 +412,15 @@ class _QRCodeLinkGeneratorState extends State<QRCodeLinkGenerator> {
                                         size: 200.0,
                                         )
                                       )
-                                    ],
-                                  ),
-                                ),
+                                    ]
+                                  )
+                                )
                               ]
                             )
                           )
                         )
                       ]
-                    ),
+                    )
                   )
                 )
               )

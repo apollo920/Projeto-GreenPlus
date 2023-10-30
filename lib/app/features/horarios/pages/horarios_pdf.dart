@@ -7,11 +7,13 @@ import 'package:greenplus/app/features/horarios/pages/horarios_controller.dart';
 import 'package:printing/printing.dart';
 import 'package:greenplus/app/core/widgets/buttons/expandable_fab.dart';
 
+import '../../../core/pages/empty/empty_page.dart';
+
 class PDFScreen extends StatefulWidget {
   final HorariosController controller;
   final String idCurso;
 
-  PDFScreen({required this.controller, required this.idCurso});
+  const PDFScreen({super.key, required this.controller, required this.idCurso});
 
   @override
   State<PDFScreen> createState() => _PDFScreenState();
@@ -32,8 +34,14 @@ class _PDFScreenState extends State<PDFScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Horários'),
-      ),
+      automaticallyImplyLeading: false,
+      leading: IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white,), onPressed: () => Modular.to.pop()),
+      title: const Text("Lista de Eventos",
+        style: TextStyle(
+          color: Colors.white
+      ),),
+      backgroundColor: const Color.fromARGB(255, 27, 136, 83),
+    ),
       floatingActionButton: (Modular.get<AuthStore>().user?.isAdmin ?? false)
         ? Observer(
           builder: (_) {  
@@ -52,17 +60,58 @@ class _PDFScreenState extends State<PDFScreen> {
           },
         )
         : null,
-      body: Observer(
-        builder: (_) {
-        return Stack(
-          children: [
-
-            PdfPreview(
-              build: (_) => base64Decode(widget.controller.listaHorario ?? ''),
-              useActions: false, ),
-            ],
-        );
-      }),
+      body: Center(
+        child: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: ExactAssetImage('assets/images/a.png'),
+            ),
+          ),
+          child: Center(
+            child: Column(
+              children: [
+                Expanded(
+                  child: Observer(
+                    builder: (_) {
+                      if (widget.controller.pdfHorario!.isNotEmpty) {
+                         var pdf = widget.controller.pdfHorario;
+                         return PdfPreview(
+                          build: (_) => base64Decode(pdf ?? ''),
+                          useActions: false,
+                         );
+                      } else if(widget.controller.erro) {
+                        return Column(
+                          children: [
+                            const EmptyPage(
+                              imagePath: "assets/images/server_down.svg", 
+                              message: "Erro ao carregar dados!",
+                              isSvg: true,
+                              heightPercent: 0.4,
+                              subMessage: "Tente novamente mais tarde", textColor: Colors.white,),
+                              ElevatedButton(onPressed: () => Navigator.of(context).pop(), 
+                              child: const Text("VOLTAR")),
+                              const SizedBox(height: 20,),
+                              ElevatedButton(onPressed: () =>  widget.controller.obterHorarios(idCurso: widget.idCurso), 
+                              child: const Text("TENTE NOVAMENTE"),),
+                                ],
+                                  );
+                      } else {
+                        return const EmptyPage(
+                        imagePath: "assets/images/empty.svg",
+                        message: "Sem Eventos",
+                        isSvg: true,
+                        heightPercent: 0.4,
+                        subMessage: "Tente novamente mais tarde", textColor: Colors.white,);
+                      }
+                    }
+                  )
+                )
+              ]
+            )
+          )
+        )
+      )
     );
   }
 }

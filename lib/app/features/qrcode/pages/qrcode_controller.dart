@@ -162,5 +162,13 @@ abstract class QrCodeControllerBase with Store {
           );
         });
   }
+
+  showTrash() {
+    if ((Modular.get<AuthStore>().user?.isAdmin ?? false)){
+      return true;
+    } else {
+      return false;
+    }
+  }
   
 }

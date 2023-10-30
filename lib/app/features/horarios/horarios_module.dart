@@ -20,6 +20,6 @@ class HorariosModule extends Module {
   List<ModularRoute> get routes => [
     ChildRoute("/",child: (context, args) => HorariosPage(controller: Modular.get())),
     ChildRoute("/horariospdf/:idCurso", child:  (context, args) => PDFScreen(controller: Modular.get(), idCurso: args.params['idCurso'],)),
-    ChildRoute("/pdfpicker", child:  (context, args) => PDFToBase64Screen()),
+    ChildRoute("/pdfpicker", child:  (context, args) => const PDFPickerService()),
   ];
 }
