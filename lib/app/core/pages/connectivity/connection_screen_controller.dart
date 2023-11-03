@@ -8,6 +8,7 @@ import '../../controllers/network_provider.dart';
 part 'connection_screen_controller.g.dart';
 
 
+// ignore: library_private_types_in_public_api
 class ConnectionScreenController = _ConnectionScreenControllerBase with _$ConnectionScreenController;
 
 abstract class _ConnectionScreenControllerBase with Store{

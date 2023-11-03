@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 
 import 'auth/auth_store.dart';
 
+// ignore: constant_identifier_names
 enum StatusNetwork { Uninitialized, TRUE, FALSE, LOADING }
 
 class NetworkProvider {
@@ -47,6 +48,7 @@ class NetworkProvider {
       if (authStore.statusNetwork != StatusNetwork.TRUE) {
         authStore.setStatusNetwork(StatusNetwork.TRUE);
       }
+    // ignore: deprecated_member_use
     } on DioError catch (e) {
       if (e.response != null) {
         if (authStore.statusNetwork != StatusNetwork.TRUE) {

@@ -87,12 +87,16 @@ class _EventosPickerServiceState extends State<EventosPickerService> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        leading: IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white,), onPressed: () => Modular.to.pop()),
+        leading: IconButton(icon: const Icon(Icons.arrow_back, 
+        color: Colors.white,), 
+        onPressed: () { 
+        Modular.to.pop();
+        }),
         title: const Text("Selecione uma imagem a ser exibida",
           style: TextStyle(
             color: Colors.white
         ),),
-        backgroundColor: const Color.fromARGB(255, 27, 136, 83),
+        backgroundColor: const Color.fromARGB(255, 67, 71, 69),
       ),
       body: Container(
         width: double.infinity,
@@ -149,6 +153,14 @@ class ImagePreviewAndObservations extends StatefulWidget {
 
 class _ImagePreviewAndObservationsState
     extends State<ImagePreviewAndObservations> {
+  final snackBar = SnackBar(
+        content: const Text("Adicionado com sucesso!"),
+        action: SnackBarAction(
+              label: 'Confirmar',
+              onPressed: () {
+              },
+            ),
+      );
   String observacoes = '';
   TextEditingController textController = TextEditingController();
 
@@ -249,6 +261,8 @@ class _ImagePreviewAndObservationsState
                           Navigator.of(context).pop();
                           // ignore: use_build_context_synchronously
                           Navigator.of(context).pop();
+                          // ignore: use_build_context_synchronously
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         },
                         child: const Text('Salvar'),
                       ),

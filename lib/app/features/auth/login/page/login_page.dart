@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'login_controller.dart';
 
+
+
 class LoginPage extends StatefulWidget {
   final LoginController controller;
 
@@ -32,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
             height: 300,
             decoration: BoxDecoration(
               color: Colors.transparent,
-              borderRadius: BorderRadius.all(Radius.circular(20)),
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
               border: Border.all(color: Colors.white, width: 2.0),
               ),
             child: Wrap(
@@ -57,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               
                             ),
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white
                             ),
                           ),
@@ -72,18 +74,21 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               border: OutlineInputBorder(),
                             ),
+                            style: const TextStyle(
+                              color: Colors.white
+                            ),
                           ),
                           Container(height: 60),
                           ElevatedButton(
                             onPressed: () {
                               widget.controller.authenticate();
-                            },  
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                            ),  
                             child: const Text('Login', style: TextStyle(
                               color: Colors.white
                             ),),
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                            ),
                           ),
                         ],
                       ),

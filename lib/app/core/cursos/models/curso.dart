@@ -12,6 +12,8 @@ class Curso {
   Curso copyWith({
     String? nome,
     String? action,
+    String? icon,
+    String? id
   }) {
     return Curso(
       nome: nome ?? this.nome,

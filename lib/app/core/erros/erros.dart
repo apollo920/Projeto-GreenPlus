@@ -13,6 +13,7 @@ class Failure implements Exception {
 
 class DataSourceEmpty extends Failure {
   @override
+  // ignore: overridden_fields
   final String? message;
 
   DataSourceEmpty({this.message = 'Sem dados'}): super(message: message);
@@ -21,6 +22,7 @@ class DataSourceEmpty extends Failure {
 
 class DataSourceException extends Failure {
   @override
+  // ignore: overridden_fields
   final String? message;
 
   DataSourceException({this.message = 'Erro na consulta'}): super(message: message);
@@ -29,6 +31,7 @@ class DataSourceException extends Failure {
 
 class InvalidParamets extends Failure {
   @override
+  // ignore: overridden_fields
   final String? message;
 
   InvalidParamets({this.message = 'Parâmetros inválidos'}) : super(message: message);
@@ -41,6 +44,7 @@ class DataSourceNull extends Failure {
 
 class ErrorLoginUserName extends Failure{
   @override
+  // ignore: overridden_fields
   final String? message;
 
   ErrorLoginUserName({this.message = 'Username ou senha inválida'}) : super(message: message);
@@ -48,12 +52,14 @@ class ErrorLoginUserName extends Failure{
 
 class StorageFailure extends Failure {
   @override
+  // ignore: overridden_fields
   final String? message;
   StorageFailure({this.message = 'Error ao gravar dados'}) : super(message: message);
 }
 
 class ErrorGetLoggedUser extends Failure {
   @override
+  // ignore: overridden_fields
   final String? message;
   ErrorGetLoggedUser({this.message}) : super(message: message);
 }

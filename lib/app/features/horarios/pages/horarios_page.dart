@@ -163,6 +163,7 @@ class _PDFPickerServiceState extends State<PDFPickerService> {
 
 class PDFPreview extends StatefulWidget {
   final String pdfBase64;
+  
 
   const PDFPreview({super.key, required this.pdfBase64});
 
@@ -174,7 +175,14 @@ class PDFPreview extends StatefulWidget {
 
 class _PDFPreviewState
     extends State<PDFPreview> {
-
+  final snackBar = SnackBar(
+    content: const Text("Substituído com sucesso!"),
+      action: SnackBarAction(
+        label: 'Confirmar',
+        onPressed: () {
+          }
+        )
+      );
   Future<void> showConfirmationDialog() async {
     return await showDialog(
       context: context,
@@ -223,16 +231,25 @@ class _PDFPreviewState
         backgroundColor: const Color.fromARGB(255, 27, 136, 83),
       ),
       floatingActionButton: 
-      ElevatedButton(
-        onPressed: () async {
-          await _changePDF(widget.pdfBase64);    
-          // ignore: use_build_context_synchronously
-          Navigator.of(context).pop();
-          // ignore: use_build_context_synchronously
-          Navigator.of(context).pop();
-                  },
-              child: const Text('Salvar'),
-                ), 
+      Align(
+        alignment: Alignment.bottomCenter,
+        child: ElevatedButton(
+          onPressed: () async {
+            await _changePDF(widget.pdfBase64);    
+            // ignore: use_build_context_synchronously
+            Navigator.of(context).pop();
+            // ignore: use_build_context_synchronously
+            Navigator.of(context).pop();
+            // ignore: use_build_context_synchronously
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    },
+                child: const Text('Salvar',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 40
+                ),),
+                  ),
+      ), 
       body:PdfPreview(
             build: (_) => base64Decode(widget.pdfBase64),
             useActions: false, ),

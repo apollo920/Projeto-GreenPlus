@@ -9,6 +9,7 @@ import 'package:greenplus/app/features/qrcode/pages/qrcode_controller.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../../core/pages/empty/empty_page.dart';
+import '../../../core/widgets/timer_tela_de_descanso.dart';
 
 
 class QRCodeListScreen extends StatefulWidget {
@@ -24,16 +25,29 @@ class QRCodeListScreen extends StatefulWidget {
   _QRCodeListScreenState createState() => _QRCodeListScreenState();
 }
 
-class _QRCodeListScreenState extends State<QRCodeListScreen> {
-
+class _QRCodeListScreenState extends State<QRCodeListScreen> with TimeoutManagerMixin{
+  final snackBar = SnackBar(
+        content: const Text("Deletado com sucesso!"),
+        action: SnackBarAction(
+              label: 'Confirmar',
+              onPressed: () {
+              },
+            ),
+      );
   @override
   void initState() {
     super.initState();
+    startTimeoutTimer(context);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       widget.controller.obterQrCodes(idCurso: widget.idCurso, idPeriodo: widget.idPeriodo);
     });
   }
-
+  
+  @override
+  void dispose() {
+    resetTimeoutTimer();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -174,6 +188,7 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
                                                                     onPressed: () {
                                                                       Navigator.of(context).pop();
                                                                       _deleteQRCode(int.parse(qrCode.id!));
+                                                                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                                                     },
                                                                     child: const Text("Ok"),
                                                                   )

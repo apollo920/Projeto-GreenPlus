@@ -10,12 +10,14 @@ class FabActionButton {
       {required this.onPressed, required this.title, required this.icon});
 }
 
+// ignore: must_be_immutable
 class ExpandableFab extends StatefulWidget {
   List<FabActionButton> fabButtons;
 
-  ExpandableFab({required this.fabButtons});
+  ExpandableFab({super.key, required this.fabButtons});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ExpandableFabState createState() => _ExpandableFabState();
 }
 
@@ -26,15 +28,15 @@ class _ExpandableFabState extends State<ExpandableFab>
   Animation<Color?>? _buttonColor;
   Animation<double>? _animateIcon;
   Animation<double>? _translateButton;
-  Curve _curve = Curves.easeOut;
-  double _fabHeight = 56.0;
+  final Curve _curve = Curves.easeOut;
+  final double _fabHeight = 56.0;
   double init = 1.0;
 
   @override
   initState() {
     super.initState();
     _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500))
+        AnimationController(vsync: this, duration: const Duration(milliseconds: 500))
           ..addListener(() {
             setState(() {});
           });
@@ -45,7 +47,7 @@ class _ExpandableFabState extends State<ExpandableFab>
       end: Colors.green,
     ).animate(CurvedAnimation(
       parent: _animationController!,
-      curve: Interval(
+      curve: const Interval(
         0.00,
         1.00,
         curve: Curves.linear,
@@ -80,16 +82,14 @@ class _ExpandableFabState extends State<ExpandableFab>
   }
 
   Widget toggle() {
-    return Container(
-      child: FloatingActionButton(
-        backgroundColor: _buttonColor?.value,
-        onPressed: animate,
-        tooltip: "Menu",
-        child: AnimatedIcon(
-          color: Colors.white,
-          icon: AnimatedIcons.menu_close,
-          progress: _animateIcon!,
-        ),
+    return FloatingActionButton(
+      backgroundColor: _buttonColor?.value,
+      onPressed: animate,
+      tooltip: "Menu",
+      child: AnimatedIcon(
+        color: Colors.white,
+        icon: AnimatedIcons.menu_close,
+        progress: _animateIcon!,
       ),
     );
   }
@@ -125,7 +125,7 @@ class _ExpandableFabState extends State<ExpandableFab>
                         child: Visibility(
                           visible: !_animationController!.isDismissed,
                           child: Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Colors.white,
                                 backgroundBlendMode: BlendMode.srcOver,
                                 borderRadius:
@@ -135,7 +135,7 @@ class _ExpandableFabState extends State<ExpandableFab>
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   e.title,
-                                  style: TextStyle(color: Colors.black54),
+                                  style: const TextStyle(color: Colors.black54),
                                 ),
                               )),
                         ),

@@ -12,6 +12,12 @@ import 'package:greenplus/app/core/periodos/infra/datasources/i_periodos_datasou
 import 'package:greenplus/app/core/periodos/infra/repository/i_periodos_repository.dart';
 import 'package:greenplus/app/core/periodos/page/periodos_controller.dart';
 import 'package:greenplus/app/features/avisos/page/avisos_page.dart';
+import 'package:greenplus/app/features/eventos/infra/datasources/eventos_datasource_impl.dart';
+import 'package:greenplus/app/features/eventos/infra/datasources/i_eventos_datasource.dart';
+import 'package:greenplus/app/features/eventos/infra/repository/eventos_repository.dart';
+import 'package:greenplus/app/features/eventos/infra/repository/i_eventos_repository.dart';
+import 'package:greenplus/app/features/eventos/pages/eventos_controller.dart';
+import 'package:greenplus/app/features/eventos/pages/eventos_tela_de_descanso.dart';
 import 'package:greenplus/app/features/home/home_module.dart';
 import 'core/cursos/page/curso_controller.dart';
 import 'core/infra/client_http/client_http_impl.dart';
@@ -40,8 +46,10 @@ class AppModule extends Module {
     Bind((i) => CursoController(i())),
     Bind<IPeriodosDataSource>((i) => PeriodosDataSourceImpl(i(), i())),
     Bind<IPeriodosRepository>((i) => PeriodosRepositoryImpl(i())),
-    Bind((i) => PeriodosController(i()))
-
+    Bind((i) => PeriodosController(i())),
+    Bind<IEventosDataSource>((i) => EventosDataSourceImpl(i(), i())),
+    Bind<IEventosRepository>((i) => EventosRepositoryImpl(i())),
+    Bind((i) => EventosController(i(),i())),
   ];
 
   @override
@@ -51,6 +59,7 @@ class AppModule extends Module {
     ModuleRoute('/qrcode', module: QrCodeModule()),
     ModuleRoute('/eventos', module: EventosModule()),
     ModuleRoute('/horarios', module: HorariosModule()),
+    ChildRoute("/timeout", child:  (context, args) => TimeoutScreen(controller: Modular.get())),
     ChildRoute("/cursos", child:  (context, args) => CursosPage(controller: Modular.get(), callBack: args.data,)),
     //ChildRoute("/periodos/:idCurso", child:  (context, args) => PeriodosPage(controller: Modular.get(), idCurso: args.params['idCurso'],)),
     ChildRoute("/avisos", child:  (context, args) => const AvisosPage()),

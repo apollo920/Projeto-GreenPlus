@@ -17,6 +17,7 @@ class EmptyPage extends StatelessWidget {
   final Function()? functioRetry;
 
   const EmptyPage({
+    super.key, 
     required this.imagePath,
     required this.message,
     this.subMessage,
@@ -107,7 +108,7 @@ class LoadErrorWithRetry extends StatelessWidget {
             padding:  EdgeInsets.only(bottom: 8.0),
             child:  Text("Tivemos um problema ao carregar os dados"),
           ),
-          ElevatedButton.icon(icon: const Icon(Icons.replay, color: Colors.white,),  onPressed: onPressed, label: Text("TENTE NOVAMENTE"),)
+          ElevatedButton.icon(icon: const Icon(Icons.replay, color: Colors.white,),  onPressed: onPressed, label: const Text("TENTE NOVAMENTE"),)
         ],
       ),
     );

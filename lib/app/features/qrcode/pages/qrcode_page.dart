@@ -65,7 +65,6 @@ class _QrCodePageState extends State<QrCodePage> {
                       Modular.to.pushNamed('/qrcode/qrcodelist/${widget.controller.cursoSelected?.id}/${periodo.id}');
                     });
               }
-
               return Container();
             }),
           )
@@ -92,7 +91,14 @@ class _QRCodeWifiGeneratorState extends State<QRCodeWifiGenerator> {
   String title = "";
   String type = "Wi-Fi";
   SecurityType? securityType = SecurityType.nopass;
-
+  final snackBar = SnackBar(
+    content: const Text("Adicionado com sucesso!"),
+      action: SnackBarAction(
+        label: 'Confirmar',
+        onPressed: () {
+          }
+        )
+      );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -239,7 +245,7 @@ class _QRCodeWifiGeneratorState extends State<QRCodeWifiGenerator> {
                                                                   // ignore: use_build_context_synchronously
                                                                   Navigator.of(context).pop();
                                                                   setState(() {
-                                                                    
+                                                                  ScaffoldMessenger.of(context).showSnackBar(snackBar);  
                                                                   });
                                                             },
                                                             child: const Text(
@@ -307,7 +313,14 @@ class _QRCodeLinkGeneratorState extends State<QRCodeLinkGenerator> {
   String link = '';
   String title = '';
   String type = "Link";
-
+  final snackBar = SnackBar(
+    content: const Text("Adicionado com sucesso!"),
+      action: SnackBarAction(
+        label: 'Confirmar',
+        onPressed: () {
+          }
+        )
+      );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -386,6 +399,7 @@ class _QRCodeLinkGeneratorState extends State<QRCodeLinkGenerator> {
                                                 Navigator.of(context).pop();
                                                 // ignore: use_build_context_synchronously
                                                 Navigator.of(context).pop();
+                                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                               },
                                               child: const Text("OK"),
                                             )

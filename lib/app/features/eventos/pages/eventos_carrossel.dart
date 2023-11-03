@@ -8,9 +8,11 @@ import '../../../core/controllers/auth/auth_store.dart';
 import '../../../core/pages/empty/empty_page.dart';
 import '../../../core/widgets/buttons/expandable_fab.dart';
 
+
 class EventosCarousel extends StatefulWidget {
   final EventosController controller;
   final String idCurso;
+
 
   const EventosCarousel({super.key, required this.controller, required this.idCurso});
 
@@ -19,21 +21,34 @@ class EventosCarousel extends StatefulWidget {
   _EventosCarouselState createState() => _EventosCarouselState();
 }
 
-class _EventosCarouselState extends State<EventosCarousel> {
+class _EventosCarouselState extends State<EventosCarousel>{
+  final snackBar = SnackBar(
+    content: const Text("Deletado com sucesso!"),
+    action: SnackBarAction(
+      label: 'Confirmar',
+        onPressed: () {
+          },
+        ),
+      );
   @override
   void initState() {
     super.initState();
+    
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       widget.controller.obterEventos(idCurso: widget.idCurso);
     });
   }
 
+  
 @override
 Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
       automaticallyImplyLeading: false,
-      leading: IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white,), onPressed: () => Modular.to.pop()),
+      leading: IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white,), onPressed: () {
+        widget.controller.setCursoSelected(null);
+        Modular.to.pop();
+        }),
       title: const Text("Lista de Eventos",
         style: TextStyle(
           color: Colors.white
@@ -129,6 +144,7 @@ Widget build(BuildContext context) {
                                                             onPressed: () {
                                                               Navigator.of(context).pop();
                                                               _deleteEventos(int.parse(evento.id!));
+                                                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                                             },
                                                             child: const Text("Ok"),
                                                           )

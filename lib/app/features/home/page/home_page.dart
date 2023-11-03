@@ -4,8 +4,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:greenplus/app/core/utils/string_extensions.dart';
 
 import '../../../core/pages/empty/empty_page.dart';
-import '../../../core/widgets/custom_button_2.dart';
+import '../../../core/widgets/buttons/custom_button_redondo.dart';
 import '../../../core/widgets/grid_menus.dart';
+import '../../../core/widgets/timer_tela_de_descanso.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,14 +18,21 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TimeoutManagerMixin{
 
   @override
   void initState() {
     super.initState();
+    startTimeoutTimer(context);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       widget.controller.obterMenusModulos();
     });
+  }
+
+  @override
+  void dispose() {
+    resetTimeoutTimer();
+    super.dispose();
   }
 
   @override
@@ -76,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                       menu) {
                     return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: CustomButton2(
+                        child: CustomButtonRedondo(
                           backgroundColor:
                           const Color.fromARGB(255, 27, 136, 83),
                           icon: menu.icon!.toIcon(),
@@ -89,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                   contentLine2: widget.controller.menusModulo.skip((widget.controller.menusModulo.length.toInt() / 2).ceil()).map((menu) {
                     return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: CustomButton2(
+                        child: CustomButtonRedondo(
                           backgroundColor:
                           const Color.fromARGB(255, 27, 136, 83),
                           icon: menu.icon!.toIcon(),
