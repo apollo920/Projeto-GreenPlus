@@ -7,15 +7,17 @@ mixin TimeoutManagerMixin<T extends StatefulWidget> on State<T> {
   bool _timeout = false;
 
   void startTimeoutTimer(BuildContext context) {
-    _timer = Timer(const Duration(minutes: 1), () {
+    _timer = Timer(const Duration(seconds: 10), () {
       _timeout = true;
       Modular.to.pushNamed('/timeout');
     });
   }
 
   void resetTimeoutTimer() {
+    print("resetTimeoutTimer");
     _timeout = false;
     _timer.cancel();
+    startTimeoutTimer(context);
   }
 
   bool isTimedOut() {

@@ -15,6 +15,8 @@ abstract class _AuthStoreBase with Store {
   final ILoginRepository repository;
 
   _AuthStoreBase(this.repository) {
+
+    reaction((p0) => null, (p0) { });
     reaction((_) => status, (_) {
       if (statusNetwork == StatusNetwork.TRUE) {
         switch (status) {
