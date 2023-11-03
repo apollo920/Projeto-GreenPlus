@@ -12,14 +12,14 @@ class CursosPage extends StatefulWidget {
   final Function(Curso curso) callBack;
   final CursoController controller;
 
-  const CursosPage({super.key, required this.controller, required this.callBack});
+  const CursosPage(
+      {super.key, required this.controller, required this.callBack});
 
   @override
   State<CursosPage> createState() => _CursosPageState();
 }
 
-class _CursosPageState extends State<CursosPage> with TimeoutManagerMixin{
-
+class _CursosPageState extends State<CursosPage> with TimeoutManagerMixin {
   @override
   void initState() {
     super.initState();
@@ -37,74 +37,66 @@ class _CursosPageState extends State<CursosPage> with TimeoutManagerMixin{
 
   @override
   Widget build(BuildContext context) {
-    return 
-      Scaffold(
-
-          body: Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: ExactAssetImage('assets/images/a.png'))),
-              child: Center(
-                child: SingleChildScrollView(
-                  child: Observer(builder: (context) {
-                    if (widget.controller.loading) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    if (widget.controller.erro) {
-                      return Column(
-                        children: [
-                          Container(
-                            color: Colors.red,
-                            child: const Text("Error"),
-                          ),
-                          OutlinedButton(
-                              onPressed: () =>
-                                  widget.controller.obterCursos(),
-                              child: const Text("Tentar novamente"))
-                        ],
-                      );
-                    }
-                    if (widget.controller.loaded) {
-                      return GridMenus(
-                            contentLine1: widget.controller.cursos
-                                .take(3)
-                                .map((curso) => Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                                  
-                                  child: CustomButtonQuadrado(
-                                        backgroundColor:
-                                            const Color.fromARGB(255, 27, 136, 83),
-                                        icon: curso.icon!.toIcon(),
-                                        onPressed: () => widget.callBack(curso),
-                                        label: curso.nome ?? '',
-                                      ),
-                                ))
-                                .toList(),                      
-                              contentLine2: widget.controller.cursos
-                                  .skip(3)
-                                  .map((curso) => Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                                    child: CustomButtonQuadrado(
-                                          backgroundColor:
-                                              const Color.fromARGB(255, 27, 136, 83),
-                                          icon: curso.icon!.toIcon(),
-                                          onPressed: () => widget.callBack(curso),
-                                          label: curso.nome ?? '',
-                                        )
-                                  ))
-                                .toList());
-                      
-                    }
-                    return Container();
-                  }),
-                )
-              ))
-    );
+    return Scaffold(
+        body: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: ExactAssetImage('assets/images/aa.png'))),
+            child: Center(child: SingleChildScrollView(
+              child: Observer(builder: (context) {
+                if (widget.controller.loading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (widget.controller.erro) {
+                  return Column(
+                    children: [
+                      Container(
+                        color: Colors.red,
+                        child: const Text("Error"),
+                      ),
+                      OutlinedButton(
+                          onPressed: () => widget.controller.obterCursos(),
+                          child: const Text("Tentar novamente"))
+                    ],
+                  );
+                }
+                if (widget.controller.loaded) {
+                  return GridMenus(
+                      contentLine1: widget.controller.cursos
+                          .take(3)
+                          .map((curso) => Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 30),
+                                child: CustomButtonQuadrado(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 27, 136, 83),
+                                  icon: curso.icon!.toIcon(),
+                                  onPressed: () => widget.callBack(curso),
+                                  label: curso.nome ?? '',
+                                ),
+                              ))
+                          .toList(),
+                      contentLine2: widget.controller.cursos
+                          .skip(3)
+                          .map((curso) => Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: CustomButtonQuadrado(
+                                backgroundColor:
+                                    const Color.fromARGB(255, 27, 136, 83),
+                                icon: curso.icon!.toIcon(),
+                                onPressed: () => widget.callBack(curso),
+                                label: curso.nome ?? '',
+                              )))
+                          .toList());
+                }
+                return Container();
+              }),
+            ))));
   }
 }
- 

@@ -1,12 +1,9 @@
 import 'dart:convert';
 
-
 class User {
-
   final String? username;
   final String? password;
   final String? token;
-
 
   bool get isAdmin => true;
 
@@ -23,7 +20,6 @@ class User {
       token: token ?? this.token,
     );
   }
-
 
   static User? fromJson(String? source) {
     if (source?.isEmpty ?? true) return User.fromMap({});
