@@ -18,19 +18,19 @@ class TimeoutScreen extends StatefulWidget {
   _TimeoutScreenState createState() => _TimeoutScreenState();
 }
 
-class _TimeoutScreenState extends State<TimeoutScreen> with TimeoutManagerMixin{
+class _TimeoutScreenState extends State<TimeoutScreen> {
   @override
   void initState() {
     super.initState();
-    resetTimeoutTimer();
-    pauseTimeoutTimer();
+    // resetTimeoutTimer();
+    // pauseTimeoutTimer();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       widget.controller.obterEventos(idCurso: 'all');
     });
   }
     void _onScreenTapped() {
     Navigator.of(context).pop();
-    startTimeoutTimer();
+    //startTimeoutTimer();
   }
 
   @override

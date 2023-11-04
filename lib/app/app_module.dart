@@ -19,6 +19,7 @@ import 'package:greenplus/app/features/eventos/infra/repository/i_eventos_reposi
 import 'package:greenplus/app/features/eventos/pages/eventos_controller.dart';
 import 'package:greenplus/app/features/eventos/pages/eventos_tela_de_descanso.dart';
 import 'package:greenplus/app/features/home/home_module.dart';
+import 'core/controllers/timeout_controller.dart';
 import 'core/cursos/page/curso_controller.dart';
 import 'core/infra/client_http/client_http_impl.dart';
 import 'core/infra/client_http/i_client_http.dart';
@@ -41,6 +42,7 @@ class AppModule extends Module {
     Bind<IClientHttp>((i) => ClientHttpImpl(i())),
     ...LoginModule.export,
     Bind((i) => AuthStore(i())),
+    Bind((i) => TimeoutController()),
     Bind<ICursoDataSource>((i) => CursoDataSourceImpl(i(), i())),
     Bind<ICursoRepository>((i) => CursoRepositoryImpl(i())),
     Bind((i) => CursoController(i())),

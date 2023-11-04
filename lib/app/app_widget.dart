@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:greenplus/app/core/controllers/timeout_controller.dart';
 
 import 'core/widgets/timer_tela_de_descanso.dart';
 
@@ -20,7 +21,8 @@ class AppWidget extends StatelessWidget {
             onGenerateRoute: (settings) =>
                 MaterialPageRoute(
                   builder: (context) {
-                    return TesteObserver(child: widget ?? Container());
+                    return TesteObserver(controller: Modular.get(),
+                    child: widget ?? Container());
                   },
                 ),
           ),
@@ -32,22 +34,23 @@ class AppWidget extends StatelessWidget {
 
 class TesteObserver extends StatefulWidget {
   final Widget child;
+  final TimeoutController controller;
 
-  const TesteObserver({super.key, required this.child});
+  const TesteObserver({super.key, required this.child, required this.controller});
 
   @override
   State<TesteObserver> createState() => _TesteObserverState();
 }
 
-class _TesteObserverState extends State<TesteObserver>
-    with TimeoutManagerMixin {
+class _TesteObserverState extends State<TesteObserver> {
 
 
   @override
   Widget build(BuildContext context) {
     return Listener(
       onPointerUp: (value){
-        restartTimeoutTimer();
+        print("Listener");
+        widget.controller.restartTimeoutTimer();
       },
         child: widget.child);
   }
@@ -55,6 +58,6 @@ class _TesteObserverState extends State<TesteObserver>
   @override
   void initState() {
     super.initState();
-    startTimeoutTimer();
+    widget.controller.startTimeoutTimer();
   }
 }
