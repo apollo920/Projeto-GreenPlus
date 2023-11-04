@@ -3,24 +3,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 mixin TimeoutManagerMixin<T extends StatefulWidget> on State<T> {
-  late Timer _timer;
+  Timer? _timer;
   bool _timeout = false;
+  bool _isTimeoutScreenOpened = false; 
 
-  void startTimeoutTimer(BuildContext context) {
+  void startTimeoutTimer() {
     _timer = Timer(const Duration(seconds: 10), () {
       _timeout = true;
-      Modular.to.pushNamed('/timeout');
+      if (!_isTimeoutScreenOpened) {
+        _isTimeoutScreenOpened = true;
+        Modular.to.pushNamed('/timeout');
+      }
     });
   }
 
   void resetTimeoutTimer() {
-    print("resetTimeoutTimer");
     _timeout = false;
-    _timer.cancel();
-    startTimeoutTimer(context);
+    _timer?.cancel();
+  }
+
+  void pauseTimeoutTimer() {
+    _timer?.cancel();
+  }
+
+  void restartTimeoutTimer() {
+    _timeout = false;
+    _timer?.cancel();
+    startTimeoutTimer();
   }
 
   bool isTimedOut() {
     return _timeout;
+  }
+
+  // Método para redefinir o indicador da tela de timeout
+  void resetTimeoutScreenOpened() {
+    _isTimeoutScreenOpened = false;
   }
 }

@@ -7,7 +7,6 @@ import '../../../core/controllers/auth/auth_store.dart';
 import '../../../core/pages/empty/empty_page.dart';
 import '../../../core/widgets/buttons/custom_button_redondo.dart';
 import '../../../core/widgets/grid_menus.dart';
-import '../../../core/widgets/timer_tela_de_descanso.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,20 +18,13 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with TimeoutManagerMixin {
+class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    startTimeoutTimer(context);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       widget.controller.obterMenusModulos();
     });
-  }
-
-  @override
-  void dispose() {
-    resetTimeoutTimer();
-    super.dispose();
   }
 
   @override

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:greenplus/app/core/utils/string_extensions.dart';
 import 'package:greenplus/app/core/widgets/grid_menus.dart';
-import 'package:greenplus/app/core/widgets/timer_tela_de_descanso.dart';
 
 import '../../widgets/buttons/custom_button_quadrado.dart';
 import '../models/curso.dart';
@@ -19,20 +18,13 @@ class CursosPage extends StatefulWidget {
   State<CursosPage> createState() => _CursosPageState();
 }
 
-class _CursosPageState extends State<CursosPage> with TimeoutManagerMixin {
+class _CursosPageState extends State<CursosPage> {
   @override
   void initState() {
     super.initState();
-    startTimeoutTimer(context);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       widget.controller.obterCursos();
     });
-  }
-
-  @override
-  void dispose() {
-    resetTimeoutTimer();
-    super.dispose();
   }
 
   @override

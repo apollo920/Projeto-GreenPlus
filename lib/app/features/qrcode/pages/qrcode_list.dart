@@ -24,8 +24,7 @@ class QRCodeListScreen extends StatefulWidget {
   _QRCodeListScreenState createState() => _QRCodeListScreenState();
 }
 
-class _QRCodeListScreenState extends State<QRCodeListScreen>
-    with TimeoutManagerMixin {
+class _QRCodeListScreenState extends State<QRCodeListScreen>{
   final snackBar = SnackBar(
     content: const Text("Deletado com sucesso!"),
     action: SnackBarAction(
@@ -36,17 +35,10 @@ class _QRCodeListScreenState extends State<QRCodeListScreen>
   @override
   void initState() {
     super.initState();
-    startTimeoutTimer(context);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       widget.controller
           .obterQrCodes(idCurso: widget.idCurso, idPeriodo: widget.idPeriodo);
     });
-  }
-
-  @override
-  void dispose() {
-    resetTimeoutTimer();
-    super.dispose();
   }
 
   @override

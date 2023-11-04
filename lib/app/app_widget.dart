@@ -45,17 +45,16 @@ class _TesteObserverState extends State<TesteObserver>
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => resetTimeoutTimer(),
-      child: widget.child,
-    );
+    return Listener(
+      onPointerUp: (value){
+        restartTimeoutTimer();
+      },
+        child: widget.child);
   }
 
   @override
   void initState() {
     super.initState();
-
-    startTimeoutTimer(context);
+    startTimeoutTimer();
   }
 }
-

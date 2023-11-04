@@ -3,7 +3,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:greenplus/app/core/periodos/models/periodo.dart';
 import 'package:greenplus/app/core/utils/string_extensions.dart';
 import 'package:greenplus/app/core/widgets/grid_menus.dart';
-import 'package:greenplus/app/core/widgets/timer_tela_de_descanso.dart';
 
 import '../../widgets/buttons/custom_button_quadrado.dart';
 import 'periodos_controller.dart';
@@ -23,20 +22,13 @@ class PeriodosPage extends StatefulWidget {
   State<PeriodosPage> createState() => _PeriodosPageState();
 }
 
-class _PeriodosPageState extends State<PeriodosPage> with TimeoutManagerMixin {
+class _PeriodosPageState extends State<PeriodosPage> {
   @override
   void initState() {
     super.initState();
-    startTimeoutTimer(context);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       widget.controller.obterPeriodos(idCurso: widget.idCurso);
     });
-  }
-
-  @override
-  void dispose() {
-    resetTimeoutTimer();
-    super.dispose();
   }
 
   @override

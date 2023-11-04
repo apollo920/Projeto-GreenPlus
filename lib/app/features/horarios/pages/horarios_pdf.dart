@@ -6,7 +6,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:greenplus/app/features/horarios/pages/horarios_controller.dart';
 import 'package:printing/printing.dart';
 import 'package:greenplus/app/core/widgets/buttons/expandable_fab.dart';
-import 'package:greenplus/app/core/widgets/timer_tela_de_descanso.dart';
 
 import '../../../core/pages/empty/empty_page.dart';
 
@@ -20,20 +19,14 @@ class PDFScreen extends StatefulWidget {
   State<PDFScreen> createState() => _PDFScreenState();
 }
 
-class _PDFScreenState extends State<PDFScreen> with TimeoutManagerMixin {
+class _PDFScreenState extends State<PDFScreen> {
   @override
   void initState() {
     super.initState();
-    startTimeoutTimer(context);
+   
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       widget.controller.obterHorarios(idCurso: widget.idCurso);
     });
-  }
-
-  @override
-  void dispose() {
-    resetTimeoutTimer();
-    super.dispose();
   }
 
   @override
