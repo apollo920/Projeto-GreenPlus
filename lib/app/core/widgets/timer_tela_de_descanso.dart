@@ -8,7 +8,7 @@ mixin TimeoutManagerMixin<T extends StatefulWidget> on State<T> {
   bool _isTimeoutScreenOpened = false; 
 
   void startTimeoutTimer() {
-    _timer = Timer(const Duration(seconds: 10), () {
+    _timer = Timer(const Duration(hours: 10), () {
       _timeout = true;
       if (!_isTimeoutScreenOpened) {
         _isTimeoutScreenOpened = true;

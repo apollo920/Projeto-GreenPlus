@@ -75,6 +75,7 @@ var listaQrCodeByCursoAndPeriodo = {
         "content": "WIFI:T:WPA;S:SuaRedeWiFi;P:SuaSenha;;",
         "title": "WIFI DA PADARIA 0",
         "icon": "0xf051f",
+        "id": "1",
         "type": "WiFi",
       },
       {
