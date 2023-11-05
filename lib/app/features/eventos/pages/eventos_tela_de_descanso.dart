@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:greenplus/app/core/widgets/timer_tela_de_descanso.dart';
-
 import '../../../core/pages/empty/empty_page.dart';
 import 'eventos_controller.dart';
 

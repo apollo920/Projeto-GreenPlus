@@ -47,6 +47,6 @@ var listaHorariosByCursos = {
        '',
       
     
-    // "3":
-    //    ''
+    "3":
+       ''
   };

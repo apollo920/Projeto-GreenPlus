@@ -77,11 +77,11 @@ abstract class EventosControllerBase with Store {
   }
 
   Future addEventos({required EventoModel eventosModel}) async {
-    showLoading();
+    // showLoading();
     var result = await eventosRepository.addEventos(
         idCurso: cursoSelected!.id!,
         eventoModel: eventosModel);
-    await Future.delayed(const Duration(seconds: 3));
+    // await Future.delayed(const Duration(seconds: 3));
     result.fold((erro) {
       Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
       showDialog(
@@ -107,12 +107,12 @@ abstract class EventosControllerBase with Store {
   
   
   Future deleteEventos({required int idEvento}) async {
-    showLoading();
+    // showLoading();
 
     var result = await eventosRepository.deleteEventos(
         idCurso: cursoSelected!.id!,
         idEvento: idEvento);
-    await Future.delayed(const Duration(seconds: 3));
+    // await Future.delayed(const Duration(seconds: 3));
     result.fold((erro) {
       Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
       showDialog(
@@ -132,7 +132,6 @@ abstract class EventosControllerBase with Store {
           });
     }, (id) {
       listaEvento.removeWhere((element) => element.id == id.toString());
-      Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
     });
   }
 

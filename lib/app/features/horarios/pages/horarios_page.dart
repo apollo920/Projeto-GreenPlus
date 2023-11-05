@@ -168,6 +168,7 @@ class _PDFPreviewState extends State<PDFPreview> {
   final snackBar = SnackBar(
       content: const Text("Substituído com sucesso!"),
       action: SnackBarAction(label: 'Confirmar', onPressed: () {}));
+      
   Future<void> showConfirmationDialog() async {
     return await showDialog(
         context: context,
@@ -186,7 +187,8 @@ class _PDFPreviewState extends State<PDFPreview> {
                     child: const Text("Sim"),
                     onPressed: () {
                       Navigator.of(context).pop();
-                      Navigator.of(context).pop();
+                      Modular.to.pop();
+                     
                     })
               ]);
         });
@@ -218,8 +220,7 @@ class _PDFPreviewState extends State<PDFPreview> {
         child: ElevatedButton(
           onPressed: () async {
             await _changePDF(widget.pdfBase64);
-            // ignore: use_build_context_synchronously
-            Navigator.of(context).pop();
+            setState(() {});
             // ignore: use_build_context_synchronously
             Navigator.of(context).pop();
             // ignore: use_build_context_synchronously
@@ -227,7 +228,7 @@ class _PDFPreviewState extends State<PDFPreview> {
           },
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(
-                Color.fromARGB(255, 27, 136, 83)),
+                const Color.fromARGB(255, 27, 136, 83)),
           ),
           child: const Text(
             'Salvar',

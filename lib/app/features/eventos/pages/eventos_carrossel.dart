@@ -102,7 +102,10 @@ class _EventosCarouselState extends State<EventosCarousel> {
                                     margin: const EdgeInsets.all(10),
                                     child: Container(
                                         decoration: const BoxDecoration(
-                                            color: Colors.white,
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: ExactAssetImage('assets/images/a.png'),
+                                                ),
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(20))),
                                         child: Column(

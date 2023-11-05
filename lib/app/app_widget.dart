@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:greenplus/app/core/controllers/timeout_controller.dart';
 
-import 'core/widgets/timer_tela_de_descanso.dart';
-
 class AppWidget extends StatelessWidget {
   const AppWidget({super.key});
 

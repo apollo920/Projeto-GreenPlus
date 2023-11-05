@@ -41,36 +41,39 @@ class _CustomButtonQuadradoState extends State<CustomButtonQuadrado> {
                 _size = 60.0;
               });
             },
-            child: AnimatedSize(
-              duration: const Duration(milliseconds: 200),
-              curve: Curves.easeInOut,
-              child: Stack(
-                children: [
-                  ElevatedButton(
-                    onPressed: widget.onPressed,
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(40),
-                      backgroundColor: widget.backgroundColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+            child: GestureDetector(
+              onTap: widget.onPressed,
+              child: AnimatedSize(
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeInOut,
+                child: Stack(
+                  children: [
+                    ElevatedButton(
+                      onPressed: widget.onPressed,
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(40),
+                        backgroundColor: widget.backgroundColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: SizedBox(
+                        width: _size,
+                        height: _size,
                       ),
                     ),
-                    child: SizedBox(
-                      width: _size,
-                      height: _size,
-                    ),
-                  ),
-                  Positioned.fill(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Icon(
-                        widget.icon,
-                        size: _size,
-                        color: Colors.white,
+                    Positioned.fill(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Icon(
+                          widget.icon,
+                          size: _size,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

@@ -7,20 +7,20 @@ import 'package:greenplus/app/features/qrcode/pages/qrcode_controller.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../../core/pages/empty/empty_page.dart';
-import '../../../core/widgets/timer_tela_de_descanso.dart';
 
 class QRCodeListScreen extends StatefulWidget {
   final QrCodeController controller;
   final String idCurso;
   final String idPeriodo;
 
-  QRCodeListScreen(
+  const QRCodeListScreen(
       {required this.controller,
       required this.idCurso,
       required this.idPeriodo,
       super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _QRCodeListScreenState createState() => _QRCodeListScreenState();
 }
 

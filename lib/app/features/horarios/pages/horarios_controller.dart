@@ -75,11 +75,11 @@ abstract class HorariosControllerBase with Store {
   }
 
   Future changeHorarios({required String base64}) async {
-    showLoading();
+    // showLoading();
     var result = await horariosRepository.changeHorarios(
         idCurso: cursoSelected!.id!,
         base64: base64);
-    await Future.delayed(const Duration(seconds: 3));
+    // await Future.delayed(const Duration(seconds: 3));
     result.fold((erro) {
       Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
       showDialog(

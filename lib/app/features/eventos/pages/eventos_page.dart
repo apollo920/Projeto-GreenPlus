@@ -73,7 +73,22 @@ class _EventosPickerServiceState extends State<EventosPickerService> {
               ImagePreviewAndObservations(imagePath: base64Image),
         ),
       );
-    } else {}
+    } else {
+      // ignore: use_build_context_synchronously
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+                title: const Text("Algo de errado aconteceu"),
+                actions: <Widget>[
+                  TextButton(
+                      child: const Text("Ok"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      })
+                ]);
+          });
+    }
   }
 
   @override
@@ -175,7 +190,7 @@ class _ImagePreviewAndObservationsState
                     child: const Text("Sim"),
                     onPressed: () {
                       Navigator.of(context).pop();
-                      Navigator.of(context).pop();
+                      Modular.to.pop();
                     })
               ]);
         });
@@ -256,10 +271,8 @@ class _ImagePreviewAndObservationsState
                                 // ignore: use_build_context_synchronously
                                 Navigator.of(context).pop();
                                 // ignore: use_build_context_synchronously
-                                Navigator.of(context).pop();
-                                // ignore: use_build_context_synchronously
                                 ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);
+                                    .showSnackBar(snackBar);                               
                               },
                               child: const Text('Salvar'),
                             ),

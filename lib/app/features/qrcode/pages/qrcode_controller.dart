@@ -98,7 +98,7 @@ abstract class QrCodeControllerBase with Store {
         idCurso: cursoSelected!.id!,
         idPeriodo: periodoSelected!.id!,
         qrCodeModel: qrCodeModel);
-    await Future.delayed(const Duration(seconds: 3));
+    // await Future.delayed(const Duration(seconds: 3));
     result.fold((erro) {
       Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
       showDialog(
@@ -123,13 +123,13 @@ abstract class QrCodeControllerBase with Store {
   }
 
   Future deleteQrCode({required int idQrcode}) async {
-    showLoading();
+    // showLoading();
 
     var result = await qrCodeRepository.deleteQrCode(
         idCurso: cursoSelected!.id!,
         idPeriodo: periodoSelected!.id!,
         idQrcode: idQrcode);
-    await Future.delayed(const Duration(seconds: 3));
+    // await Future.delayed(const Duration(seconds: 3));
     result.fold((erro) {
       Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
       showDialog(
@@ -149,7 +149,7 @@ abstract class QrCodeControllerBase with Store {
           });
     }, (id) {
       listaQrCode.removeWhere((element) => element.id == id.toString());
-      Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
+      
     });
   }
 
