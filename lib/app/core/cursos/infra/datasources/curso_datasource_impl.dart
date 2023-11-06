@@ -1,6 +1,8 @@
 
 import '../../../../core/infra/client_http/i_client_http.dart';
 import '../../../../core/infra/local_storage/i_local_secure_storage.dart';
+import '../../../erros/erros.dart';
+import '../../../utils/api_routes.dart';
 import '../../models/curso.dart';
 import 'i_curso_datasource.dart';
 
@@ -12,16 +14,20 @@ class CursoDataSourceImpl implements ICursoDataSource {
 
   @override
   Future<List<Curso>?> getCursos() async {
-    return listaCursos.map((curso) => Curso.fromMap(curso)).toList();
+    var result = await clientHttp.get(url: ApiRoutes.CURSOS);
+    if (result.statusCode == 200) {
+      var json = result.data;
+      var menus = json['data'] as List?;
+      await Future.delayed(Duration(seconds: 2));
+      return menus?.map((curso) => Curso.fromMap(curso)).toList();
+    } else if (result.statusCode != 500) {
+      print(result.data);
+      var json = result.data;
+      throw Failure(message: json['message'] ?? "Erro na consulta");
+    } else {
+      throw Failure();
+    }
 
-    // var result = await clientHttp.get(url: "/users/checktoken");
-    // if (result.statusCode == 200) {
-    //   return true;
-    // } else if (result.statusCode != 500) {
-    //   return false;
-    // } else {
-    //   throw Failure();
-    // }
   }
 
 

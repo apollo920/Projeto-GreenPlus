@@ -22,8 +22,8 @@ class HomeRepositoryImpl extends IHomeRepository{
       }
 
       return Right(listaMenusModulos);
-    } catch (e) {
-      return Left(DataSourceException());
+    }  on Failure catch (e) {
+      return Left(DataSourceException(message: e.message));
     }
   }
 

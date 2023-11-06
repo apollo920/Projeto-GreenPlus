@@ -6,7 +6,7 @@ class ApiRoutes {
   static String PERIODO({required String idCurso, required String idPeriodo}) => "/periodos/$idCurso/$idPeriodo";
   static String PERIODOS_BY_CURSO(String idCurso) => "/periodos/$idCurso";
   static String CURSOS = "/cursos";
-  static String HOME = "/home";
+  static String HOME = "/menu/allmenu";
   static String GETQRCODES({required String idCurso, required String idPeriodo}) => "/qrcodes/$idCurso/$idPeriodo";
   static String ADDQRCODES({required String idCurso, required String idPeriodo, required QrCodeModel qrCodeModel}) => "/qrcodes/$idCurso/$idPeriodo";
   static String DELETEQRCODES({required String idCurso, required String idPeriodo,required int idQrcode}) => "/qrcodes/$idCurso/$idPeriodo";

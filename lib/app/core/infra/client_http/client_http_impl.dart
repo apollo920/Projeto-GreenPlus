@@ -21,7 +21,7 @@ class ClientHttpImpl implements IClientHttp {
   }
 
   BaseOptions options = BaseOptions(
-    baseUrl: "http://192.168.0.79:8080",
+    baseUrl: "http://127.0.0.1:8080",
     connectTimeout: const Duration(seconds: 30),
     receiveTimeout: const Duration(seconds: 30),
   );
@@ -139,10 +139,12 @@ class ClientHttpImpl implements IClientHttp {
 
   Future<RequestOptions> addAuthHeader(Dio dio, RequestOptions options) async {
     options.headers['Authorization'] = 'Bearer $token';
+    options.headers['Access-Control-Allow-Origin'] = '*';
     return options;
   }
 
   handleException(dynamic e) {
+    print(e.toString());
     if (e is DioException) {
       if (e.response != null) {
         return e.response;

@@ -1,3 +1,6 @@
+import 'package:greenplus/app/core/utils/api_routes.dart';
+
+import '../../../../core/erros/erros.dart';
 import '../../../../core/infra/client_http/i_client_http.dart';
 import '../../../../core/infra/local_storage/i_local_secure_storage.dart';
 import '../../models/menu_modulo.dart';
@@ -11,18 +14,20 @@ class HomeDataSourceImpl implements IHomeDataSource {
 
   @override
   Future<List<MenuModulo>?> getMenusMedulos() async {
-    return listaMenuModulo
-        .map((menuModulo) => MenuModulo.fromMap(menuModulo))
-        .toList();
 
-    // var result = await clientHttp.get(url: "/users/checktoken");
-    // if (result.statusCode == 200) {
-    //   return true;
-    // } else if (result.statusCode != 500) {
-    //   return false;
-    // } else {
-    //   throw Failure();
-    // }
+    var result = await clientHttp.get(url: ApiRoutes.HOME);
+    if (result.statusCode == 200) {
+      var json = result.data;
+      var menus = json['data'] as List?;
+      await Future.delayed(Duration(seconds: 2));
+      return menus?.map((menuModulo) => MenuModulo.fromMap(menuModulo)).toList();
+    } else if (result.statusCode != 500) {
+      print(result.data);
+      var json = result.data;
+      throw Failure(message: json['message'] ?? "Erro na consulta");
+    } else {
+      throw Failure();
+    }
   }
 
   var listaMenuModulo = [
