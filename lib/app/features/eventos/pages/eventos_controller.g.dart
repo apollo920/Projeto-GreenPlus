@@ -79,6 +79,22 @@ mixin _$EventosController on EventosControllerBase, Store {
     });
   }
 
+  late final _$listaAllEventoAtom =
+      Atom(name: 'EventosControllerBase.listaAllEvento', context: context);
+
+  @override
+  ObservableList<EventoModel> get listaAllEvento {
+    _$listaAllEventoAtom.reportRead();
+    return super.listaAllEvento;
+  }
+
+  @override
+  set listaAllEvento(ObservableList<EventoModel> value) {
+    _$listaAllEventoAtom.reportWrite(value, super.listaAllEvento, () {
+      super.listaAllEvento = value;
+    });
+  }
+
   late final _$erroAtom =
       Atom(name: 'EventosControllerBase.erro', context: context);
 
@@ -143,11 +159,23 @@ mixin _$EventosController on EventosControllerBase, Store {
   }
 
   @override
+  dynamic setAllEventos(List<EventoModel> value) {
+    final _$actionInfo = _$EventosControllerBaseActionController.startAction(
+        name: 'EventosControllerBase.setAllEventos');
+    try {
+      return super.setAllEventos(value);
+    } finally {
+      _$EventosControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 cursoSelected: ${cursoSelected},
 loading: ${loading},
 listaEvento: ${listaEvento},
+listaAllEvento: ${listaAllEvento},
 erro: ${erro},
 loaded: ${loaded},
 showCursosWidget: ${showCursosWidget},

@@ -17,11 +17,10 @@ class CursoDataSourceImpl implements ICursoDataSource {
     var result = await clientHttp.get(url: ApiRoutes.CURSOS);
     if (result.statusCode == 200) {
       var json = result.data;
-      var menus = json['data'] as List?;
-      await Future.delayed(Duration(seconds: 2));
-      return menus?.map((curso) => Curso.fromMap(curso)).toList();
+      var cursos = json['data'] as List?;
+      print(cursos);
+      return cursos?.map((curso) => Curso.fromMap(curso)).toList();
     } else if (result.statusCode != 500) {
-      print(result.data);
       var json = result.data;
       throw Failure(message: json['message'] ?? "Erro na consulta");
     } else {

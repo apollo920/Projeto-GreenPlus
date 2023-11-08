@@ -26,6 +26,9 @@ abstract class EventosControllerBase with Store {
   ObservableList<EventoModel> listaEvento = ObservableList<EventoModel>.of([]);
 
   @observable
+  ObservableList<EventoModel> listaAllEvento = ObservableList<EventoModel>.of([]);
+
+  @observable
   bool erro = false;
 
   @action
@@ -43,6 +46,10 @@ abstract class EventosControllerBase with Store {
   @action
   setEventos(List<EventoModel> value) =>
       listaEvento = ObservableList<EventoModel>.of(value);
+
+  @action
+  setAllEventos(List<EventoModel> value) =>
+      listaAllEvento = ObservableList<EventoModel>.of(value);
 
   @computed
   get showCursosWidget => cursoSelected == null;
@@ -71,6 +78,22 @@ abstract class EventosControllerBase with Store {
       setLoading(false);
     }, (evento) {
       setEventos(evento);
+      setErro(false);
+      setLoading(false);
+    });
+  }
+  
+  obterAllEventos() async {
+    listaEvento.clear();
+    setLoading(true);
+
+    var result = await eventosRepository.getAllEventos();
+
+    result.fold((erro) {
+      setErro(true);
+      setLoading(false);
+    }, (allEvento) {
+      setAllEventos(allEvento);
       setErro(false);
       setLoading(false);
     });

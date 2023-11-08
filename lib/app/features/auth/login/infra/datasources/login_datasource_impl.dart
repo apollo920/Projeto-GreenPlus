@@ -14,7 +14,7 @@ class LoginDataSourceImpl implements ILoginDataSource {
   Future<String?> loginUsername(
       {required String username, required String password}) async {
 
-    return "tokenabcd";
+    // return "tokenabcd";
 
     var payload = {
       "username": username,
@@ -76,13 +76,13 @@ class LoginDataSourceImpl implements ILoginDataSource {
   @override
   Future<bool> verificarToken(String token) async {
     return true;
-    var result = await clientHttp.get(url: "/users/checktoken");
-    if (result.statusCode == 200) {
-      return true;
-    } else if (result.statusCode != 500) {
-      return false;
-    } else {
-      throw Failure();
-    }
+    // var result = await clientHttp.get(url: "/users/checktoken");
+    // if (result.statusCode == 200) {
+    //   return true;
+    // } else if (result.statusCode != 500) {
+    //   return false;
+    // } else {
+    //   throw Failure();
+    // }
   }
 }

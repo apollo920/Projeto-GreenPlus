@@ -43,8 +43,6 @@ abstract class _TimeoutControllerBase with Store {
   bool isTimedOut() {
     return _timeout;
   }
-
-  // Método para redefinir o indicador da tela de timeout
   void resetTimeoutScreenOpened() {
     _isTimeoutScreenOpened = false;
   }

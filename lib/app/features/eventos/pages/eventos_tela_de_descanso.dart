@@ -23,7 +23,7 @@ class _TimeoutScreenState extends State<TimeoutScreen> {
     // resetTimeoutTimer();
     // pauseTimeoutTimer();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      widget.controller.obterEventos(idCurso: 'all');
+      widget.controller.obterAllEventos();
     });
   }
     void _onScreenTapped() {
@@ -50,7 +50,7 @@ class _TimeoutScreenState extends State<TimeoutScreen> {
                 Expanded(
                   child: Observer(
                     builder: (context) {
-                      if (widget.controller.listaEvento.isNotEmpty) {
+                      if (widget.controller.listaAllEvento.isNotEmpty) {
                         return LayoutBuilder(
                           builder: (_, constrants){
                             return CarouselSlider(
@@ -67,7 +67,7 @@ class _TimeoutScreenState extends State<TimeoutScreen> {
                                 autoPlayCurve: Curves.fastEaseInToSlowEaseOut,
                                 enlargeCenterPage: true,
                               ),
-                              items: widget.controller.listaEvento.map((evento) {
+                              items: widget.controller.listaAllEvento.map((evento) {
                                 return Builder(
                                   builder: (BuildContext context) {
                                     return Container(

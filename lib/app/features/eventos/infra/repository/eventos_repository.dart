@@ -24,6 +24,20 @@ class EventosRepositoryImpl extends IEventosRepository{
       return Left(DataSourceException());
     }
   }
+  @override
+  Future<Either<Failure, List<EventoModel>>> getAllEventos() async {
+    try {
+      List<EventoModel>? listaAllEventos = await dataSource.getAllEventos();
+
+      if (listaAllEventos == null) {
+        return Left(DataSourceEmpty());
+      }
+
+      return Right(listaAllEventos);
+    } catch (e) {
+      return Left(DataSourceException());
+    }
+  }
 
   @override
   Future<Either<Failure, String>> addEventos({required String idCurso, required EventoModel eventoModel}) async {

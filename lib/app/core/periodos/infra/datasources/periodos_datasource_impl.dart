@@ -1,5 +1,8 @@
+import 'package:greenplus/app/core/utils/api_routes.dart';
+
 import '../../../../core/infra/client_http/i_client_http.dart';
 import '../../../../core/infra/local_storage/i_local_secure_storage.dart';
+import '../../../erros/erros.dart';
 import '../../models/periodo.dart';
 import 'i_periodos_datasource.dart';
 
@@ -11,19 +14,22 @@ class PeriodosDataSourceImpl implements IPeriodosDataSource {
 
   @override
   Future<List<Periodo>?> getPeriodos({required String idCurso}) async {
-    return listaPeriodoss[idCurso]?.map((periodo) {
-      periodo['id'] = listaPeriodoss[idCurso]!.indexOf(periodo).toString();
-      return  Periodo.fromMap(periodo);
-    }).toList();
+    // return listaPeriodoss[idCurso]?.map((periodo) {
+    //   periodo['id'] = listaPeriodoss[idCurso]!.indexOf(periodo).toString();
+    //   return  Periodo.fromMap(periodo);
+    // }).toList();
 
-    // var result = await clientHttp.get(url: "/users/checktoken");
-    // if (result.statusCode == 200) {
-    //   return true;
-    // } else if (result.statusCode != 500) {
-    //   return false;
-    // } else {
-    //   throw Failure();
-    // }
+    var result = await clientHttp.get(url: ApiRoutes.PERIODOS_BY_CURSO(idCurso));
+    if (result.statusCode == 200) {
+      var json = result.data;
+      var periodos = json['data'] as List?;
+      return periodos?.map((curso) => Periodo.fromMap(curso)).toList();
+    } else if (result.statusCode != 500) {
+      var json = result.data;
+      throw Failure(message: json['message'] ?? "Erro na consulta");
+    } else {
+      throw Failure();
+    }
   }
 
   var listaPeriodoss = {

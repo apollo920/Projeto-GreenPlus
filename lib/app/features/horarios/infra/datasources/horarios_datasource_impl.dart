@@ -1,5 +1,7 @@
+import '../../../../core/erros/erros.dart';
 import '../../../../core/infra/client_http/i_client_http.dart';
 import '../../../../core/infra/local_storage/i_local_secure_storage.dart';
+import '../../../../core/utils/api_routes.dart';
 import 'i_horarios_datasource.dart';
 
 class HorariosDataSourceImpl implements IHorariosDataSource {
@@ -10,6 +12,19 @@ class HorariosDataSourceImpl implements IHorariosDataSource {
 
   @override
   Future<String?> getHorarios({required String idCurso}) async {
+    // var result = await clientHttp.get(url: ApiRoutes.GETHORARIOS(idCurso: idCurso));
+    //     if (result.statusCode == 200) {
+    //       var json = result.data;
+    //       var menus = json['data'] as List?;
+    //       return menus?[idCurso];
+    //     } else if (result.statusCode != 500) {
+    //       var json = result.data;
+    //       throw Failure(message: json['message'] ?? "Erro na consulta");
+    //     } else {
+    //       throw Failure();
+    //     }
+    
+    
     return listaHorariosByCursos[idCurso];
   }
 
