@@ -58,9 +58,10 @@ class _CursosPageState extends State<CursosPage> {
                   );
                 }
                 if (widget.controller.loaded) {
+                  int halfLength = widget.controller.cursos.length <= 5 ? 5 : (widget.controller.cursos.length / 2).ceil();
                   return GridMenus(
                       contentLine1: widget.controller.cursos
-                          .take(3)
+                          .take(halfLength)
                           .map((curso) => Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 30),
@@ -74,7 +75,7 @@ class _CursosPageState extends State<CursosPage> {
                               ))
                           .toList(),
                       contentLine2: widget.controller.cursos
-                          .skip(3)
+                          .skip(halfLength)
                           .map((curso) => Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 20),

@@ -115,7 +115,7 @@ class _TimeoutScreenState extends State<TimeoutScreen> {
                                 ElevatedButton(onPressed: () => Navigator.of(context).pop(), child: const Text("VOLTAR")),
                                   const SizedBox(height: 20,),
                                   ElevatedButton(onPressed: () =>  setState(() {
-                                    initState();
+                                    widget.controller.obterAllEventos();
                                   }),child: const Text("TENTE NOVAMENTE"))
                                 ],
                               );

@@ -15,10 +15,12 @@ class QrCodeDataSourceImpl implements IQrCodeDataSource {
   Future<List<QrCodeModel>?> getQrCodes(
       {required String idCurso, required String idPeriodo}) async {
         var result = await clientHttp.get(url: ApiRoutes.GETQRCODES(idCurso: idCurso, idPeriodo: idPeriodo));
+        // print(result.statuscode);
+        // print(result.data);
         if (result.statusCode == 200) {
           var json = result.data;
           var qrcode = json['data'] as List?;
-          print(qrcode);
+          // print(qrcode);
           return qrcode?.map((qrcode) => QrCodeModel.fromMap(qrcode)).toList();
         } else if (result.statusCode != 500) {
           var json = result.data;
@@ -37,7 +39,7 @@ class QrCodeDataSourceImpl implements IQrCodeDataSource {
       {required String idCurso,
       required String idPeriodo,
       required QrCodeModel qrCodeModel}) async {
-        var result = await clientHttp.get(url: ApiRoutes.ADDQRCODES(idCurso: idCurso, idPeriodo: idPeriodo, qrCodeModel: qrCodeModel));
+        var result = await clientHttp.post(url: ApiRoutes.ADDQRCODES(idCurso: idCurso, idPeriodo: idPeriodo, qrCodeModel: qrCodeModel), body: qrCodeModel.toMap());
         if (result.statusCode == 200) {
           var json = result.data;
           var idQrcode = json['data'] as String?;
@@ -66,7 +68,7 @@ Future<String?> deleteQrCode(
     {required String idCurso,
     required String idPeriodo,
     required int idQrcode}) async {
-      var result = await clientHttp.get(url: ApiRoutes.DELETEQRCODES(idCurso: idCurso, idPeriodo: idPeriodo, idQrcode: idQrcode));
+      var result = await clientHttp.delete(url: ApiRoutes.DELETEQRCODES(idCurso: idCurso, idPeriodo: idPeriodo, idQrcode: idQrcode));
         if (result.statusCode == 200) {
           var json = result.data;
           var idQrcode = json['data'] as String?;

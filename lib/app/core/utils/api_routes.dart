@@ -15,7 +15,7 @@ class ApiRoutes {
   static String GETEVENTOS({required String idCurso}) => "/eventos/$idCurso";
   static String GETALLEVENTOS = "/eventos/all";
   static String ADDEVENTOS({required String idCurso, required EventoModel eventoModel}) => "/eventos/register/$idCurso";
-  static String DELETEEVENTOS({required String idCurso, required int idEvento}) => "/eventos/$idCurso";
+  static String DELETEEVENTOS({required String idCurso, required int idEvento}) => "/eventos/delete/$idCurso/$idEvento";
   static String GETHORARIOS({required String idCurso}) => "/horarios/$idCurso";
   static String CHANGEHORARIOS({required String idCurso, required String base64}) => "/horarios/$idCurso";
 }

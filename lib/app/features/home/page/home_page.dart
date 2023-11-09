@@ -6,6 +6,7 @@ import 'package:greenplus/app/core/utils/string_extensions.dart';
 import '../../../core/controllers/auth/auth_store.dart';
 import '../../../core/pages/empty/empty_page.dart';
 import '../../../core/widgets/buttons/custom_button_redondo.dart';
+import '../../../core/widgets/buttons/expandable_fab.dart';
 import '../../../core/widgets/grid_menus.dart';
 import 'home_controller.dart';
 
@@ -45,6 +46,23 @@ class _HomePageState extends State<HomePage> {
           ),
           backgroundColor: const Color.fromARGB(255, 27, 136, 83),
         ),
+        floatingActionButton:
+          ExpandableFab(
+            fabButtons: [
+              FabActionButton(
+                icon: Icons.picture_as_pdf,
+                onPressed: () =>
+                  Modular.to.pushNamed('/horarios/pdfpicker'),
+                title: 'Sobre o App',
+              ),
+              FabActionButton(
+                icon: Icons.picture_as_pdf,
+                onPressed: () =>
+                  sair(),
+                title: 'Sair',
+              ),
+            ],
+          ),                  
         body: Container(
             width: double.infinity,
             height: double.infinity,
@@ -84,9 +102,10 @@ class _HomePageState extends State<HomePage> {
                 );
               }
               if (widget.controller.loaded) {
+                int halfLength = widget.controller.menusModulo.length <= 5 ? 5 : (widget.controller.menusModulo.length / 2).ceil();
                 return GridMenus(
                     contentLine1:
-                        widget.controller.menusModulo.take(4).map((menu) {
+                        widget.controller.menusModulo.take(halfLength).map((menu) {
                       return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: CustomButtonRedondo(
@@ -100,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                           ));
                     }).toList(),
                     contentLine2:
-                        widget.controller.menusModulo.skip(4).map((menu) {
+                        widget.controller.menusModulo.skip(halfLength).map((menu) {
                       return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: CustomButtonRedondo(
@@ -116,5 +135,72 @@ class _HomePageState extends State<HomePage> {
               }
               return Container();
             })))));
+  }
+
+  sair() {
+    var senhaCorreta = "1234";
+    showDialog(
+  context: context,
+  builder: (BuildContext context) {
+    String senhaDigitada = '';
+    return AlertDialog(
+      title: Text('Digite a senha:'),
+      content: TextFormField(
+        keyboardType: TextInputType.number,
+        obscureText: true,
+        onChanged: (value) {
+          senhaDigitada = value;
+        },
+      ),
+      actions: <Widget>[
+        TextButton(
+          child: const Text('Verificar'),
+          onPressed: () {
+            if (senhaDigitada.toString() == senhaCorreta) {
+              Navigator.pop(context);
+              Modular.to.pop();
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Senha correta!'),
+                    content: const Text('Acesso concedido.'),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text('Fechar'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            } else {
+              Navigator.pop(context);
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Senha incorreta!'),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text('Fechar'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+          },
+        ),
+      ],
+    );
+  },
+);
+
   }
 }

@@ -64,8 +64,7 @@ class _PeriodosPageState extends State<PeriodosPage> {
                   );
                 }
                 if (widget.controller.loaded) {
-                  int halfLength =
-                      (widget.controller.periodos.length / 2).ceil();
+                  int halfLength = widget.controller.periodos.length <= 5 ? 5 : (widget.controller.periodos.length / 2).ceil();
                   return GridMenus(
                       contentLine1: widget.controller.periodos
                           .take(halfLength)

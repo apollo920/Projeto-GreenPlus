@@ -96,7 +96,7 @@ Future<String?> deleteEventos(
       var result = await clientHttp.delete(url: ApiRoutes.DELETEEVENTOS(idCurso: idCurso, idEvento: idEvento));
         if (result.statusCode == 200) {
           var json = result.data;
-          var idEventos = json['data'] as String?;
+          var idEventos = json['data'].toString();
           return idEventos;
         } else if (result.statusCode != 500) {
           var json = result.data;
