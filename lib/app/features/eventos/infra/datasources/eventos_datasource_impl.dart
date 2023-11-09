@@ -16,13 +16,10 @@ class EventosDataSourceImpl implements IEventosDataSource {
   Future<List<EventoModel>?> getEventos(
       {required String idCurso}) async {
         var result = await clientHttp.get(url: ApiRoutes.GETEVENTOS(idCurso: idCurso));
-        print(result.statusCode);
-        print(result.data);
         if (result.statusCode == 200) {
-          print("ok");
           var json = result.data;
           var eventos = json['data'] as List?;
-          print(eventos?.map((evento) => EventoModel.fromMap(evento)).toList());
+          print(eventos);
           return eventos?.map((evento) => EventoModel.fromMap(evento)).toList();
         } else if (result.statusCode == 404) {
           var eventos = result.data['data'] as List?;
@@ -64,13 +61,12 @@ class EventosDataSourceImpl implements IEventosDataSource {
   @override
   Future<String?> addEventos(
       {required String idCurso,  required EventoModel eventoModel}) async {
-        var result = await clientHttp.post(url: ApiRoutes.ADDEVENTOS(idCurso: idCurso, eventoModel: eventoModel));
+        var result = await clientHttp.post(url: ApiRoutes.ADDEVENTOS(idCurso: idCurso, eventoModel: eventoModel), body: eventoModel.toMap());
         print(result.data);
         print(result.data["data"]);
             if (result.statusCode == 201) {
               var json = result.data;
-              var idEventos = json['data'] as String?;
-              print(idEventos);
+              var idEventos = json['data']?.toString();
               return idEventos;
             } else if (result.statusCode != 500) {
               var json = result.data;

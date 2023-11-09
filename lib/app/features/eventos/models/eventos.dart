@@ -37,7 +37,7 @@ class EventoModel {
     return EventoModel(
         image: map['image'] as String?,
         observacoes: map['observacoes'] as String?,
-        id: map['id'] as String?);
+        id: map['id']?.toString());
   }
   dynamic operator [](String key) {
     switch (key) {

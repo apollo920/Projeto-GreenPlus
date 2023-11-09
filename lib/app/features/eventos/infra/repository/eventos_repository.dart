@@ -12,7 +12,7 @@ class EventosRepositoryImpl extends IEventosRepository{
 
   @override
   Future<Either<Failure, List<EventoModel>>> getEventos({required String idCurso}) async {
-    try {
+    //try {
       List<EventoModel>? listaEventos = await dataSource.getEventos(idCurso: idCurso);
 
       if (listaEventos == null) {
@@ -20,9 +20,9 @@ class EventosRepositoryImpl extends IEventosRepository{
       }
 
       return Right(listaEventos);
-    } catch (e) {
-      return Left(DataSourceException());
-    }
+    // } catch (e) {
+    //   return Left(DataSourceException());
+    // }
   }
   @override
   Future<Either<Failure, List<EventoModel>>> getAllEventos() async {

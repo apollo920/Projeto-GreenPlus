@@ -216,7 +216,7 @@ class _EventosCarouselState extends State<EventosCarousel> {
                           ),
                           ElevatedButton(
                               onPressed: () => setState(() {
-                                    initState();
+                                widget.controller.obterEventos(idCurso: widget.idCurso);
                                   }),
                               child: const Text("TENTE NOVAMENTE"))
                         ],
