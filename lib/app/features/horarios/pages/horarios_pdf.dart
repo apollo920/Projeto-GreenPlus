@@ -44,7 +44,7 @@ class _PDFScreenState extends State<PDFScreen> {
                 Modular.to.pop();
               }),
           title: const Text(
-            "Lista de Eventos",
+            "Horários",
             style: TextStyle(color: Colors.white),
           ),
           backgroundColor: const Color.fromARGB(255, 27, 136, 83),

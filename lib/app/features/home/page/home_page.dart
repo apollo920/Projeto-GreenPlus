@@ -50,13 +50,13 @@ class _HomePageState extends State<HomePage> {
           ExpandableFab(
             fabButtons: [
               FabActionButton(
-                icon: Icons.picture_as_pdf,
+                icon: Icons.question_mark,
                 onPressed: () =>
-                  Modular.to.pushNamed('/horarios/pdfpicker'),
+                  textoCreditos(),
                 title: 'Sobre o App',
               ),
               FabActionButton(
-                icon: Icons.picture_as_pdf,
+                icon: Icons.exit_to_app,
                 onPressed: () =>
                   sair(),
                 title: 'Sair',
@@ -144,13 +144,13 @@ class _HomePageState extends State<HomePage> {
   builder: (BuildContext context) {
     String senhaDigitada = '';
     return AlertDialog(
-      title: Text('Digite a senha:'),
+      title: const Text('Digite a senha:'),
       content: TextFormField(
         keyboardType: TextInputType.number,
         obscureText: true,
         onChanged: (value) {
           senhaDigitada = value;
-        },
+        }
       ),
       actions: <Widget>[
         TextButton(
@@ -170,11 +170,11 @@ class _HomePageState extends State<HomePage> {
                         child: const Text('Fechar'),
                         onPressed: () {
                           Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
+                        }
+                      )
+                    ]
                   );
-                },
+                }
               );
             } else {
               Navigator.pop(context);
@@ -188,19 +188,40 @@ class _HomePageState extends State<HomePage> {
                         child: const Text('Fechar'),
                         onPressed: () {
                           Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
+                        }
+                      )
+                    ]
                   );
-                },
+                }
               );
             }
-          },
-        ),
-      ],
+          }
+        )
+      ]
     );
-  },
+  }
 );
+  }
 
+  textoCreditos(){
+    showDialog(
+  context: context,
+  builder: (BuildContext context) {
+    return AlertDialog(
+      title: const Text('Créditos'),
+      content: const SingleChildScrollView(
+        child: Text('Versão da aplicação: 1.0.0\nProjeto de extensão\nReponsáveis e criadores:\nApollo Sá\nIngrid Ribeiro\nIves Daniel\nJoão Antônio\nLuís Gabriel\nParticipação Especial:\nJoão Pedro Gama - TechLeader\nEsse projeto visa a sustentabilidade a longo prazo através do uso de tecnologias para diminuir o uso de panfletos, horários, murais e outros que advém de inúmeros pápeis impressos todos os dias.\nObrigado por usar nosso produto!'),
+      ),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text('Fechar'),
+        )
+      ]
+    );
+  }
+);
   }
 }

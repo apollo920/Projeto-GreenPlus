@@ -49,6 +49,8 @@ abstract class LoginControllerBase with Store {
                 );
               },
             ), (token) {
+      usernameController.clear();
+      passwordController.clear();
       authStore.setUserAuthentication(authStore.user?.copyWith(token: token));
       Modular.to.pushNamed('/home');
     });
