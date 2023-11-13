@@ -16,13 +16,10 @@ class EventosDataSourceImpl implements IEventosDataSource {
   Future<List<EventoModel>?> getEventos({required String idCurso}) async {
     var result =
         await clientHttp.get(url: ApiRoutes.GETEVENTOS(idCurso: idCurso));
-    if (result.statusCode == 200) {
+    if (result.statusCode == 200 || result.statusCode == 404) {
       var json = result.data;
       var eventos = json['data'] as List?;
       print(eventos);
-      return eventos?.map((evento) => EventoModel.fromMap(evento)).toList();
-    } else if (result.statusCode == 404) {
-      var eventos = result.data['data'] as List?;
       return eventos?.map((evento) => EventoModel.fromMap(evento)).toList();
     } else if (result.statusCode != 500) {
       var json = result.data;
