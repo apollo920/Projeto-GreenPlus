@@ -4,26 +4,28 @@ import '../../models/eventos.dart';
 import '../datasources/i_eventos_datasource.dart';
 import 'i_eventos_repository.dart';
 
-class EventosRepositoryImpl extends IEventosRepository{
-
+class EventosRepositoryImpl extends IEventosRepository {
   final IEventosDataSource dataSource;
 
   EventosRepositoryImpl(this.dataSource);
 
   @override
-  Future<Either<Failure, List<EventoModel>>> getEventos({required String idCurso}) async {
+  Future<Either<Failure, List<EventoModel>>> getEventos(
+      {required String idCurso}) async {
     //try {
-      List<EventoModel>? listaEventos = await dataSource.getEventos(idCurso: idCurso);
+    List<EventoModel>? listaEventos =
+        await dataSource.getEventos(idCurso: idCurso);
 
-      if (listaEventos == null) {
-        return Left(DataSourceEmpty());
-      }
+    if (listaEventos == null) {
+      return Left(DataSourceEmpty());
+    }
 
-      return Right(listaEventos);
+    return Right(listaEventos);
     // } catch (e) {
     //   return Left(DataSourceException());
     // }
   }
+
   @override
   Future<Either<Failure, List<EventoModel>>> getAllEventos() async {
     try {
@@ -40,9 +42,11 @@ class EventosRepositoryImpl extends IEventosRepository{
   }
 
   @override
-  Future<Either<Failure, String>> addEventos({required String idCurso, required EventoModel eventoModel}) async {
+  Future<Either<Failure, String>> addEventos(
+      {required String idCurso, required EventoModel eventoModel}) async {
     try {
-      String? idEv = await dataSource.addEventos(idCurso: idCurso, eventoModel: eventoModel );
+      String? idEv = await dataSource.addEventos(
+          idCurso: idCurso, eventoModel: eventoModel);
 
       if (idEv == null || idEv.isEmpty) {
         return Left(DataSourceEmpty());
@@ -55,9 +59,11 @@ class EventosRepositoryImpl extends IEventosRepository{
   }
 
   @override
-  Future<Either<Failure, String>> deleteEventos({required String idCurso, required int idEvento}) async {
+  Future<Either<Failure, String>> deleteEventos(
+      {required String idCurso, required String idEvento}) async {
     try {
-      String? idEv = await dataSource.deleteEventos(idCurso: idCurso, idEvento: idEvento);
+      String? idEv =
+          await dataSource.deleteEventos(idCurso: idCurso, idEvento: idEvento);
 
       if (idEv == null || idEv.isEmpty) {
         return Left(DataSourceEmpty());
@@ -68,6 +74,4 @@ class EventosRepositoryImpl extends IEventosRepository{
       return Left(DataSourceException());
     }
   }
-
-
 }

@@ -26,7 +26,8 @@ abstract class EventosControllerBase with Store {
   ObservableList<EventoModel> listaEvento = ObservableList<EventoModel>.of([]);
 
   @observable
-  ObservableList<EventoModel> listaAllEvento = ObservableList<EventoModel>.of([]);
+  ObservableList<EventoModel> listaAllEvento =
+      ObservableList<EventoModel>.of([]);
 
   @observable
   bool erro = false;
@@ -70,8 +71,7 @@ abstract class EventosControllerBase with Store {
     listaEvento.clear();
     setLoading(true);
 
-    var result = await eventosRepository.getEventos(
-        idCurso: idCurso);
+    var result = await eventosRepository.getEventos(idCurso: idCurso);
 
     result.fold((erro) {
       setErro(true);
@@ -82,7 +82,7 @@ abstract class EventosControllerBase with Store {
       setLoading(false);
     });
   }
-  
+
   obterAllEventos() async {
     listaEvento.clear();
     setLoading(true);
@@ -102,8 +102,7 @@ abstract class EventosControllerBase with Store {
   Future addEventos({required EventoModel eventosModel}) async {
     // showLoading();
     var result = await eventosRepository.addEventos(
-        idCurso: cursoSelected!.id!,
-        eventoModel: eventosModel);
+        idCurso: cursoSelected!.id!, eventoModel: eventosModel);
     // await Future.delayed(const Duration(seconds: 3));
     result.fold((erro) {
       Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
@@ -127,14 +126,12 @@ abstract class EventosControllerBase with Store {
       Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
     });
   }
-  
-  
-  Future deleteEventos({required int idEvento}) async {
+
+  Future deleteEventos({required String idEvento}) async {
     // showLoading();
 
     var result = await eventosRepository.deleteEventos(
-        idCurso: cursoSelected!.id!,
-        idEvento: idEvento);
+        idCurso: cursoSelected!.id!, idEvento: idEvento);
     // await Future.delayed(const Duration(seconds: 3));
     result.fold((erro) {
       Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
@@ -167,8 +164,9 @@ abstract class EventosControllerBase with Store {
           );
         });
   }
+
   showTrash() {
-    if ((Modular.get<AuthStore>().user?.isAdmin ?? false)){
+    if ((Modular.get<AuthStore>().user?.isAdmin ?? false)) {
       return true;
     } else {
       return false;

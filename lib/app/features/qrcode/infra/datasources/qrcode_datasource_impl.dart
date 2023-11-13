@@ -14,20 +14,21 @@ class QrCodeDataSourceImpl implements IQrCodeDataSource {
   @override
   Future<List<QrCodeModel>?> getQrCodes(
       {required String idCurso, required String idPeriodo}) async {
-        var result = await clientHttp.get(url: ApiRoutes.GETQRCODES(idCurso: idCurso, idPeriodo: idPeriodo));
-        // print(result.statuscode);
-        // print(result.data);
-        if (result.statusCode == 200) {
-          var json = result.data;
-          var qrcode = json['data'] as List?;
-          // print(qrcode);
-          return qrcode?.map((qrcode) => QrCodeModel.fromMap(qrcode)).toList();
-        } else if (result.statusCode != 500) {
-          var json = result.data;
-          throw Failure(message: json['message'] ?? "Erro na consulta");
-        } else {
-          throw Failure();
-        }
+    var result = await clientHttp.get(
+        url: ApiRoutes.GETQRCODES(idCurso: idCurso, idPeriodo: idPeriodo));
+    // print(result.statuscode);
+    // print(result.data);
+    if (result.statusCode == 200 || result.statusCode == 404) {
+      var json = result.data;
+      var qrcode = json['data'] as List?;
+      // print(qrcode);
+      return qrcode?.map((qrcode) => QrCodeModel.fromMap(qrcode)).toList();
+    } else if (result.statusCode != 500) {
+      var json = result.data;
+      throw Failure(message: json['message'] ?? "Erro na consulta");
+    } else {
+      throw Failure();
+    }
 
     // return listaQrCodeByCursoAndPeriodo[idCurso]?[idPeriodo]
     //     ?.map((qrcode) => QrCodeModel.fromMap(qrcode))
@@ -39,17 +40,20 @@ class QrCodeDataSourceImpl implements IQrCodeDataSource {
       {required String idCurso,
       required String idPeriodo,
       required QrCodeModel qrCodeModel}) async {
-        var result = await clientHttp.post(url: ApiRoutes.ADDQRCODES(idCurso: idCurso, idPeriodo: idPeriodo, qrCodeModel: qrCodeModel), body: qrCodeModel.toMap());
-        if (result.statusCode == 200) {
-          var json = result.data;
-          var idQrcode = json['data'] as String?;
-          return idQrcode;
-        } else if (result.statusCode != 500) {
-          var json = result.data;
-          throw Failure(message: json['message'] ?? "Erro ao adicionar QrCode");
-        } else {
-          throw Failure();
-        }
+    var result = await clientHttp.post(
+        url: ApiRoutes.ADDQRCODES(
+            idCurso: idCurso, idPeriodo: idPeriodo, qrCodeModel: qrCodeModel),
+        body: qrCodeModel.toMap());
+    if (result.statusCode == 200) {
+      var json = result.data;
+      var idQrcode = json['data'] as String?;
+      return idQrcode;
+    } else if (result.statusCode != 500) {
+      var json = result.data;
+      throw Failure(message: json['message'] ?? "Erro ao adicionar QrCode");
+    } else {
+      throw Failure();
+    }
     // try {
     //   String id =
     //       (listaQrCodeByCursoAndPeriodo[idCurso]![idPeriodo]!.length + 1)
@@ -63,39 +67,39 @@ class QrCodeDataSourceImpl implements IQrCodeDataSource {
     // }
   }
 
- @override
-Future<String?> deleteQrCode(
-    {required String idCurso,
-    required String idPeriodo,
-    required int idQrcode}) async {
-      var result = await clientHttp.delete(url: ApiRoutes.DELETEQRCODES(idCurso: idCurso, idPeriodo: idPeriodo, idQrcode: idQrcode));
-        if (result.statusCode == 200) {
-          var json = result.data;
-          var idQrcode = json['data'] as String?;
-          return idQrcode;
-        } else if (result.statusCode != 500) {
-          var json = result.data;
-          throw Failure(message: json['message'] ?? "Erro ao deletar QrCode");
-        } else {
-          throw Failure();
-        }
-  // try {
-  //   var qrCodes = listaQrCodeByCursoAndPeriodo[idCurso]?[idPeriodo];
-  //   if (qrCodes != null) {
-  //     for (int i = 0; i < qrCodes.length; i++) {
-  //       if (qrCodes[i]['id'] == idQrcode.toString()) {
-  //         qrCodes.removeAt(i);
-  //         return idQrcode.toString();
-  //       }
-  //     }
-  //   }
-  //   return null;
-  // } on Exception catch (e) {
-  //   return null;
-  // }
-}
-
-
+  @override
+  Future<String?> deleteQrCode(
+      {required String idCurso,
+      required String idPeriodo,
+      required String idQrcode}) async {
+    var result = await clientHttp.delete(
+        url: ApiRoutes.DELETEQRCODES(
+            idCurso: idCurso, idPeriodo: idPeriodo, idQrcode: idQrcode));
+    if (result.statusCode == 200) {
+      var json = result.data;
+      var idQrcode = json['data'] as String?;
+      return idQrcode;
+    } else if (result.statusCode != 500) {
+      var json = result.data;
+      throw Failure(message: json['message'] ?? "Erro ao deletar QrCode");
+    } else {
+      throw Failure();
+    }
+    // try {
+    //   var qrCodes = listaQrCodeByCursoAndPeriodo[idCurso]?[idPeriodo];
+    //   if (qrCodes != null) {
+    //     for (int i = 0; i < qrCodes.length; i++) {
+    //       if (qrCodes[i]['id'] == idQrcode.toString()) {
+    //         qrCodes.removeAt(i);
+    //         return idQrcode.toString();
+    //       }
+    //     }
+    //   }
+    //   return null;
+    // } on Exception catch (e) {
+    //   return null;
+    // }
+  }
 
 // var result = await clientHttp.get(url: "/users/checktoken");
 // if (result.statusCode == 200) {
@@ -231,7 +235,7 @@ var listaQrCodeByCursoAndPeriodo = {
         "title": "WIFI DA PADARIA  2 1",
         "icon": "0xf051f",
         "type": "WiFi",
-        'id':"21"
+        'id': "21"
       },
       {
         "content": "https://exemplo.com",

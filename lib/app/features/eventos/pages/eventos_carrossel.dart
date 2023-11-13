@@ -104,8 +104,9 @@ class _EventosCarouselState extends State<EventosCarousel> {
                                         decoration: const BoxDecoration(
                                             image: DecorationImage(
                                               fit: BoxFit.cover,
-                                              image: ExactAssetImage('assets/images/a.png'),
-                                                ),
+                                              image: ExactAssetImage(
+                                                  'assets/images/a.png'),
+                                            ),
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(20))),
                                         child: Column(
@@ -160,7 +161,7 @@ class _EventosCarouselState extends State<EventosCarousel> {
                                                                             TextButton(
                                                                               onPressed: () {
                                                                                 Navigator.of(context).pop();
-                                                                                _deleteEventos(int.parse(evento.id!));
+                                                                                _deleteEventos((evento.id!));
                                                                                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                                                               },
                                                                               child: const Text("Ok"),
@@ -216,7 +217,8 @@ class _EventosCarouselState extends State<EventosCarousel> {
                           ),
                           ElevatedButton(
                               onPressed: () => setState(() {
-                                widget.controller.obterEventos(idCurso: widget.idCurso);
+                                    widget.controller
+                                        .obterEventos(idCurso: widget.idCurso);
                                   }),
                               child: const Text("TENTE NOVAMENTE"))
                         ],
@@ -235,7 +237,7 @@ class _EventosCarouselState extends State<EventosCarousel> {
                 ])))));
   }
 
-  Future<void> _deleteEventos(int id) async {
+  Future<void> _deleteEventos(String id) async {
     await Modular.get<EventosController>().deleteEventos(idEvento: id);
   }
 }

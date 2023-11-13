@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:greenplus/app/core/controllers/auth/auth_store.dart';
@@ -92,7 +90,7 @@ abstract class QrCodeControllerBase with Store {
   }
 
   Future addQrCode({required QrCodeModel qrCodeModel}) async {
-    showLoading();
+    // showLoading();
 
     var result = await qrCodeRepository.addQrCode(
         idCurso: cursoSelected!.id!,
@@ -122,7 +120,7 @@ abstract class QrCodeControllerBase with Store {
     });
   }
 
-  Future deleteQrCode({required int idQrcode}) async {
+  Future deleteQrCode({required String idQrcode}) async {
     // showLoading();
 
     var result = await qrCodeRepository.deleteQrCode(
@@ -149,7 +147,6 @@ abstract class QrCodeControllerBase with Store {
           });
     }, (id) {
       listaQrCode.removeWhere((element) => element.id == id.toString());
-      
     });
   }
 
@@ -164,11 +161,10 @@ abstract class QrCodeControllerBase with Store {
   }
 
   showTrash() {
-    if ((Modular.get<AuthStore>().user?.isAdmin ?? false)){
+    if ((Modular.get<AuthStore>().user?.isAdmin ?? false)) {
       return true;
     } else {
       return false;
     }
   }
-  
 }

@@ -24,7 +24,7 @@ class QRCodeListScreen extends StatefulWidget {
   _QRCodeListScreenState createState() => _QRCodeListScreenState();
 }
 
-class _QRCodeListScreenState extends State<QRCodeListScreen>{
+class _QRCodeListScreenState extends State<QRCodeListScreen> {
   final snackBar = SnackBar(
     content: const Text("Deletado com sucesso!"),
     action: SnackBarAction(
@@ -198,7 +198,7 @@ class _QRCodeListScreenState extends State<QRCodeListScreen>{
                                                                               TextButton(
                                                                                 onPressed: () {
                                                                                   Navigator.of(context).pop();
-                                                                                  _deleteQRCode(int.parse(qrCode.id!));
+                                                                                  _deleteQRCode((qrCode.id!));
                                                                                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                                                                 },
                                                                                 child: const Text("Ok"),
@@ -276,7 +276,7 @@ class _QRCodeListScreenState extends State<QRCodeListScreen>{
                     ]))))));
   }
 
-  Future<void> _deleteQRCode(int id) async {
+  Future<void> _deleteQRCode(String id) async {
     await Modular.get<QrCodeController>().deleteQrCode(idQrcode: id);
   }
 }
