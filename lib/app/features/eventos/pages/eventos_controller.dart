@@ -102,10 +102,13 @@ abstract class EventosControllerBase with Store {
 
   Future addEventos({required EventoModel eventosModel}) async {
     // showLoading();
+    setLoading(true);
     var result = await eventosRepository.addEventos(
         idCurso: cursoSelected!.id!, eventoModel: eventosModel);
     // await Future.delayed(const Duration(seconds: 3));
     result.fold((erro) {
+      setLoading(false);
+      print("erro: $result");
       Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
       showDialog(
           context: Modular.routerDelegate.navigatorKey.currentState!.context,
@@ -123,7 +126,8 @@ abstract class EventosControllerBase with Store {
                 ]);
           });
     }, (id) {
-      listaEvento.add(eventosModel.copyWith(id: id));
+      setLoading(false);
+      print("deu certo: $result");
       Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
     });
   }
@@ -135,6 +139,7 @@ abstract class EventosControllerBase with Store {
         idCurso: cursoSelected!.id!, idEvento: idEvento);
     // await Future.delayed(const Duration(seconds: 3));
     result.fold((erro) {
+      print("erro: $result");
       showDialog(
           context: Modular.routerDelegate.navigatorKey.currentState!.context,
           builder: (context) {
@@ -151,6 +156,7 @@ abstract class EventosControllerBase with Store {
                 ]);
           });
     }, (id) {
+      print("deu certo: $result");
       listaEvento.removeWhere((element) => element.id == id.toString());
     });
   }

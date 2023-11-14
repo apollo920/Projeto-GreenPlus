@@ -70,8 +70,8 @@ class _EventosPickerServiceState extends State<EventosPickerService> {
         context,
         MaterialPageRoute(
           builder: (context) =>
-              ImagePreviewAndObservations(imagePath: base64Image),
-        ),
+              ImagePreviewAndObservations(imagePath: base64Image, controller: Modular.get(), ),
+        ) ,
       );
     } else {
       // ignore: use_build_context_synchronously
@@ -153,8 +153,9 @@ class _EventosPickerServiceState extends State<EventosPickerService> {
 
 class ImagePreviewAndObservations extends StatefulWidget {
   final String imagePath;
+  final EventosController controller;
 
-  const ImagePreviewAndObservations({super.key, required this.imagePath});
+  const ImagePreviewAndObservations({super.key, required this.imagePath, required this.controller});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -268,11 +269,12 @@ class _ImagePreviewAndObservationsState
                                   observacoes = textController.text;
                                 });
                                 await _addImage(widget.imagePath, observacoes);
-                                // ignore: use_build_context_synchronously
                                 Navigator.of(context).pop();
-                                // ignore: use_build_context_synchronously
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);                               
+                                Navigator.of(context).pop();
+                                setState(() {
+                                  ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);   
+                                });                          
                               },
                               child: const Text('Salvar'),
                             ),

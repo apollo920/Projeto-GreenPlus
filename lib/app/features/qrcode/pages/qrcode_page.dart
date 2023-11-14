@@ -258,16 +258,17 @@ class _QRCodeWifiGeneratorState extends State<QRCodeWifiGenerator> {
                                                                     Navigator.of(
                                                                             context)
                                                                         .pop();
+                                                                    // ignore: use_build_context_synchronously
                                                                     Navigator.of(
                                                                             context)
                                                                         .pop();
-                                                                    setState(
-                                                                        () {
+                                                                    Modular.to.pop();
+                                                                   
                                                                       ScaffoldMessenger.of(
                                                                               context)
                                                                           .showSnackBar(
                                                                               snackBar);
-                                                                    });
+                                                                    
                                                                   },
                                                                   child:
                                                                       const Text(
@@ -410,6 +411,7 @@ class _QRCodeLinkGeneratorState extends State<QRCodeLinkGenerator> {
                                                       // ignore: use_build_context_synchronously
                                                       Navigator.of(context)
                                                           .pop();
+                                                      Modular.to.pop();
                                                       // ignore: use_build_context_synchronously
                                                       ScaffoldMessenger.of(
                                                               context)

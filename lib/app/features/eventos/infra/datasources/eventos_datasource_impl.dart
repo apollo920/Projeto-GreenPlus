@@ -19,7 +19,6 @@ class EventosDataSourceImpl implements IEventosDataSource {
     if (result.statusCode == 200 || result.statusCode == 404) {
       var json = result.data;
       var eventos = json['data'] as List?;
-      print(eventos);
       return eventos?.map((evento) => EventoModel.fromMap(evento)).toList();
     } else if (result.statusCode != 500) {
       var json = result.data;
@@ -60,16 +59,16 @@ class EventosDataSourceImpl implements IEventosDataSource {
     var result = await clientHttp.post(
         url: ApiRoutes.ADDEVENTOS(idCurso: idCurso, eventoModel: eventoModel),
         body: eventoModel.toMap());
-    print(result.data);
-    print(result.data["data"]);
     if (result.statusCode == 201) {
       var json = result.data;
       var idEventos = json['data']?.toString();
       return idEventos;
     } else if (result.statusCode != 500) {
+      print("primeiro failure");
       var json = result.data;
       throw Failure(message: json['message'] ?? "Erro ao adicionar evento");
     } else {
+      print("segundo failure");
       throw Failure();
     }
 
@@ -98,9 +97,11 @@ class EventosDataSourceImpl implements IEventosDataSource {
       print(idEventos);
       return idEventos;
     } else if (result.statusCode != 500) {
+      print("primeiro failure");
       var json = result.data;
       throw Failure(message: json['message'] ?? "Erro ao deletar evento");
     } else {
+      print("segundo failure");
       throw Failure();
     }
 
