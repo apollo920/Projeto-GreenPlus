@@ -87,6 +87,11 @@ class _EventosCarouselState extends State<EventosCarousel> {
                 child: Center(
                     child: Column(children: [
                   Expanded(child: Observer(builder: (context) {
+                    if (widget.controller.loading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
                     if (widget.controller.listaEvento.isNotEmpty) {
                       return LayoutBuilder(builder: (_, constrants) {
                         return CarouselSlider(

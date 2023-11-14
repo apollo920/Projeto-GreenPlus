@@ -79,6 +79,11 @@ class _PDFScreenState extends State<PDFScreen> {
                 child: Center(
                     child: Column(children: [
                   Expanded(child: Observer(builder: (_) {
+                    if (widget.controller.loading) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
                     if (widget.controller.pdfHorario?.isNotEmpty ?? false) {
                       var pdf = widget.controller.pdfHorario;
                       return PdfPreview(

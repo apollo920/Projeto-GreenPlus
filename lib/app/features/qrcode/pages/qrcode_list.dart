@@ -101,6 +101,11 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
                       SizedBox(
                           height: MediaQuery.of(context).size.height,
                           child: Observer(builder: (context) {
+                            if (widget.controller.loading) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                                  );
+                                }
                             return Container(
                                 alignment: Alignment.center,
                                 child: Wrap(

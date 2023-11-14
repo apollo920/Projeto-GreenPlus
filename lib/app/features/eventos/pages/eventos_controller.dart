@@ -87,6 +87,7 @@ abstract class EventosControllerBase with Store {
     listaEvento.clear();
     setLoading(true);
 
+
     var result = await eventosRepository.getAllEventos();
 
     result.fold((erro) {
@@ -134,7 +135,6 @@ abstract class EventosControllerBase with Store {
         idCurso: cursoSelected!.id!, idEvento: idEvento);
     // await Future.delayed(const Duration(seconds: 3));
     result.fold((erro) {
-      Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
       showDialog(
           context: Modular.routerDelegate.navigatorKey.currentState!.context,
           builder: (context) {

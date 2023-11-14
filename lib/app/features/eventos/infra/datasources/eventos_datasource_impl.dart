@@ -91,9 +91,11 @@ class EventosDataSourceImpl implements IEventosDataSource {
       {required String idCurso, required String idEvento}) async {
     var result = await clientHttp.delete(
         url: ApiRoutes.DELETEEVENTOS(idCurso: idCurso, idEvento: idEvento));
-    if (result.statusCode == 200) {
+    print(result.data);
+    if (result.statusCode == 200 || result.statusCode == 404) {
       var json = result.data;
-      var idEventos = json['data'].toString();
+      var idEventos = json['data'] as String?;
+      print(idEventos);
       return idEventos;
     } else if (result.statusCode != 500) {
       var json = result.data;

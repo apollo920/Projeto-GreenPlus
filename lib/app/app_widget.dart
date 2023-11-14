@@ -5,6 +5,7 @@ import 'package:greenplus/app/core/controllers/timeout_controller.dart';
 class AppWidget extends StatelessWidget {
   const AppWidget({super.key});
 
+  @override
   Widget build(BuildContext context) {
     final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
     Modular.setNavigatorKey(navigatorKey);

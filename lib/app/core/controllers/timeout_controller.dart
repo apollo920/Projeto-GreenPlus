@@ -13,7 +13,7 @@ abstract class _TimeoutControllerBase with Store {
   bool _isTimeoutScreenOpened = false;
 
   void startTimeoutTimer() {
-    _timer = Timer.periodic(const Duration(minutes: 30), (time) {
+    _timer = Timer.periodic(const Duration(minutes: 10), (time) {
       print("${time.tick}");
       _timeout = true;
       if (!_isTimeoutScreenOpened) {
