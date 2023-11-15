@@ -8,7 +8,7 @@ import 'app/app_widget.dart';
 void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  
+
   runApp(ModularApp(module: AppModule(), child: const AppWidget()));
   FlutterNativeSplash.remove();
 }

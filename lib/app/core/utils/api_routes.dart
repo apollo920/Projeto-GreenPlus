@@ -35,5 +35,5 @@ class ApiRoutes {
   static String GETHORARIOS({required String idCurso}) => "/horarios/$idCurso";
   static String CHANGEHORARIOS(
           {required String idCurso, required String base64}) =>
-      "/horarios/$idCurso";
+      "/horarios/alterar/$idCurso";
 }

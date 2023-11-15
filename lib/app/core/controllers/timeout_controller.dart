@@ -13,14 +13,13 @@ abstract class _TimeoutControllerBase with Store {
   bool _isTimeoutScreenOpened = false;
 
   void startTimeoutTimer() {
-    _timer = Timer.periodic(const Duration(minutes: 10), (time) {
+    _timer = Timer.periodic(const Duration(minutes: 60), (time) {
       print("${time.tick}");
       _timeout = true;
       if (!_isTimeoutScreenOpened) {
         _isTimeoutScreenOpened = true;
         Modular.to.pushNamed('/timeout');
       }
-
     });
   }
 
@@ -43,6 +42,7 @@ abstract class _TimeoutControllerBase with Store {
   bool isTimedOut() {
     return _timeout;
   }
+
   void resetTimeoutScreenOpened() {
     _isTimeoutScreenOpened = false;
   }
