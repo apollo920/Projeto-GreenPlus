@@ -5,7 +5,7 @@ class User {
   final String? password;
   final String? token;
 
-  bool get isAdmin => true;
+  bool get isAdmin => username == 'Aluno' ? false : true;
 
   User({required this.username, required this.password, this.token});
 

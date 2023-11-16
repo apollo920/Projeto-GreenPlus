@@ -11,7 +11,6 @@ import 'package:greenplus/app/core/cursos/page/cursos_page.dart';
 import 'package:greenplus/app/core/periodos/infra/datasources/i_periodos_datasource.dart';
 import 'package:greenplus/app/core/periodos/infra/repository/i_periodos_repository.dart';
 import 'package:greenplus/app/core/periodos/page/periodos_controller.dart';
-import 'package:greenplus/app/features/avisos/page/avisos_page.dart';
 import 'package:greenplus/app/features/eventos/infra/datasources/eventos_datasource_impl.dart';
 import 'package:greenplus/app/features/eventos/infra/datasources/i_eventos_datasource.dart';
 import 'package:greenplus/app/features/eventos/infra/repository/eventos_repository.dart';
@@ -64,6 +63,5 @@ class AppModule extends Module {
     ChildRoute("/timeout", child:  (context, args) => TimeoutScreen(controller: Modular.get())),
     ChildRoute("/cursos", child:  (context, args) => CursosPage(controller: Modular.get(), callBack: args.data,)),
     //ChildRoute("/periodos/:idCurso", child:  (context, args) => PeriodosPage(controller: Modular.get(), idCurso: args.params['idCurso'],)),
-    ChildRoute("/avisos", child:  (context, args) => const AvisosPage()),
   ];
 }

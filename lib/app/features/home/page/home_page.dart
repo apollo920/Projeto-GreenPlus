@@ -32,14 +32,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: (Modular.get<AuthStore>().user?.isAdmin ?? false)
-              ? IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
-                  ),
-                  onPressed: () => Modular.to.pop())
-              : null,
+          automaticallyImplyLeading: (Modular.get<AuthStore>().user?.isAdmin ?? false) ? true : false,              
           title: const Text(
             "Opções de funcionalidades",
             style: TextStyle(color: Colors.white),
