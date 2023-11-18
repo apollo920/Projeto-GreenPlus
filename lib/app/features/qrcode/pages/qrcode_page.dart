@@ -27,14 +27,18 @@ class _QrCodePageState extends State<QrCodePage> {
       appBar: AppBar(
           title: Observer(builder: (context) {
             return widget.controller.showPeriodosWidget
-                ? const Text(
-                    'Escolha um dos periodos específicos',
-                    style: TextStyle(color: Colors.white),
-                  )
-                : const Text(
-                    'Escolha um dos cursos específicos',
-                    style: TextStyle(color: Colors.white),
-                  );
+                ? const Center(
+                  child: Text(
+                      'Escolha um dos periodos específicos',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                )
+                : const Center(
+                  child: Text(
+                      'Escolha um dos cursos específicos',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                );
           }),
           backgroundColor: const Color.fromARGB(255, 27, 136, 83),
           automaticallyImplyLeading: false,
@@ -61,7 +65,7 @@ class _QrCodePageState extends State<QrCodePage> {
               if (widget.controller.showPeriodosWidget) {
                 return PeriodosPage(
                     controller: Modular.get(),
-                    idCurso: widget.controller.cursoSelected!.id!,
+                    idPeriodo: widget.controller.cursoSelected!.id!,
                     callBack: (periodo) {
                       widget.controller.setPeriodoSelected(periodo);
                       Modular.to.pushNamed(
@@ -108,9 +112,11 @@ class _QRCodeWifiGeneratorState extends State<QRCodeWifiGenerator> {
                 color: Colors.white,
               ),
               onPressed: () => Modular.to.pop()),
-          title: const Text(
-            'Gerador de QR Code de Rede Wi-Fi',
-            style: TextStyle(color: Colors.white),
+          title: const Center(
+            child: Text(
+              'Gerador de QR Code de Rede Wi-Fi',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           backgroundColor: const Color.fromARGB(255, 27, 136, 83),
         ),
@@ -264,6 +270,7 @@ class _QRCodeWifiGeneratorState extends State<QRCodeWifiGenerator> {
                                                                         .pop();
                                                                     Modular.to.pop();
                                                                    
+                                                                      // ignore: use_build_context_synchronously
                                                                       ScaffoldMessenger.of(
                                                                               context)
                                                                           .showSnackBar(
@@ -336,9 +343,11 @@ class _QRCodeLinkGeneratorState extends State<QRCodeLinkGenerator> {
                 color: Colors.white,
               ),
               onPressed: () => Modular.to.pop()),
-          title: const Text(
-            'Gerador de QR Code de Link',
-            style: TextStyle(color: Colors.white),
+          title: const Center(
+            child: Text(
+              'Gerador de QR Code de Link',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           backgroundColor: const Color.fromARGB(255, 27, 136, 83),
         ),

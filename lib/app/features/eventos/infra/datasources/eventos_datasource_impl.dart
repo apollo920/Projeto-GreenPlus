@@ -64,11 +64,9 @@ class EventosDataSourceImpl implements IEventosDataSource {
       var idEventos = json['data']?.toString();
       return idEventos;
     } else if (result.statusCode != 500) {
-      print("primeiro failure");
       var json = result.data;
       throw Failure(message: json['message'] ?? "Erro ao adicionar evento");
     } else {
-      print("segundo failure");
       throw Failure();
     }
 

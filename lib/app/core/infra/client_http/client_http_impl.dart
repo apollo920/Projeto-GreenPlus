@@ -11,7 +11,7 @@ class ClientHttpImpl implements IClientHttp {
 
   ClientHttpImpl(this.dio) {
     dio.options = options;
-    origin = 'http://localhost:8080';
+    origin = 'http://192.168.15.9:8080';
     dio.interceptors
         .add(InterceptorsWrapper(onRequest: (options, handler) async {
       final RequestOptions customOptions = await addAuthHeader(dio, options);
@@ -20,10 +20,13 @@ class ClientHttpImpl implements IClientHttp {
     }));
   }
 
+  
+
   BaseOptions options = BaseOptions(
-    baseUrl: "http://127.0.0.1:8080",
+    baseUrl: "http://192.168.15.9:8080",
     connectTimeout: const Duration(seconds: 30),
     receiveTimeout: const Duration(seconds: 30),
+    
   );
 
   String get token {
@@ -144,7 +147,7 @@ class ClientHttpImpl implements IClientHttp {
   }
 
   handleException(dynamic e) {
-    print(e.toString());
+    // print(e.toString());
     if (e is DioException) {
       if (e.response != null) {
         return e.response;

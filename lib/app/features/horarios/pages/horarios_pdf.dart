@@ -43,9 +43,11 @@ class _PDFScreenState extends State<PDFScreen> {
                 widget.controller.setCursoSelected(null);
                 Modular.to.pop();
               }),
-          title: const Text(
-            "Horários",
-            style: TextStyle(color: Colors.white),
+          title: const Center(
+            child: Text(
+              "Horários",
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           backgroundColor: const Color.fromARGB(255, 27, 136, 83),
         ),

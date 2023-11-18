@@ -12,9 +12,9 @@ part 'periodos_controller.g.dart';
 class PeriodosController = PeriodosControllerBase with _$PeriodosController;
 
 abstract class PeriodosControllerBase with Store {
-  IPeriodosRepository cursoRepository;
+  IPeriodosRepository periodosRepository;
 
-  PeriodosControllerBase(this.cursoRepository);
+  PeriodosControllerBase(this.periodosRepository);
 
   @observable
   List<Periodo> periodos = [];
@@ -37,10 +37,10 @@ abstract class PeriodosControllerBase with Store {
   @action
   setPeriodos(List<Periodo> value) => periodos = value;
 
-  obterPeriodos({required String idCurso}) async {
+  obterPeriodos({required String idPeriodo}) async {
     setLoading(true);
     
-    var result = await cursoRepository.getPeriodos(idCurso: idCurso);
+    var result = await periodosRepository.getPeriodos(idPeriodo: idPeriodo);
 
     result.fold(
         (erro) {
@@ -51,7 +51,7 @@ abstract class PeriodosControllerBase with Store {
             Modular.routerDelegate.navigatorKey.currentState!.context,
             builder: (context) {
               return AlertDialog(
-                title: const Text('Erro ao buscar os cursos'),
+                title: const Text('Erro ao buscar os periodoss'),
                 content: Text(erro.message ?? ''),
                 actions: [
                   TextButton(
@@ -64,8 +64,8 @@ abstract class PeriodosControllerBase with Store {
               );
             },
           );
-        }, (cursos) {
-      setPeriodos(cursos);
+        }, (periodos) {
+      setPeriodos(periodos);
       setErro(false);
       setLoading(false);
     });

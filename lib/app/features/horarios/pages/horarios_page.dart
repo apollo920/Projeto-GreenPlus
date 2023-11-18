@@ -26,9 +26,11 @@ class _HorariosPageState extends State<HorariosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: const Text(
-              'Escolha um dos cursos específicos',
-              style: TextStyle(color: Colors.white),
+            title: const Center(
+              child: Text(
+                'Escolha um dos cursos específicos',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
             backgroundColor: const Color.fromARGB(255, 27, 136, 83),
             automaticallyImplyLeading: false,
@@ -109,8 +111,10 @@ class _PDFPickerServiceState extends State<PDFPickerService> {
                 color: Colors.white,
               ),
               onPressed: () => Modular.to.pop()),
-          title: const Text("Selecione o horário a ser exibido",
-              style: TextStyle(color: Colors.white)),
+          title: const Center(
+            child: Text("Selecione o horário a ser exibido",
+                style: TextStyle(color: Colors.white)),
+          ),
           backgroundColor: const Color.fromARGB(255, 27, 136, 83),
         ),
         body: Container(
@@ -209,9 +213,11 @@ class _PDFPreviewState extends State<PDFPreview> {
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => showConfirmationDialog(),
         ),
-        title: const Text(
-          "Verificação do PDF selecionado",
-          style: TextStyle(color: Colors.white),
+        title: const Center(
+          child: Text(
+            "Verificação do PDF selecionado",
+            style: TextStyle(color: Colors.white),
+          ),
         ),
         backgroundColor: const Color.fromARGB(255, 27, 136, 83),
       ),

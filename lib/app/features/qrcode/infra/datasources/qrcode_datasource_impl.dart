@@ -16,12 +16,9 @@ class QrCodeDataSourceImpl implements IQrCodeDataSource {
       {required String idCurso, required String idPeriodo}) async {
     var result = await clientHttp.get(
         url: ApiRoutes.GETQRCODES(idCurso: idCurso, idPeriodo: idPeriodo));
-    // print(result.statuscode);
-    // print(result.data);
     if (result.statusCode == 200 || result.statusCode == 404) {
       var json = result.data;
       var qrcode = json['data'] as List?;
-      // print(qrcode);
       return qrcode?.map((qrcode) => QrCodeModel.fromMap(qrcode)).toList();
     } else if (result.statusCode != 500) {
       var json = result.data;

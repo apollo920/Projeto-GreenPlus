@@ -8,14 +8,14 @@ import '../../widgets/buttons/custom_button_quadrado.dart';
 import 'periodos_controller.dart';
 
 class PeriodosPage extends StatefulWidget {
-  final String idCurso;
+  final String idPeriodo;
   final PeriodosController controller;
   final Function(Periodo curso) callBack;
 
   const PeriodosPage(
       {super.key,
       required this.controller,
-      required this.idCurso,
+      required this.idPeriodo,
       required this.callBack});
 
   @override
@@ -27,7 +27,7 @@ class _PeriodosPageState extends State<PeriodosPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      widget.controller.obterPeriodos(idCurso: widget.idCurso);
+      widget.controller.obterPeriodos(idPeriodo: widget.idPeriodo);
     });
   }
 
@@ -58,7 +58,7 @@ class _PeriodosPageState extends State<PeriodosPage> {
                       ),
                       OutlinedButton(
                           onPressed: () => widget.controller
-                              .obterPeriodos(idCurso: widget.idCurso),
+                              .obterPeriodos(idPeriodo: widget.idPeriodo),
                           child: const Text("Tentar novamente"))
                     ],
                   );

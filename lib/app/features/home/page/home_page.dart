@@ -12,7 +12,7 @@ import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
   final HomeController controller;
-
+  
   const HomePage({super.key, required this.controller});
 
   @override
@@ -27,15 +27,17 @@ class _HomePageState extends State<HomePage> {
       widget.controller.obterMenusModulos();
     });
   }
-
+  var senhaParaSair = "1234";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: (Modular.get<AuthStore>().user?.isAdmin ?? false) ? true : false,              
-          title: const Text(
-            "Opções de funcionalidades",
-            style: TextStyle(color: Colors.white),
+          automaticallyImplyLeading:false,              
+          title: const Center(
+            child: Text(
+              "Opções de funcionalidades",
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           backgroundColor: const Color.fromARGB(255, 27, 136, 83),
         ),
@@ -56,82 +58,110 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),                  
-        body: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: ExactAssetImage('assets/images/aa.png'))),
-            child: Center(child:
-                SingleChildScrollView(child: Observer(builder: (context) {
-              if (widget.controller.loading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              if (widget.controller.erro) {
-                return Column(
-                  children: [
-                    const EmptyPage(
-                      imagePath: "assets/images/server_down.svg",
-                      message: "Erro ao carregar dados!",
-                      isSvg: true,
-                      heightPercent: 0.4,
-                      subMessage: "Tente novamente mais tarde",
-                      textColor: Colors.white,
-                    ),
-                    ElevatedButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: const Text("VOLTAR")),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ElevatedButton(
-                      onPressed: () => widget.controller.obterMenusModulos(),
-                      child: const Text("TENTE NOVAMENTE"),
-                    ),
-                  ],
-                );
-              }
-              if (widget.controller.loaded) {
-                int halfLength = widget.controller.menusModulo.length <= 5 ? 5 : (widget.controller.menusModulo.length / 2).ceil();
-                return GridMenus(
-                    contentLine1:
-                        widget.controller.menusModulo.take(halfLength).map((menu) {
-                      return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: CustomButtonRedondo(
-                            backgroundColor:
-                                const Color.fromARGB(255, 49, 150, 101),
-                            icon: menu.icon!.toIcon(),
-                            onPressed: () {
-                              Modular.to.pushNamed(menu.action ?? "/");
-                            },
-                            label: menu.title ?? '',
-                          ));
-                    }).toList(),
-                    contentLine2:
-                        widget.controller.menusModulo.skip(halfLength).map((menu) {
-                      return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: CustomButtonRedondo(
-                            backgroundColor:
-                                const Color.fromARGB(255, 49, 150, 101),
-                            icon: menu.icon!.toIcon(),
-                            onPressed: () {
-                              Modular.to.pushNamed(menu.action ?? "/");
-                            },
-                            label: menu.title ?? '',
-                          ));
-                    }).toList());
-              }
-              return Container();
-            })))));
+        body: Stack(
+          children: [
+                Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: ExactAssetImage('assets/images/aa.png'))),
+                child: Center(child:
+                    SingleChildScrollView(child: Observer(builder: (context) {
+                  if (widget.controller.loading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (widget.controller.erro) {
+                    return Column(
+                      children: [
+                        const EmptyPage(
+                          imagePath: "assets/images/server_down.svg",
+                          message: "Erro ao carregar dados!",
+                          isSvg: true,
+                          heightPercent: 0.4,
+                          subMessage: "Tente novamente mais tarde",
+                          textColor: Colors.white,
+                        ),
+                        ElevatedButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: const Text("VOLTAR")),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        ElevatedButton(
+                          onPressed: () => widget.controller.obterMenusModulos(),
+                          child: const Text("TENTE NOVAMENTE"),
+                        ),
+                      ],
+                    );
+                  }
+                  if (widget.controller.loaded) {
+                    int halfLength = widget.controller.menusModulo.length <= 5 ? 5 : (widget.controller.menusModulo.length / 2).ceil();
+                    return GridMenus(
+                        contentLine1:
+                            widget.controller.menusModulo.take(halfLength).map((menu) {
+                          return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                              child: CustomButtonRedondo(
+                                backgroundColor:
+                                    const Color.fromARGB(255, 49, 150, 101),
+                                icon: menu.icon!.toIcon(),
+                                onPressed: () {
+                                  Modular.to.pushNamed(menu.action ?? "/");
+                                },
+                                label: menu.title ?? '',
+                              ));
+                        }).toList(),
+                        contentLine2:
+                            widget.controller.menusModulo.skip(halfLength).map((menu) {
+                          return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                              child: CustomButtonRedondo(
+                                backgroundColor:
+                                    const Color.fromARGB(255, 49, 150, 101),
+                                icon: menu.icon!.toIcon(),
+                                onPressed: () {
+                                  Modular.to.pushNamed(menu.action ?? "/");
+                                },
+                                label: menu.title ?? '',
+                              ));
+                        }).toList());
+                  }
+                  return Container();
+                })) 
+                )
+                
+                ),
+                 Visibility(
+                  visible: (Modular.get<AuthStore>().user?.isAdmin ?? false),
+                   child: Positioned(
+                      top: 10, 
+                      right: 10, 
+                      child: Container(
+                        padding: const EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Text(
+                            'Senha para sair: $senhaParaSair',
+                            style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            
+                                 ),
+                               ),
+                             ),
+                           ),
+                 ),
+              ],
+        ));
   }
 
   sair() {
-    var senhaCorreta = "1234";
     showDialog(
   context: context,
   builder: (BuildContext context) {
@@ -149,7 +179,7 @@ class _HomePageState extends State<HomePage> {
         TextButton(
           child: const Text('Verificar'),
           onPressed: () {
-            if (senhaDigitada.toString() == senhaCorreta) {
+            if (senhaDigitada.toString() == senhaParaSair) {
               Navigator.pop(context);
               Modular.to.pop();
               showDialog(

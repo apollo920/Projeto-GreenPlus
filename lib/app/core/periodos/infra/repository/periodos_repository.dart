@@ -12,9 +12,9 @@ class PeriodosRepositoryImpl extends IPeriodosRepository{
 
   PeriodosRepositoryImpl(this.dataSource);
   @override
-  Future<Either<Failure, List<Periodo>>> getPeriodos({required String idCurso}) async {
+  Future<Either<Failure, List<Periodo>>> getPeriodos({required String idPeriodo}) async {
     try {
-      List<Periodo>? listaPeriodoss = await dataSource.getPeriodos(idCurso: idCurso);
+      List<Periodo>? listaPeriodoss = await dataSource.getPeriodos(idPeriodo: idPeriodo);
 
       if (listaPeriodoss == null) {
         return Left(DataSourceEmpty());

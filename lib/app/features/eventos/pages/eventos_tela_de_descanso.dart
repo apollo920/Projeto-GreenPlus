@@ -41,15 +41,20 @@ class _TimeoutScreenState extends State<TimeoutScreen> {
           decoration: const BoxDecoration(
             image: DecorationImage(
               fit: BoxFit.cover,
-              image: ExactAssetImage('assets/images/a.png'),
+              image: ExactAssetImage('assets/images/aa.png'),
             ),
           ),
           child: Center(
             child: Column(
               children: [
-                Expanded(
+                Expanded(  
                   child: Observer(
                     builder: (context) {
+                       if (widget.controller.loading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
                       if (widget.controller.listaAllEvento.isNotEmpty) {
                         return LayoutBuilder(
                           builder: (_, constrants){
@@ -74,7 +79,11 @@ class _TimeoutScreenState extends State<TimeoutScreen> {
                                       margin: const EdgeInsets.all(10),
                                       child: Container(
                                         decoration: const BoxDecoration(
-                                            color: Colors.white,
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: ExactAssetImage(
+                                                  'assets/images/a.png'),
+                                            ),
                                             borderRadius: BorderRadius.all(Radius.circular(20))),
                                         child: Column(
                                           mainAxisAlignment: MainAxisAlignment.center,

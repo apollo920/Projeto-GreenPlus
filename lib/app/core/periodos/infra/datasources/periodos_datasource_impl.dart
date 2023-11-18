@@ -13,13 +13,13 @@ class PeriodosDataSourceImpl implements IPeriodosDataSource {
   PeriodosDataSourceImpl(this.clientHttp, this.localStorage);
 
   @override
-  Future<List<Periodo>?> getPeriodos({required String idCurso}) async {
+  Future<List<Periodo>?> getPeriodos({required String idPeriodo}) async {
     // return listaPeriodoss[idCurso]?.map((periodo) {
     //   periodo['id'] = listaPeriodoss[idCurso]!.indexOf(periodo).toString();
     //   return  Periodo.fromMap(periodo);
     // }).toList();
 
-    var result = await clientHttp.get(url: ApiRoutes.PERIODOS_BY_CURSO(idCurso));
+    var result = await clientHttp.get(url: ApiRoutes.PERIODOS_BY_CURSO(idPeriodo));
     if (result.statusCode == 200) {
       var json = result.data;
       var periodos = json['data'] as List?;

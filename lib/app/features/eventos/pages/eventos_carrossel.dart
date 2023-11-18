@@ -51,9 +51,11 @@ class _EventosCarouselState extends State<EventosCarousel> {
                 widget.controller.setCursoSelected(null);
                 Modular.to.pop();
               }),
-          title: const Text(
-            "Lista de Eventos",
-            style: TextStyle(color: Colors.white),
+          title: const Center(
+            child: Text(
+              "Lista de Eventos",
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           backgroundColor: const Color.fromARGB(255, 27, 136, 83),
         ),

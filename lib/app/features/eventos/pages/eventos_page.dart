@@ -24,9 +24,11 @@ class _EventosPageState extends State<EventosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: const Text(
-              'Escolha um dos cursos específicos',
-              style: TextStyle(color: Colors.white),
+            title: const Center(
+              child: Text(
+                'Escolha um dos cursos específicos',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
             backgroundColor: const Color.fromARGB(255, 27, 136, 83),
             automaticallyImplyLeading: false,
@@ -104,9 +106,11 @@ class _EventosPickerServiceState extends State<EventosPickerService> {
               onPressed: () {
                 Modular.to.pop();
               }),
-          title: const Text(
-            "Selecione uma imagem a ser exibida",
-            style: TextStyle(color: Colors.white),
+          title: const Center(
+            child: Text(
+              "Selecione uma imagem a ser exibida",
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           backgroundColor: const Color.fromARGB(255, 27, 136, 83),
         ),
@@ -214,9 +218,11 @@ class _ImagePreviewAndObservationsState
             icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => showConfirmationDialog(),
           ),
-          title: const Text(
-            "Verificação de imagem selecionada e observações",
-            style: TextStyle(color: Colors.white),
+          title: const Center(
+            child: Text(
+              "Verificação de imagem selecionada e observações",
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           backgroundColor: const Color.fromARGB(255, 27, 136, 83),
         ),
@@ -269,7 +275,9 @@ class _ImagePreviewAndObservationsState
                                   observacoes = textController.text;
                                 });
                                 await _addImage(widget.imagePath, observacoes);
+                                // ignore: use_build_context_synchronously
                                 Navigator.of(context).pop();
+                                // ignore: use_build_context_synchronously
                                 Navigator.of(context).pop();
                                 setState(() {
                                   ScaffoldMessenger.of(context)

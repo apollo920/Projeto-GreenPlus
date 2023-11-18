@@ -18,7 +18,6 @@ class CursoDataSourceImpl implements ICursoDataSource {
     if (result.statusCode == 200) {
       var json = result.data;
       var cursos = json['data'] as List?;
-      print(cursos);
       return cursos?.map((curso) => Curso.fromMap(curso)).toList();
     } else if (result.statusCode != 500) {
       var json = result.data;

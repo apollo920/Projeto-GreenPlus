@@ -17,10 +17,8 @@ class HomeDataSourceImpl implements IHomeDataSource {
 
     var result = await clientHttp.get(url: ApiRoutes.MENU);
     if (result.statusCode == 200) {
-      print(result);
       var json = result.data;
       var menus = json['data'] as List?;
-      // print(menus);
       return menus?.map((menuModulo) => MenuModulo.fromMap(menuModulo)).toList();
     } else if (result.statusCode != 500) {
       var json = result.data;

@@ -52,9 +52,11 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
                 color: Colors.white,
               ),
               onPressed: () => Modular.to.pop()),
-          title: const Text(
-            "Lista de QrCodes",
-            style: TextStyle(color: Colors.white),
+          title: const Center(
+            child: Text(
+              "Lista de QrCodes",
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           backgroundColor: const Color.fromARGB(255, 27, 136, 83),
         ),
@@ -303,9 +305,11 @@ class QRCodeZoomScreen extends StatelessWidget {
                 color: Colors.white,
               ),
               onPressed: () => Modular.to.pop()),
-          title: Text(
-            title,
-            style: const TextStyle(color: Colors.white),
+          title: Center(
+            child: Text(
+              title,
+              style: const TextStyle(color: Colors.white),
+            ),
           ),
           backgroundColor: const Color.fromARGB(255, 27, 136, 83),
           elevation: 0,
