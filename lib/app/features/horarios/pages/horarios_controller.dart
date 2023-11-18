@@ -17,7 +17,7 @@ abstract class HorariosControllerBase with Store {
 
   @observable
   Curso? cursoSelected;
-  
+
   @observable
   String? pdfHorario;
 
@@ -61,8 +61,7 @@ abstract class HorariosControllerBase with Store {
     pdfHorario = '';
     setLoading(true);
 
-    var result = await horariosRepository.getHorarios(
-        idCurso: idCurso);
+    var result = await horariosRepository.getHorarios(idCurso: idCurso);
 
     result.fold((erro) {
       setErro(true);
@@ -76,9 +75,9 @@ abstract class HorariosControllerBase with Store {
 
   Future changeHorarios({required String base64}) async {
     // showLoading();
+    print(1);
     var result = await horariosRepository.changeHorarios(
-        idCurso: cursoSelected!.id!,
-        base64: base64);
+        idCurso: cursoSelected!.id!, base64: base64);
     // await Future.delayed(const Duration(seconds: 3));
     result.fold((erro) {
       Navigator.pop(Modular.routerDelegate.navigatorKey.currentState!.context);
@@ -112,6 +111,4 @@ abstract class HorariosControllerBase with Store {
           );
         });
   }
-
 }
-
