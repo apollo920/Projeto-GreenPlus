@@ -33,7 +33,7 @@ class HorariosDataSourceImpl implements IHorariosDataSource {
       {required String idCurso, required String base64}) async {
     var result = await clientHttp.put(
         url: ApiRoutes.CHANGEHORARIOS(idCurso: idCurso, base64: base64),
-        body: base64);
+        body: '"value": $base64');
     if (result.statusCode == 200) {
       var json = result.data;
       var horario = json['data'] as String?;
