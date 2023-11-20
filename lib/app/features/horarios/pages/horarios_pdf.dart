@@ -33,6 +33,7 @@ class _PDFScreenState extends State<PDFScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          toolbarHeight: 60,
           automaticallyImplyLeading: false,
           leading: IconButton(
               icon: const Icon(
@@ -51,25 +52,25 @@ class _PDFScreenState extends State<PDFScreen> {
           ),
           backgroundColor: const Color.fromARGB(255, 27, 136, 83),
         ),
-        floatingActionButton: (Modular.get<AuthStore>().user?.isAdmin ?? false)
-            ? Observer(
-                builder: (_) {
-                  if (!widget.controller.erro) {
-                    return ExpandableFab(
-                      fabButtons: [
-                        FabActionButton(
-                          icon: Icons.picture_as_pdf,
-                          onPressed: () =>
-                              Modular.to.pushNamed('/horarios/pdfpicker'),
-                          title: 'Trocar horários',
-                        ),
-                      ],
-                    );
-                  }
-                  return Container();
-                },
-              )
-            : null,
+        // floatingActionButton: (Modular.get<AuthStore>().user?.isAdmin ?? false)
+        //     ? Observer(
+        //         builder: (_) {
+        //           if (!widget.controller.erro) {
+        //             return ExpandableFab(
+        //               fabButtons: [
+        //                 FabActionButton(
+        //                   icon: Icons.picture_as_pdf,
+        //                   onPressed: () =>
+        //                       Modular.to.pushNamed('/horarios/pdfpicker'),
+        //                   title: 'Trocar horários',
+        //                 ),
+        //               ],
+        //             );
+        //           }
+        //           return Container();
+        //         },
+        //       )
+        //     : null,
         body: Center(
             child: Container(
                 decoration: const BoxDecoration(

@@ -43,17 +43,14 @@ class TesteObserver extends StatefulWidget {
 
 class _TesteObserverState extends State<TesteObserver> {
 
-
   @override
   Widget build(BuildContext context) {
     return Listener(
       onPointerUp: (value){
-        print("Listener");
         widget.controller.restartTimeoutTimer();
       },
         child: widget.child);
   }
-
   @override
   void initState() {
     super.initState();

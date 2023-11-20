@@ -41,6 +41,7 @@ class _EventosCarouselState extends State<EventosCarousel> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          toolbarHeight: 60,
           automaticallyImplyLeading: false,
           leading: IconButton(
               icon: const Icon(

@@ -24,6 +24,7 @@ class _EventosPageState extends State<EventosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          toolbarHeight: 60,
             title: const Center(
               child: Text(
                 'Escolha um dos cursos específicos',
@@ -97,6 +98,7 @@ class _EventosPickerServiceState extends State<EventosPickerService> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          toolbarHeight: 60,
           automaticallyImplyLeading: false,
           leading: IconButton(
               icon: const Icon(
@@ -213,6 +215,7 @@ class _ImagePreviewAndObservationsState
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          toolbarHeight: 60,
           automaticallyImplyLeading: false,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),

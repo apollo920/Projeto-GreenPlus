@@ -45,6 +45,7 @@ class _QRCodeListScreenState extends State<QRCodeListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          toolbarHeight: 60,
           automaticallyImplyLeading: false,
           leading: IconButton(
               icon: const Icon(
@@ -298,6 +299,7 @@ class QRCodeZoomScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          toolbarHeight: 60,
           automaticallyImplyLeading: false,
           leading: IconButton(
               icon: const Icon(

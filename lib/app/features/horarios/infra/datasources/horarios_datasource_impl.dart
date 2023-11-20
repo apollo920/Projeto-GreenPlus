@@ -18,7 +18,10 @@ class HorariosDataSourceImpl implements IHorariosDataSource {
       var json = result.data;
       var horario = json['data'] as String?;
       return horario;
-    } else if (result.statusCode != 500) {
+    } else if (result.statusCode == 404) {
+      var horario = '';
+      return horario;
+    }else if (result.statusCode != 500) {
       var json = result.data;
       throw Failure(message: json['message'] ?? "Erro na consulta");
     } else {
@@ -31,9 +34,10 @@ class HorariosDataSourceImpl implements IHorariosDataSource {
   @override
   Future<String?> changeHorarios(
       {required String idCurso, required String base64}) async {
+    
     var result = await clientHttp.put(
         url: ApiRoutes.CHANGEHORARIOS(idCurso: idCurso, base64: base64),
-        body: '"value": $base64');
+        body: base64.toString());
     if (result.statusCode == 200) {
       var json = result.data;
       var horario = json['data'] as String?;
